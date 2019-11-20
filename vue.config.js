@@ -1,9 +1,9 @@
 module.exports = {
   configureWebpack: {
-    devtool: "source-map",
+    devtool: 'source-map',
     output: {
-      libraryExport: "default"
-    }
+      libraryExport: 'default',
+    },
   },
-  css: { extract: false }
-};
+  css: { extract: false },
+}

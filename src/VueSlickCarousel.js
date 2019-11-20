@@ -1,6 +1,6 @@
 export default {
-  name: "VueSlickCarousel",
+  name: 'VueSlickCarousel',
   render() {
-    return <div>vue-slick-carousel</div>;
-  }
-};
+    return <div>vue-slick-carousel</div>
+  },
+}
