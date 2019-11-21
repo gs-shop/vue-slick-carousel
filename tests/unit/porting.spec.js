@@ -1,4 +1,5 @@
 import fc from 'fast-check'
+import { JSDOM } from 'jsdom'
 import Vue from 'vue/dist/vue'
 import { createRenderer } from 'vue-server-renderer'
 import VueSlickCarousel from '@/VueSlickCarousel'
@@ -17,10 +18,9 @@ const vueServerRender = async (itemHtmls = []) => {
     }),
   )
 
-  const template = document.createElement('template')
-  template.innerHTML = renderedString
+  return new JSDOM(renderedString).window.document.body.firstElementChild
+}
 
-  return template.content.firstChild
 }
 
 describe('carousel', () => {
