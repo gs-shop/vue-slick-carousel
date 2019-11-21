@@ -1,6 +1,11 @@
+import InnerSlider from '@/InnerSlider'
+
 export default {
   name: 'VueSlickCarousel',
+  components: {
+    InnerSlider,
+  },
   render() {
-    return <div>vue-slick-carousel</div>
+    return <InnerSlider></InnerSlider>
   },
 }
