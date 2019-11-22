@@ -13,6 +13,7 @@ export default {
     InnerSlider,
   },
   inheritAttrs: false,
+  props: Object.keys(defaultProps),
   data() {
     return {
       breakpoint: null,
@@ -20,11 +21,18 @@ export default {
   },
   computed: {
     settings() {
+      // filter undefined props
+      const props = Object.keys(this.$props)
+        .filter(key => this.$props[key] !== undefined)
+        .reduce((obj, key) => {
+          obj[key] = this.$props[key]
+          return obj
+        }, {})
       let settings
       let newProps
 
       if (this.breakpoint) {
-        newProps = this.$attrs.settings.responsive.filter(
+        newProps = this.responsive.filter(
           resp => resp.breakpoint === this.breakpoint,
         )
         settings =
@@ -32,11 +40,11 @@ export default {
             ? 'unslick'
             : {
                 ...defaultProps,
-                ...this.$attrs.settings,
+                ...props,
                 ...newProps[0].settings,
               }
       } else {
-        settings = { ...defaultProps, ...this.$attrs.settings }
+        settings = { ...defaultProps, ...props }
       }
 
       // force scrolling by one if centerMode is on
@@ -125,10 +133,9 @@ export default {
       this.responsiveMediaHandlers.push({ query, handler })
     },
     makeBreakpoints() {
-      const { responsive } = this.$attrs.settings || {}
       // handles responsive breakpoints
-      if (responsive) {
-        let breakpoints = responsive.map(breakpt => breakpt.breakpoint)
+      if (this.responsive) {
+        let breakpoints = this.responsive.map(breakpt => breakpt.breakpoint)
         // sort them in increasing order of their numerical value
         breakpoints.sort((x, y) => x - y)
 
