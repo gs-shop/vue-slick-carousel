@@ -1,6 +1,7 @@
 import SliderTrack from '@/SliderTrack'
 import SliderArrow from '@/SliderArrow'
 import SliderDots from '@/SliderDots'
+import initialState from '@/initialState'
 
 export default {
   name: 'InnerSlider',
@@ -10,6 +11,21 @@ export default {
     SliderDots,
   },
   inheritAttrs: false,
+  props: ['settings'],
+  data() {
+    return { ...initialState, currentSlide: this.settings.initialSlide }
+  },
+  computed: {
+    slideCount() {
+      return this.$slots.default.length
+    },
+  },
+  created() {
+    // non-reactive data
+    this.callbackTimers = []
+    this.clickable = true
+    this.debouncedResize = null
+  },
   methods: {
     slickPrev() {
       throw Error('not implemented yet')
@@ -28,14 +44,23 @@ export default {
     },
   },
   render() {
+    let prevArrow = <SliderArrow />
+    let nextArrow = <SliderArrow />
+    let dots = <SliderDots />
+
+    let listProps = {}
+    let trackProps = {}
+
     return (
       <div>
-        <SliderArrow />
-        <div>
-          <SliderTrack>{this.$slots.default}</SliderTrack>
+        {!this.settings.unslick ? prevArrow : ''}
+        <div ref="list" {...listProps}>
+          <SliderTrack ref="track" {...trackProps}>
+            {this.$slots.default}
+          </SliderTrack>
         </div>
-        <SliderArrow />
-        <SliderDots />
+        {!this.settings.unslick ? nextArrow : ''}
+        {!this.settings.unslick ? dots : ''}
       </div>
     )
   },
