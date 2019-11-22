@@ -34,7 +34,7 @@ export default {
       this.responsiveMediaHandlers.push({ query, handler })
     },
     makeBreakpoints() {
-      const { responsive } = this.$attrs.settings
+      const { responsive } = this.$attrs.settings || {}
       // handles responsive breakpoints
       if (responsive) {
         let breakpoints = responsive.map(breakpt => breakpt.breakpoint)
