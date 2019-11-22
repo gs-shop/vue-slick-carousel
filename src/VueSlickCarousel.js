@@ -25,6 +25,21 @@ export default {
     this.makeBreakpoints()
   },
   methods: {
+    slickPrev() {
+      this.$refs.innerSlider.slickPrev()
+    },
+    slickNext() {
+      this.$refs.innerSlider.slickNext()
+    },
+    slickGoTo(slide, dontAnimate = false) {
+      this.$refs.innerSlider.slickGoTo(slide, dontAnimate)
+    },
+    slickPause() {
+      this.$refs.innerSlider.pause('paused')
+    },
+    slickPlay() {
+      this.$refs.innerSlider.autoPlay('play')
+    },
     media(query, handler) {
       // javascript handler for  css media query
       // when not using server side rendering
