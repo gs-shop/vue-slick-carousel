@@ -18,6 +18,75 @@ export default {
       breakpoint: null,
     }
   },
+  computed: {
+    settings() {
+      let settings
+      let newProps
+
+      if (this.breakpoint) {
+        newProps = this.$attrs.settings.responsive.filter(
+          resp => resp.breakpoint === this.breakpoint,
+        )
+        settings =
+          newProps[0].settings === 'unslick'
+            ? 'unslick'
+            : {
+                ...defaultProps,
+                ...this.$attrs.settings,
+                ...newProps[0].settings,
+              }
+      } else {
+        settings = { ...defaultProps, ...this.$attrs.settings }
+      }
+
+      // force scrolling by one if centerMode is on
+      if (settings.centerMode) {
+        if (
+          settings.slidesToScroll > 1 &&
+          process.env.NODE_ENV !== 'production'
+        ) {
+          console.warn(
+            `slidesToScroll should be equal to 1 in centerMode, you are using ${settings.slidesToScroll}`,
+          )
+        }
+        settings.slidesToScroll = 1
+      }
+      // force showing one slide and scrolling by one if the fade mode is on
+      if (settings.fade) {
+        if (
+          settings.slidesToShow > 1 &&
+          process.env.NODE_ENV !== 'production'
+        ) {
+          console.warn(
+            `slidesToShow should be equal to 1 when fade is true, you're using ${settings.slidesToShow}`,
+          )
+        }
+        if (
+          settings.slidesToScroll > 1 &&
+          process.env.NODE_ENV !== 'production'
+        ) {
+          console.warn(
+            `slidesToScroll should be equal to 1 when fade is true, you're using ${settings.slidesToScroll}`,
+          )
+        }
+        settings.slidesToShow = 1
+        settings.slidesToScroll = 1
+      }
+
+      // rows and slidesPerRow logic is handled here
+      if (
+        settings.variableWidth &&
+        (settings.rows > 1 || settings.slidesPerRow > 1)
+      ) {
+        console.warn(
+          `variableWidth is not supported in case of rows > 1 or slidesPerRow > 1`,
+        )
+        settings.variableWidth = false
+      }
+
+      return settings
+    },
+  },
   created() {
     // non-reactive data
     this.responsiveMediaHandlers = []
@@ -94,67 +163,7 @@ export default {
     },
   },
   render() {
-    let settings
-    let newProps
-
-    if (this.breakpoint) {
-      newProps = this.$attrs.settings.responsive.filter(
-        resp => resp.breakpoint === this.breakpoint,
-      )
-      settings =
-        newProps[0].settings === 'unslick'
-          ? 'unslick'
-          : {
-              ...defaultProps,
-              ...this.$attrs.settings,
-              ...newProps[0].settings,
-            }
-    } else {
-      settings = { ...defaultProps, ...this.$attrs.settings }
-    }
-
-    // force scrolling by one if centerMode is on
-    if (settings.centerMode) {
-      if (
-        settings.slidesToScroll > 1 &&
-        process.env.NODE_ENV !== 'production'
-      ) {
-        console.warn(
-          `slidesToScroll should be equal to 1 in centerMode, you are using ${settings.slidesToScroll}`,
-        )
-      }
-      settings.slidesToScroll = 1
-    }
-    // force showing one slide and scrolling by one if the fade mode is on
-    if (settings.fade) {
-      if (settings.slidesToShow > 1 && process.env.NODE_ENV !== 'production') {
-        console.warn(
-          `slidesToShow should be equal to 1 when fade is true, you're using ${settings.slidesToShow}`,
-        )
-      }
-      if (
-        settings.slidesToScroll > 1 &&
-        process.env.NODE_ENV !== 'production'
-      ) {
-        console.warn(
-          `slidesToScroll should be equal to 1 when fade is true, you're using ${settings.slidesToScroll}`,
-        )
-      }
-      settings.slidesToShow = 1
-      settings.slidesToScroll = 1
-    }
-
-    // rows and slidesPerRow logic is handled here
-    if (
-      settings.variableWidth &&
-      (settings.rows > 1 || settings.slidesPerRow > 1)
-    ) {
-      console.warn(
-        `variableWidth is not supported in case of rows > 1 or slidesPerRow > 1`,
-      )
-      settings.variableWidth = false
-    }
-
+    const { settings } = this
     let children = this.$slots.default || []
     let newChildren = []
     let currentWidth = null
