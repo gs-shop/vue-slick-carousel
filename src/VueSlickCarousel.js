@@ -16,10 +16,12 @@ export default {
   data() {
     return {
       breakpoint: null,
-      responsiveMediaHandlers: [],
     }
   },
   created() {
+    // non-reactive data
+    this.responsiveMediaHandlers = []
+
     this.makeBreakpoints()
   },
   methods: {
