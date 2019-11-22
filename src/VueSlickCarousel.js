@@ -24,6 +24,11 @@ export default {
 
     this.makeBreakpoints()
   },
+  beforeDestroy() {
+    this.responsiveMediaHandlers.forEach(obj =>
+      enquire.unregister(obj.query, obj.handler),
+    )
+  },
   methods: {
     slickPrev() {
       this.$refs.innerSlider.slickPrev()
