@@ -9,12 +9,13 @@ export default {
     SliderArrow,
     SliderDots,
   },
+  inheritAttrs: false,
   render() {
     return (
       <div>
         <SliderArrow />
         <div>
-          <SliderTrack />
+          <SliderTrack>{this.$slots.default}</SliderTrack>
         </div>
         <SliderArrow />
         <SliderDots />

@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "core-js": "^3.3.2",
+    "enquire.js": "2.1.6",
+    "json2mq": "0.2.0",
+    "lodash": "4.17.15",
     "vue": "^2.6.10"
   },
   "devDependencies": {
