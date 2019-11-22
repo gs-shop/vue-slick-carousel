@@ -9,12 +9,30 @@ export default {
     SliderArrow,
     SliderDots,
   },
+  inheritAttrs: false,
+  methods: {
+    slickPrev() {
+      throw Error('not implemented yet')
+    },
+    slickNext() {
+      throw Error('not implemented yet')
+    },
+    slickGoTo() {
+      throw Error('not implemented yet')
+    },
+    pause() {
+      throw Error('not implemented yet')
+    },
+    autoPlay() {
+      throw Error('not implemented yet')
+    },
+  },
   render() {
     return (
       <div>
         <SliderArrow />
         <div>
-          <SliderTrack />
+          <SliderTrack>{this.$slots.default}</SliderTrack>
         </div>
         <SliderArrow />
         <SliderDots />

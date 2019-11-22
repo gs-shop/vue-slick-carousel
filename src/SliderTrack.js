@@ -1,6 +1,6 @@
 export default {
   name: 'SliderTrack',
   render() {
-    return <div>slider track</div>
+    return <div>{this.$slots.default}</div>
   },
 }
