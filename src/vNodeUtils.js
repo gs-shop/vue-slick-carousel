@@ -1,5 +1,6 @@
 import pick from 'lodash/pick'
 import assign from 'lodash/assign'
+import get from 'lodash/get'
 
 export const mergeVNodeData = (vnode, name, obj) => {
   if (!vnode) {
@@ -83,4 +84,20 @@ export const copyClassesFrom = (vnode, from) => {
     ...data.class,
     ...from,
   })
+}
+
+export const getData = (vnode, path, defaultValue) => {
+  if (!vnode) {
+    return
+  }
+  const data = vnode.data || {}
+
+  return typeof path === 'undefined' ? data : get(data, path, defaultValue)
+}
+
+export const getStyle = vnode => {
+  return {
+    ...getData(vnode, 'staticStyle', {}),
+    ...getData(vnode, 'style', {}),
+  }
 }

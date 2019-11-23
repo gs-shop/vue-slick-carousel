@@ -1,6 +1,11 @@
 import json2mq from 'json2mq'
 
-import { cloneVNode, mergeVNodeData, setVNodeData } from '@/vNodeUtils'
+import {
+  cloneVNode,
+  mergeVNodeData,
+  setVNodeData,
+  getStyle,
+} from '@/vNodeUtils'
 import { canUseDOM } from '@/innerSliderUtils'
 import defaultProps from '@/defaultProps'
 import InnerSlider from '@/InnerSlider'
@@ -187,12 +192,8 @@ export default {
       ) {
         let row = []
         for (let k = j; k < j + settings.slidesPerRow; k += 1) {
-          if (
-            settings.variableWidth &&
-            children[k].data &&
-            children[k].data.style
-          ) {
-            currentWidth = children[k].data.style.width
+          if (settings.variableWidth && getStyle(children[k])) {
+            currentWidth = getStyle(children[k]).width
           }
           if (k >= children.length) break
           let clonedVNode = cloneVNode(children[k])
