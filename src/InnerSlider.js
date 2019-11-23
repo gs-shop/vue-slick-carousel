@@ -1,6 +1,7 @@
 import SliderTrack from '@/SliderTrack'
 import SliderArrow from '@/SliderArrow'
 import SliderDots from '@/SliderDots'
+import defaultProps from '@/defaultProps'
 import initialState from '@/initialState'
 
 export default {
@@ -11,9 +12,9 @@ export default {
     SliderDots,
   },
   inheritAttrs: false,
-  props: ['settings'],
+  props: Object.keys(defaultProps),
   data() {
-    return { ...initialState, currentSlide: this.settings.initialSlide }
+    return { ...initialState, currentSlide: this.initialSlide }
   },
   computed: {
     slideCount() {
@@ -53,14 +54,14 @@ export default {
 
     return (
       <div>
-        {!this.settings.unslick ? prevArrow : ''}
+        {!this.unslick ? prevArrow : ''}
         <div ref="list" {...listProps}>
           <SliderTrack ref="track" {...trackProps}>
             {this.$slots.default}
           </SliderTrack>
         </div>
-        {!this.settings.unslick ? nextArrow : ''}
-        {!this.settings.unslick ? dots : ''}
+        {!this.unslick ? nextArrow : ''}
+        {!this.unslick ? dots : ''}
       </div>
     )
   },

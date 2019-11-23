@@ -225,7 +225,7 @@ export default {
     }
 
     return (
-      <InnerSlider ref="innerSlider" settings={settings}>
+      <InnerSlider ref="innerSlider" {...{ props: settings }}>
         {newChildren}
       </InnerSlider>
     )
