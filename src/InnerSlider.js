@@ -132,9 +132,14 @@ export default {
 
     let listProps = {}
     let trackProps = {}
+    const className = {
+      'slick-slider': true,
+      'slick-initialized': true,
+      'slick-vertical': this.vertical,
+    }
 
     return (
-      <div>
+      <div class={className} dir={!this.unslick ? 'ltr' : false}>
         {!this.unslick ? prevArrow : ''}
         <div ref="list" {...listProps}>
           <SliderTrack ref="track" {...trackProps}>
