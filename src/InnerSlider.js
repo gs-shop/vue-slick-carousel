@@ -20,7 +20,7 @@ export default {
     SliderDots,
   },
   inheritAttrs: false,
-  props: Object.keys(defaultProps),
+  props: [...Object.keys(defaultProps), 'unslick'],
   data() {
     return { ...initialState, currentSlide: this.initialSlide }
   },
