@@ -32,6 +32,9 @@ export default {
     this.debouncedResize = null
 
     this.ssrInit()
+    if (this.onInit) {
+      this.onInit()
+    }
   },
   methods: {
     slickPrev() {
