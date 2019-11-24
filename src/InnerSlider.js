@@ -6,7 +6,11 @@ import defaultProps from '@/defaultProps'
 import initialState from '@/initialState'
 
 import { getStyle } from '@/vNodeUtils'
-import { getPreClones, getPostClones } from '@/innerSliderUtils'
+import {
+  getPreClones,
+  getPostClones,
+  getOnDemandLazySlides,
+} from '@/innerSliderUtils'
 
 export default {
   name: 'InnerSlider',
@@ -24,6 +28,13 @@ export default {
     slideCount() {
       return this.$slots.default.length
     },
+    spec() {
+      return {
+        ...this.$props,
+        ...this.$data,
+        slideCount: this.slideCount,
+      }
+    },
   },
   created() {
     // non-reactive data
@@ -34,6 +45,15 @@ export default {
     this.ssrInit()
     if (this.onInit) {
       this.onInit()
+    }
+    if (this.lazyLoad) {
+      let slidesToLoad = getOnDemandLazySlides(this.spec)
+      if (slidesToLoad.length > 0) {
+        this.lazyLoadedList = this.lazyLoadedList.concat(slidesToLoad)
+        if (this.onLazyLoad) {
+          this.onLazyLoad(slidesToLoad)
+        }
+      }
     }
   },
   methods: {
@@ -53,13 +73,8 @@ export default {
       throw Error('not implemented yet')
     },
     ssrInit() {
-      const spec = {
-        ...this.$props,
-        ...this.$data,
-        slideCount: this.slideCount,
-      }
-      const preClones = getPreClones(spec)
-      const postClones = getPostClones(spec)
+      const preClones = getPreClones(this.spec)
+      const postClones = getPostClones(this.spec)
       if (this.variableWidth) {
         let trackWidth = [],
           trackLeft = []
