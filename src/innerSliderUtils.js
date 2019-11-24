@@ -48,3 +48,58 @@ export const getOnDemandLazySlides = spec => {
   }
   return onDemandSlides
 }
+
+// given an object and a list of keys, return new object with given keys
+export const extractObject = (spec, keys) => {
+  let newObject = {}
+  keys.forEach(key => (newObject[key] = spec[key]))
+  return newObject
+}
+
+export const PROP_KEYS = {
+  TRACK: [
+    'fade',
+    'cssEase',
+    'speed',
+    'infinite',
+    'centerMode',
+    'focusOnSelect',
+    'currentSlide',
+    'lazyLoad',
+    'lazyLoadedList',
+    'rtl',
+    'slideWidth',
+    'slideHeight',
+    'listHeight',
+    'vertical',
+    'slidesToShow',
+    'slidesToScroll',
+    'slideCount',
+    'trackStyle',
+    'variableWidth',
+    'unslick',
+    'centerPadding',
+    'focusOnSelect',
+  ],
+  DOT: [
+    'dotsClass',
+    'slideCount',
+    'slidesToShow',
+    'currentSlide',
+    'slidesToScroll',
+    'clickHandler',
+    'children',
+    'customPaging',
+    'infinite',
+    'appendDots',
+  ],
+  ARROW: [
+    'infinite',
+    'centerMode',
+    'currentSlide',
+    'slideCount',
+    'slidesToShow',
+    'prevArrow',
+    'nextArrow',
+  ],
+}

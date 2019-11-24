@@ -7,6 +7,8 @@ import initialState from '@/initialState'
 
 import { getStyle } from '@/vNodeUtils'
 import {
+  PROP_KEYS,
+  extractObject,
   getPreClones,
   getPostClones,
   getOnDemandLazySlides,
@@ -124,6 +126,21 @@ export default {
         }
       }
     },
+    onTrackOver() {
+      if (!this.pauseOnHover) {
+        return
+      }
+      console.log('on track over')
+    },
+    onTrackLeave() {
+      if (!this.pauseOnHover) {
+        return
+      }
+      console.log('on track leave')
+    },
+    selectHandler() {
+      console.log('select handler')
+    },
   },
   render() {
     let prevArrow = <SliderArrow />
@@ -131,18 +148,28 @@ export default {
     let dots = <SliderDots />
 
     let listProps = {}
-    let trackProps = {}
+
     const className = {
       'slick-slider': true,
       'slick-initialized': true,
       'slick-vertical': this.vertical,
+    }
+    let trackProps = extractObject(this.spec, PROP_KEYS.TRACK)
+    trackProps = {
+      ...trackProps,
+      focusOnSelect: this.focusOnSelect ? this.selectHandler : null,
     }
 
     return (
       <div class={className} dir={!this.unslick ? 'ltr' : false}>
         {!this.unslick ? prevArrow : ''}
         <div ref="list" {...listProps}>
-          <SliderTrack ref="track" {...trackProps}>
+          <SliderTrack
+            ref="track"
+            {...{ props: trackProps }}
+            nativeOnMouseenter={this.onTrackOver}
+            nativeOnMouseover={this.onTrackOver}
+            nativeOnMouseleave={this.onTrackLeave}>
             {this.$slots.default}
           </SliderTrack>
         </div>
