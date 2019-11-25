@@ -49,6 +49,14 @@ export const getOnDemandLazySlides = spec => {
   return onDemandSlides
 }
 
+export const filterUndefined = props =>
+  Object.keys(props)
+    .filter(key => props[key] !== undefined)
+    .reduce((obj, key) => {
+      obj[key] = props[key]
+      return obj
+    }, {})
+
 // given an object and a list of keys, return new object with given keys
 export const extractObject = (spec, keys) => {
   let newObject = {}

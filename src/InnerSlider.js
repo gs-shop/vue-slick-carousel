@@ -9,6 +9,7 @@ import { getStyle } from '@/vNodeUtils'
 import {
   PROP_KEYS,
   extractObject,
+  filterUndefined,
   getPreClones,
   getPostClones,
   getOnDemandLazySlides,
@@ -127,15 +128,9 @@ export default {
       }
     },
     onTrackOver() {
-      if (!this.pauseOnHover) {
-        return
-      }
       console.log('on track over')
     },
     onTrackLeave() {
-      if (!this.pauseOnHover) {
-        return
-      }
       console.log('on track leave')
     },
     selectHandler() {
@@ -155,9 +150,16 @@ export default {
       'slick-vertical': this.vertical,
     }
     let trackProps = extractObject(this.spec, PROP_KEYS.TRACK)
-    trackProps = {
+    trackProps = filterUndefined({
       ...trackProps,
-      focusOnSelect: this.focusOnSelect ? this.selectHandler : null,
+      focusOnSelect: this.focusOnSelect ? this.selectHandler : undefined,
+    })
+    const { pauseOnHover } = this
+    const trackNativeOn = filterUndefined({
+      mouseenter: pauseOnHover ? this.onTrackOver : undefined,
+      mouseover: pauseOnHover ? this.onTrackOver : undefined,
+      mouseleave: pauseOnHover ? this.onTrackLeave : undefined,
+    })
     }
 
     return (
@@ -167,9 +169,7 @@ export default {
           <SliderTrack
             ref="track"
             {...{ props: trackProps }}
-            nativeOnMouseenter={this.onTrackOver}
-            nativeOnMouseover={this.onTrackOver}
-            nativeOnMouseleave={this.onTrackLeave}>
+            {...{ nativeOn: trackNativeOn }}>
             {this.$slots.default}
           </SliderTrack>
         </div>
