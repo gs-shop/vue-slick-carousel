@@ -110,6 +110,26 @@ export default {
       window.attachEvent('onresize', this.onWindowResized)
     }
   },
+  destroyed() {
+    if (this.animationEndCallback) {
+      clearTimeout(this.animationEndCallback)
+    }
+    if (this.lazyLoadTimer) {
+      clearInterval(this.lazyLoadTimer)
+    }
+    if (this.callbackTimers.length) {
+      this.callbackTimers.forEach(timer => clearTimeout(timer))
+      this.callbackTimers = []
+    }
+    if (window.addEventListener) {
+      window.removeEventListener('resize', this.onWindowResized)
+    } else {
+      window.detachEvent('onresize', this.onWindowResized)
+    }
+    if (this.autoplayTimer) {
+      clearInterval(this.autoplayTimer)
+    }
+  },
   methods: {
     updateState(spec, setTrackStyle) {
       let updatedState = initializedState(spec)
