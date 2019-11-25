@@ -136,13 +136,26 @@ export default {
     selectHandler() {
       console.log('select handler')
     },
+    clickHandler() {
+      console.log('click')
+    },
+    keyHandler() {
+      console.log('key')
+    },
+    swipeStart() {
+      console.log('swipe start')
+    },
+    swipeMove() {
+      console.log('swipe move')
+    },
+    swipeEnd() {
+      console.log('swipe end')
+    },
   },
   render() {
     let prevArrow = <SliderArrow />
     let nextArrow = <SliderArrow />
     let dots = <SliderDots />
-
-    let listProps = {}
 
     const className = {
       'slick-slider': true,
@@ -160,12 +173,54 @@ export default {
       mouseover: pauseOnHover ? this.onTrackOver : undefined,
       mouseleave: pauseOnHover ? this.onTrackLeave : undefined,
     })
+    var verticalHeightStyle = null
+    if (this.vertical) {
+      verticalHeightStyle = {
+        height: this.listHeight,
+      }
     }
+
+    var centerPaddingStyle = null
+    if (this.vertical === false) {
+      if (this.centerMode === true) {
+        centerPaddingStyle = {
+          padding: '0px ' + this.centerPadding,
+        }
+      }
+    } else {
+      if (this.centerMode === true) {
+        centerPaddingStyle = {
+          padding: this.centerPadding + ' 0px',
+        }
+      }
+    }
+    let listStyle = {}
+    if (!this.unslick) {
+      listStyle = { ...verticalHeightStyle, ...centerPaddingStyle }
+    }
+
+    const { accessibility, dragging, touchMove } = this
+    const listOn = filterUndefined({
+      click: this.clickHandler,
+      mousedown: touchMove ? this.swipeStart : undefined,
+      mousemove: dragging && touchMove ? this.swipeMove : undefined,
+      mouseup: touchMove ? this.swipeEnd : undefined,
+      mouseleave: dragging && touchMove ? this.swipeEnd : undefined,
+      touchstart: touchMove ? this.swipeStart : undefined,
+      touchmove: dragging && touchMove ? this.swipeMove : undefined,
+      touchend: touchMove ? this.swipeEnd : undefined,
+      touchcancel: dragging && touchMove ? this.swipeEnd : undefined,
+      keydown: accessibility ? this.keyHandler : undefined,
+    })
 
     return (
       <div class={className} dir={!this.unslick ? 'ltr' : false}>
         {!this.unslick ? prevArrow : ''}
-        <div ref="list" {...listProps}>
+        <div
+          ref="list"
+          class={'slick-list'}
+          {...{ on: listOn }}
+          style={listStyle}>
           <SliderTrack
             ref="track"
             {...{ props: trackProps }}
