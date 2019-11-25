@@ -22,7 +22,16 @@ export default {
   infinite: true,
   initialSlide: 0,
   lazyLoad: null,
-  nextArrow: null,
+  nextArrow: (h, options) => (
+    <button
+      key={options.key}
+      type="button"
+      data-role="none"
+      style="display: block;">
+      {' '}
+      Next
+    </button>
+  ),
   onEdge: null,
   onInit: null,
   onLazyLoadError: null,
@@ -30,7 +39,16 @@ export default {
   pauseOnDotsHover: false,
   pauseOnFocus: false,
   pauseOnHover: true,
-  prevArrow: null,
+  prevArrow: (h, options) => (
+    <button
+      key={options.key}
+      type="button"
+      data-role="none"
+      style="display: block;">
+      {' '}
+      Previous
+    </button>
+  ),
   responsive: null,
   rows: 1,
   rtl: false,
