@@ -162,9 +162,6 @@ export default {
     },
   },
   render() {
-    let prevArrow = <SliderArrow />
-    let nextArrow = <SliderArrow />
-
     const className = {
       'slick-slider': true,
       'slick-initialized': true,
@@ -195,6 +192,15 @@ export default {
       dots = (
         <SliderDots {...{ props: dotProps }} {...{ nativeOn: dotNativeOn }} />
       )
+    }
+
+    let prevArrow, nextArrow
+    let arrowProps = extractObject(this.spec, PROP_KEYS.ARROW)
+    arrowProps.clickHandler = this.changeSlide
+
+    if (this.arrows) {
+      prevArrow = <SliderArrow {...{ props: arrowProps }} />
+      nextArrow = <SliderArrow {...{ props: arrowProps }} />
     }
 
     var verticalHeightStyle = null
