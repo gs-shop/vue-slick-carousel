@@ -6,7 +6,7 @@ import {
   setVNodeData,
   getStyle,
 } from '@/vNodeUtils'
-import { canUseDOM } from '@/innerSliderUtils'
+import { canUseDOM, filterUndefined } from '@/innerSliderUtils'
 import defaultProps from '@/defaultProps'
 import InnerSlider from '@/InnerSlider'
 
@@ -26,13 +26,7 @@ export default {
   },
   computed: {
     settings() {
-      // filter undefined props
-      const props = Object.keys(this.$props)
-        .filter(key => this.$props[key] !== undefined)
-        .reduce((obj, key) => {
-          obj[key] = this.$props[key]
-          return obj
-        }, {})
+      const props = filterUndefined(this.$props)
       let settings
       let newProps
 
@@ -225,7 +219,7 @@ export default {
     }
 
     return (
-      <InnerSlider ref="innerSlider" settings={settings}>
+      <InnerSlider ref="innerSlider" {...{ props: settings }}>
         {newChildren}
       </InnerSlider>
     )
