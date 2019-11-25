@@ -142,6 +142,9 @@ export default {
     keyHandler() {
       console.log('key')
     },
+    changeSlide() {
+      console.log('change slide')
+    },
     swipeStart() {
       console.log('swipe start')
     },
@@ -151,11 +154,16 @@ export default {
     swipeEnd() {
       console.log('swipe end')
     },
+    onDotsOver() {
+      console.log('dot over')
+    },
+    onDotsLeave() {
+      console.log('dot leave')
+    },
   },
   render() {
     let prevArrow = <SliderArrow />
     let nextArrow = <SliderArrow />
-    let dots = <SliderDots />
 
     const className = {
       'slick-slider': true,
@@ -173,6 +181,22 @@ export default {
       mouseover: pauseOnHover ? this.onTrackOver : undefined,
       mouseleave: pauseOnHover ? this.onTrackLeave : undefined,
     })
+
+    let dots
+    if (this.dots === true && this.slideCount >= this.slidesToShow) {
+      let dotProps = extractObject(this.spec, PROP_KEYS.DOT)
+      dotProps.clickHandler = this.changeSlide
+      const { pauseOnDotsHover } = this
+      const dotNativeOn = filterUndefined({
+        mouseenter: pauseOnDotsHover ? this.onDotsLeave : undefined,
+        mouseover: pauseOnDotsHover ? this.onDotsOver : undefined,
+        mouseleave: pauseOnDotsHover ? this.onDotsLeave : undefined,
+      })
+      dots = (
+        <SliderDots {...{ props: dotProps }} {...{ nativeOn: dotNativeOn }} />
+      )
+    }
+
     var verticalHeightStyle = null
     if (this.vertical) {
       verticalHeightStyle = {
