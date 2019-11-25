@@ -1,3 +1,5 @@
+import debounce from 'lodash.debounce'
+
 import SliderTrack from '@/SliderTrack'
 import SliderArrow from '@/SliderArrow'
 import SliderDots from '@/SliderDots'
@@ -8,11 +10,17 @@ import initialState from '@/initialState'
 import { getStyle } from '@/vNodeUtils'
 import {
   PROP_KEYS,
+  canGoNext,
   extractObject,
   filterUndefined,
+  getHeight,
   getPreClones,
   getPostClones,
   getOnDemandLazySlides,
+  getTrackCSS,
+  getTrackLeft,
+  initializedState,
+  slideHandler,
 } from '@/innerSliderUtils'
 
 export default {
@@ -59,7 +67,69 @@ export default {
       }
     }
   },
+  mounted() {
+    let spec = {
+      listRef: this.$refs.list,
+      trackRef: this.$refs.track,
+      children: this.$slots.default,
+      ...this.$props,
+    }
+    this.updateState(spec, true)
+    this.adaptHeight()
+    if (this.autoPlay) {
+      this.autoPlay('update')
+    }
+    if (this.lazyLoad === 'progressive') {
+      this.lazyLoadTimer = setInterval(this.progressiveLazyLoad, 1000)
+    }
+    this.ro = new ResizeObserver(() => {
+      if (this.animating) {
+        this.onWindowResized(false) // don't set trackStyle hence don't break animation
+        this.callbackTimers.push(
+          setTimeout(() => this.onWindowResized(), this.speed),
+        )
+      } else {
+        this.onWindowResized()
+      }
+    })
+    this.ro.observe(this.$refs.list)
+    Array.prototype.forEach.call(
+      document.querySelectorAll('.slick-slide'),
+      slide => {
+        slide.onfocus = this.pauseOnFocus ? this.onSlideFocus : null
+        slide.onblur = this.pauseOnFocus ? this.onSlideBlur : null
+      },
+    )
+    // To support server-side rendering
+    if (!window) {
+      return
+    }
+    if (window.addEventListener) {
+      window.addEventListener('resize', this.onWindowResized)
+    } else {
+      window.attachEvent('onresize', this.onWindowResized)
+    }
+  },
   methods: {
+    updateState(spec, setTrackStyle) {
+      let updatedState = initializedState(spec)
+      spec = { ...spec, ...updatedState, slideIndex: updatedState.currentSlide }
+      let targetLeft = getTrackLeft(spec)
+      spec = { ...spec, left: targetLeft }
+      let trackStyle = getTrackCSS(spec)
+      if (setTrackStyle || this.slideCount !== spec.children.length) {
+        updatedState['trackStyle'] = trackStyle
+      }
+      Object.assign(this.$data, updatedState)
+    },
+    adaptHeight() {
+      if (this.adaptiveHeight && this.$refs.list) {
+        const elem = this.$refs.list.querySelector(
+          `[data-index="${this.currentSlide}"]`,
+        )
+        this.$refs.list.style.height = getHeight(elem) + 'px'
+      }
+    },
     slickPrev() {
       throw Error('not implemented yet')
     },
@@ -69,11 +139,63 @@ export default {
     slickGoTo() {
       throw Error('not implemented yet')
     },
-    pause() {
-      throw Error('not implemented yet')
+    pause(pauseType) {
+      if (this.autoplayTimer) {
+        clearInterval(this.autoplayTimer)
+        this.autoplayTimer = null
+      }
+      const autoplaying = this.autoplaying
+      if (pauseType === 'paused') {
+        this.autoplaying = 'paused'
+      } else if (pauseType === 'focused') {
+        if (autoplaying === 'hovered' || autoplaying === 'playing') {
+          this.autoplaying = 'focused'
+        }
+      } else {
+        // pauseType  is 'hovered'
+        if (autoplaying === 'playing') {
+          this.autoplaying = 'hovered'
+        }
+      }
     },
-    autoPlay() {
-      throw Error('not implemented yet')
+    play() {
+      var nextIndex
+      if (this.rtl) {
+        nextIndex = this.currentSlide - this.slidesToScroll
+      } else {
+        if (canGoNext({ ...this.props, ...this.state })) {
+          nextIndex = this.currentSlide + this.slidesToScroll
+        } else {
+          return false
+        }
+      }
+
+      this.slideHandler(nextIndex)
+    },
+    autoPlay(playType) {
+      if (this.autoplayTimer) {
+        clearInterval(this.autoplayTimer)
+      }
+      const autoplaying = this.autoplaying
+      if (playType === 'update') {
+        if (
+          autoplaying === 'hovered' ||
+          autoplaying === 'focused' ||
+          autoplaying === 'paused'
+        ) {
+          return
+        }
+      } else if (playType === 'leave') {
+        if (autoplaying === 'paused' || autoplaying === 'focused') {
+          return
+        }
+      } else if (playType === 'blur') {
+        if (autoplaying === 'paused' || autoplaying === 'hovered') {
+          return
+        }
+      }
+      this.autoplayTimer = setInterval(this.play, this.autoplaySpeed + 50)
+      this.autoplaying = 'playing'
     },
     ssrInit() {
       const preClones = getPreClones(this.spec)
@@ -126,6 +248,68 @@ export default {
           left: trackLeft + '%',
         }
       }
+    },
+    slideHandler(index, dontAnimate = false) {
+      const { asNavFor, beforeChange, onLazyLoad, speed, afterChange } = this
+      // capture currentslide before state is updated
+      const currentSlide = this.currentSlide
+      let { state, nextState } = slideHandler({
+        index,
+        ...this.props,
+        ...this.state,
+        trackRef: this.track,
+        useCSS: this.useCSS && !dontAnimate,
+      })
+      if (!state) return
+      beforeChange && beforeChange(currentSlide, state.currentSlide)
+      let slidesToLoad = state.lazyLoadedList.filter(
+        value => this.lazyLoadedList.indexOf(value) < 0,
+      )
+      onLazyLoad && slidesToLoad.length > 0 && onLazyLoad(slidesToLoad)
+      Object.assign(this.$data, state)
+      asNavFor && asNavFor.innerSlider.slideHandler(index)
+      if (!nextState) return
+      this.animationEndCallback = setTimeout(() => {
+        const { animating, ...firstBatch } = nextState
+        Object.assign(this.$data, firstBatch)
+        this.callbackTimers.push(
+          setTimeout(() => {
+            this.animating = animating
+          }, 10),
+        )
+        afterChange && afterChange(state.currentSlide)
+        // delete this.animationEndCallback
+        this.animationEndCallback = null
+      }, speed)
+    },
+    onWindowResized(setTrackStyle) {
+      if (this.debouncedResize) this.debouncedResize.cancel()
+      this.debouncedResize = debounce(
+        () => this.resizeWindow(setTrackStyle),
+        50,
+      )
+      this.debouncedResize()
+    },
+    resizeWindow(setTrackStyle = true) {
+      if (!this.$refs.track.$el) return
+      let spec = {
+        listRef: this.$refs.list,
+        trackRef: this.$refs.track,
+        children: this.$slots.default,
+        ...this.$props,
+        ...this.$data,
+      }
+      this.updateState(spec, setTrackStyle)
+      if (this.autoplay) {
+        this.autoPlay('update')
+      } else {
+        this.pause('paused')
+      }
+      // animating state should be cleared while resizing, otherwise autoplay stops working
+      this.animating = false
+      clearTimeout(this.animationEndCallback)
+      // delete this.animationEndCallback
+      this.animationEndCallback = null
     },
     onTrackOver() {
       console.log('on track over')
