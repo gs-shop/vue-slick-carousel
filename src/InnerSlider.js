@@ -199,8 +199,12 @@ export default {
     arrowProps.clickHandler = this.changeSlide
 
     if (this.arrows) {
-      prevArrow = <SliderArrow {...{ props: arrowProps }} />
-      nextArrow = <SliderArrow {...{ props: arrowProps }} />
+      prevArrow = (
+        <SliderArrow {...{ props: { ...arrowProps, type: 'previous' } }} />
+      )
+      nextArrow = (
+        <SliderArrow {...{ props: { ...arrowProps, type: 'next' } }} />
+      )
     }
 
     var verticalHeightStyle = null
