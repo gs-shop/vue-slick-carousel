@@ -5,6 +5,7 @@ postcss.config.js
 jest.config.js
 cypress.json
 babel.config.js
+yarn-error.log
 .prettierrc
 .eslintrc.js
 .browserslistrc
