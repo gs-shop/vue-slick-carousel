@@ -46,17 +46,19 @@ const reactServerRender = (itemHtmls = [], settings = {}) => {
   return new JSDOM(renderedString).window.document.body.firstElementChild
 }
 
+const normElementAttr = element => {
+  const { cssText } = element.style
+  element.style.cssText =
+    cssText && cssText.substr(-1) !== ';' ? cssText + ';`' : cssText
+  element.className = [...element.classList].sort().join(' ')
+}
 const prettify = element => {
   // remove react, vue specific attrs
   element.removeAttribute('data-server-rendered')
   element.removeAttribute('data-reactroot')
 
-  // pad ending semicolon to style
-  element.querySelectorAll('*').forEach(el => {
-    const { cssText } = el.style
-    el.style.cssText =
-      cssText && cssText.substr(-1) !== ';' ? cssText + ';`' : cssText
-  })
+  normElementAttr(element)
+  element.querySelectorAll('*').forEach(el => normElementAttr(el))
 
   const options = prettyDiff.options
   options.source = stripHtmlComments(element.outerHTML)
