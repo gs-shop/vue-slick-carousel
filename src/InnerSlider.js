@@ -11,6 +11,7 @@ import { getStyle } from '@/vNodeUtils'
 import {
   PROP_KEYS,
   canGoNext,
+  changeSlide,
   extractObject,
   filterUndefined,
   getHeight,
@@ -20,7 +21,11 @@ import {
   getTrackCSS,
   getTrackLeft,
   initializedState,
+  keyHandler,
   slideHandler,
+  swipeEnd,
+  swipeMove,
+  swipeStart,
 } from '@/innerSliderUtils'
 
 export default {
@@ -150,73 +155,6 @@ export default {
         this.$refs.list.style.height = getHeight(elem) + 'px'
       }
     },
-    slickPrev() {
-      throw Error('not implemented yet')
-    },
-    slickNext() {
-      throw Error('not implemented yet')
-    },
-    slickGoTo() {
-      throw Error('not implemented yet')
-    },
-    pause(pauseType) {
-      if (this.autoplayTimer) {
-        clearInterval(this.autoplayTimer)
-        this.autoplayTimer = null
-      }
-      const autoplaying = this.autoplaying
-      if (pauseType === 'paused') {
-        this.autoplaying = 'paused'
-      } else if (pauseType === 'focused') {
-        if (autoplaying === 'hovered' || autoplaying === 'playing') {
-          this.autoplaying = 'focused'
-        }
-      } else {
-        // pauseType  is 'hovered'
-        if (autoplaying === 'playing') {
-          this.autoplaying = 'hovered'
-        }
-      }
-    },
-    play() {
-      var nextIndex
-      if (this.rtl) {
-        nextIndex = this.currentSlide - this.slidesToScroll
-      } else {
-        if (canGoNext({ ...this.props, ...this.state })) {
-          nextIndex = this.currentSlide + this.slidesToScroll
-        } else {
-          return false
-        }
-      }
-
-      this.slideHandler(nextIndex)
-    },
-    autoPlay(playType) {
-      if (this.autoplayTimer) {
-        clearInterval(this.autoplayTimer)
-      }
-      const autoplaying = this.autoplaying
-      if (playType === 'update') {
-        if (
-          autoplaying === 'hovered' ||
-          autoplaying === 'focused' ||
-          autoplaying === 'paused'
-        ) {
-          return
-        }
-      } else if (playType === 'leave') {
-        if (autoplaying === 'paused' || autoplaying === 'focused') {
-          return
-        }
-      } else if (playType === 'blur') {
-        if (autoplaying === 'paused' || autoplaying === 'hovered') {
-          return
-        }
-      }
-      this.autoplayTimer = setInterval(this.play, this.autoplaySpeed + 50)
-      this.autoplaying = 'playing'
-    },
     ssrInit() {
       const preClones = getPreClones(this.spec)
       const postClones = getPostClones(this.spec)
@@ -275,9 +213,9 @@ export default {
       const currentSlide = this.currentSlide
       let { state, nextState } = slideHandler({
         index,
-        ...this.props,
-        ...this.state,
-        trackRef: this.track,
+        ...this.$props,
+        ...this.$data,
+        trackRef: this.$refs.track,
         useCSS: this.useCSS && !dontAnimate,
       })
       if (!state) return
@@ -299,7 +237,7 @@ export default {
         )
         afterChange && afterChange(state.currentSlide)
         // delete this.animationEndCallback
-        this.animationEndCallback = null
+        this.animationEndCallback = undefined
       }, speed)
     },
     onWindowResized(setTrackStyle) {
@@ -329,40 +267,250 @@ export default {
       this.animating = false
       clearTimeout(this.animationEndCallback)
       // delete this.animationEndCallback
-      this.animationEndCallback = null
+      this.animationEndCallback = undefined
     },
-    onTrackOver() {
-      console.log('on track over')
+    checkImagesLoad() {
+      let images = document.querySelectorAll('.slick-slide img')
+      let imagesCount = images.length,
+        loadedCount = 0
+      Array.prototype.forEach.call(images, image => {
+        const handler = () =>
+          ++loadedCount && loadedCount >= imagesCount && this.onWindowResized()
+        if (!image.onclick) {
+          image.onclick = () => image.parentNode.focus()
+        } else {
+          const prevClickHandler = image.onclick
+          image.onclick = () => {
+            prevClickHandler()
+            image.parentNode.focus()
+          }
+        }
+        if (!image.onload) {
+          if (this.lazyLoad) {
+            image.onload = () => {
+              this.adaptHeight()
+              this.callbackTimers.push(
+                setTimeout(this.onWindowResized, this.props.speed),
+              )
+            }
+          } else {
+            image.onload = handler
+            image.onerror = () => {
+              handler()
+              this.onLazyLoadError && this.onLazyLoadError()
+            }
+          }
+        }
+      })
     },
-    onTrackLeave() {
-      console.log('on track leave')
+    progressiveLazyLoad() {
+      let slidesToLoad = []
+      const spec = { ...this.$props, ...this.$data }
+      for (
+        let index = this.currentSlide;
+        index < this.slideCount + getPostClones(spec);
+        index++
+      ) {
+        if (this.lazyLoadedList.indexOf(index) < 0) {
+          slidesToLoad.push(index)
+          break
+        }
+      }
+      for (
+        let index = this.currentSlide - 1;
+        index >= -getPreClones(spec);
+        index--
+      ) {
+        if (this.lazyLoadedList.indexOf(index) < 0) {
+          slidesToLoad.push(index)
+          break
+        }
+      }
+      if (slidesToLoad.length > 0) {
+        this.lazyLoadedList = this.lazyLoadedList.concat(slidesToLoad)
+        if (this.onLazyLoad) {
+          this.onLazyLoad(slidesToLoad)
+        }
+      } else {
+        if (this.lazyLoadTimer) {
+          clearInterval(this.lazyLoadTimer)
+          // delete this.lazyLoadTimer;
+          this.lazyLoadTimer = undefined
+        }
+      }
     },
-    selectHandler() {
-      console.log('select handler')
+    clickHandler(e) {
+      if (this.clickable === false) {
+        e.stopPropagation()
+        e.preventDefault()
+      }
+      this.clickable = true
     },
-    clickHandler() {
-      console.log('click')
+    keyHandler(e) {
+      let dir = keyHandler(e, this.accessibility, this.rtl)
+      dir !== '' && this.changeSlide({ message: dir })
     },
-    keyHandler() {
-      console.log('key')
+    changeSlide(options, dontAnimate = false) {
+      const spec = { ...this.$props, ...this.$data }
+      let targetSlide = changeSlide(spec, options)
+      if (targetSlide !== 0 && !targetSlide) return
+      if (dontAnimate === true) {
+        this.slideHandler(targetSlide, dontAnimate)
+      } else {
+        this.slideHandler(targetSlide)
+      }
     },
-    changeSlide() {
-      console.log('change slide')
+    swipeStart(e) {
+      if (this.verticalSwiping) {
+        this.disableBodyScroll()
+      }
+      let state = swipeStart(e, this.swipe, this.draggable)
+      if (state !== '') {
+        Object.assign(this.$data, state)
+      }
     },
-    swipeStart() {
-      console.log('swipe start')
+    swipeMove(e) {
+      let state = swipeMove(e, {
+        ...this.$props,
+        ...this.$data,
+        trackRef: this.$refs.track,
+        listRef: this.$refs.list,
+        slideIndex: this.currentSlide,
+      })
+      if (!state) return
+      if (state['swiping']) {
+        this.clickable = false
+      }
+      Object.assign(this.$data, state)
     },
-    swipeMove() {
-      console.log('swipe move')
+    swipeEnd(e) {
+      let state = swipeEnd(e, {
+        ...this.$props,
+        ...this.$data,
+        trackRef: this.$refs.track,
+        listRef: this.$refs.list,
+        slideIndex: this.currentSlide,
+      })
+      if (!state) return
+      let triggerSlideHandler = state['triggerSlideHandler']
+      // delete state["triggerSlideHandler"];
+      this.triggerSlideHandler = undefined
+      Object.assign(this.$data, state)
+      if (triggerSlideHandler === undefined) return
+      this.slideHandler(triggerSlideHandler)
+      if (this.verticalSwiping) {
+        this.enableBodyScroll()
+      }
     },
-    swipeEnd() {
-      console.log('swipe end')
+    slickPrev() {
+      // this and fellow methods are wrapped in setTimeout
+      // to make sure initialize setState has happened before
+      // any of such methods are called
+      this.callbackTimers.push(
+        setTimeout(() => this.changeSlide({ message: 'previous' }), 0),
+      )
+    },
+    slickNext() {
+      this.callbackTimers.push(
+        setTimeout(() => this.changeSlide({ message: 'next' }), 0),
+      )
+    },
+    slickGoTo(slide, dontAnimate = false) {
+      slide = Number(slide)
+      if (isNaN(slide)) return ''
+      this.callbackTimers.push(
+        setTimeout(
+          () =>
+            this.changeSlide(
+              {
+                message: 'index',
+                index: slide,
+                currentSlide: this.currentSlide,
+              },
+              dontAnimate,
+            ),
+          0,
+        ),
+      )
+    },
+    play() {
+      var nextIndex
+      if (this.rtl) {
+        nextIndex = this.currentSlide - this.slidesToScroll
+      } else {
+        if (canGoNext({ ...this.$props, ...this.$data })) {
+          nextIndex = this.currentSlide + this.slidesToScroll
+        } else {
+          return false
+        }
+      }
+
+      this.slideHandler(nextIndex)
+    },
+    autoPlay(playType) {
+      if (this.autoplayTimer) {
+        clearInterval(this.autoplayTimer)
+      }
+      const autoplaying = this.autoplaying
+      if (playType === 'update') {
+        if (
+          autoplaying === 'hovered' ||
+          autoplaying === 'focused' ||
+          autoplaying === 'paused'
+        ) {
+          return
+        }
+      } else if (playType === 'leave') {
+        if (autoplaying === 'paused' || autoplaying === 'focused') {
+          return
+        }
+      } else if (playType === 'blur') {
+        if (autoplaying === 'paused' || autoplaying === 'hovered') {
+          return
+        }
+      }
+      this.autoplayTimer = setInterval(this.play, this.autoplaySpeed + 50)
+      this.autoplaying = 'playing'
+    },
+    pause(pauseType) {
+      if (this.autoplayTimer) {
+        clearInterval(this.autoplayTimer)
+        this.autoplayTimer = null
+      }
+      const autoplaying = this.autoplaying
+      if (pauseType === 'paused') {
+        this.autoplaying = 'paused'
+      } else if (pauseType === 'focused') {
+        if (autoplaying === 'hovered' || autoplaying === 'playing') {
+          this.autoplaying = 'focused'
+        }
+      } else {
+        // pauseType  is 'hovered'
+        if (autoplaying === 'playing') {
+          this.autoplaying = 'hovered'
+        }
+      }
     },
     onDotsOver() {
-      console.log('dot over')
+      this.autoplay && this.pause('hovered')
     },
     onDotsLeave() {
-      console.log('dot leave')
+      this.autoplay && this.autoplaying === 'hovered' && this.autoPlay('leave')
+    },
+    onTrackOver() {
+      this.autoplay && this.pause('hovered')
+    },
+    onTrackLeave() {
+      this.autoplay && this.autoplaying === 'hovered' && this.autoPlay('leave')
+    },
+    onSlideFocus() {
+      this.autoplay && this.pause('focused')
+    },
+    onSlideBlur() {
+      this.autoplay && this.autoplaying === 'focused' && this.autoPlay('blur')
+    },
+    selectHandler(options) {
+      this.changeSlide(options)
     },
   },
   render() {

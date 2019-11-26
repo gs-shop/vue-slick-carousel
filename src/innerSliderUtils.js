@@ -22,6 +22,66 @@ export const getPostClones = spec => {
   return spec.slideCount
 }
 
+export const keyHandler = (e, accessibility, rtl) => {
+  if (e.target.tagName.match('TEXTAREA|INPUT|SELECT') || !accessibility)
+    return ''
+  if (e.keyCode === 37) return rtl ? 'next' : 'previous'
+  if (e.keyCode === 39) return rtl ? 'previous' : 'next'
+  return ''
+}
+
+export const siblingDirection = spec => {
+  if (spec.targetSlide > spec.currentSlide) {
+    if (spec.targetSlide > spec.currentSlide + slidesOnRight(spec)) {
+      return 'left'
+    }
+    return 'right'
+  } else {
+    if (spec.targetSlide < spec.currentSlide - slidesOnLeft(spec)) {
+      return 'right'
+    }
+    return 'left'
+  }
+}
+
+export const slidesOnRight = ({
+  slidesToShow,
+  centerMode,
+  rtl,
+  centerPadding,
+}) => {
+  // returns no of slides on the right of active slide
+  if (centerMode) {
+    let right = (slidesToShow - 1) / 2 + 1
+    if (parseInt(centerPadding) > 0) right += 1
+    if (rtl && slidesToShow % 2 === 0) right += 1
+    return right
+  }
+  if (rtl) {
+    return 0
+  }
+  return slidesToShow - 1
+}
+
+export const slidesOnLeft = ({
+  slidesToShow,
+  centerMode,
+  rtl,
+  centerPadding,
+}) => {
+  // returns no of slides on the left of active slide
+  if (centerMode) {
+    let left = (slidesToShow - 1) / 2 + 1
+    if (parseInt(centerPadding) > 0) left += 1
+    if (!rtl && slidesToShow % 2 === 0) left += 1
+    return left
+  }
+  if (rtl) {
+    return slidesToShow - 1
+  }
+  return 0
+}
+
 // startIndex that needs to be present
 export const lazyStartIndex = spec => spec.currentSlide - lazySlidesOnLeft(spec)
 export const lazyEndIndex = spec => spec.currentSlide + lazySlidesOnRight(spec)
@@ -49,6 +109,62 @@ export const getOnDemandLazySlides = spec => {
   return onDemandSlides
 }
 
+export const changeSlide = (spec, options) => {
+  var indexOffset, previousInt, slideOffset, unevenOffset, targetSlide
+  const {
+    slidesToScroll,
+    slidesToShow,
+    slideCount,
+    currentSlide,
+    lazyLoad,
+    infinite,
+  } = spec
+  unevenOffset = slideCount % slidesToScroll !== 0
+  indexOffset = unevenOffset ? 0 : (slideCount - currentSlide) % slidesToScroll
+
+  if (options.message === 'previous') {
+    slideOffset =
+      indexOffset === 0 ? slidesToScroll : slidesToShow - indexOffset
+    targetSlide = currentSlide - slideOffset
+    if (lazyLoad && !infinite) {
+      previousInt = currentSlide - slideOffset
+      targetSlide = previousInt === -1 ? slideCount - 1 : previousInt
+    }
+  } else if (options.message === 'next') {
+    slideOffset = indexOffset === 0 ? slidesToScroll : indexOffset
+    targetSlide = currentSlide + slideOffset
+    if (lazyLoad && !infinite) {
+      targetSlide = ((currentSlide + slidesToScroll) % slideCount) + indexOffset
+    }
+  } else if (options.message === 'dots') {
+    // Click on dots
+    targetSlide = options.index * options.slidesToScroll
+    if (targetSlide === options.currentSlide) {
+      return null
+    }
+  } else if (options.message === 'children') {
+    // Click on the slides
+    targetSlide = options.index
+    if (targetSlide === options.currentSlide) {
+      return null
+    }
+    if (infinite) {
+      let direction = siblingDirection({ ...spec, targetSlide })
+      if (targetSlide > options.currentSlide && direction === 'left') {
+        targetSlide = targetSlide - slideCount
+      } else if (targetSlide < options.currentSlide && direction === 'right') {
+        targetSlide = targetSlide + slideCount
+      }
+    }
+  } else if (options.message === 'index') {
+    targetSlide = Number(options.index)
+    if (targetSlide === options.currentSlide) {
+      return null
+    }
+  }
+  return targetSlide
+}
+
 export const filterUndefined = props =>
   Object.keys(props)
     .filter(key => props[key] !== undefined)
@@ -56,6 +172,255 @@ export const filterUndefined = props =>
       obj[key] = props[key]
       return obj
     }, {})
+
+export const swipeStart = (e, swipe, draggable) => {
+  e.target.tagName === 'IMG' && e.preventDefault()
+  if (!swipe || (!draggable && e.type.indexOf('mouse') !== -1)) return ''
+  return {
+    dragging: true,
+    touchObject: {
+      startX: e.touches ? e.touches[0].pageX : e.clientX,
+      startY: e.touches ? e.touches[0].pageY : e.clientY,
+      curX: e.touches ? e.touches[0].pageX : e.clientX,
+      curY: e.touches ? e.touches[0].pageY : e.clientY,
+    },
+  }
+}
+export const swipeMove = (e, spec) => {
+  // spec also contains, trackRef and slideIndex
+  const {
+    scrolling,
+    animating,
+    vertical,
+    swipeToSlide,
+    verticalSwiping,
+    rtl,
+    currentSlide,
+    edgeFriction,
+    edgeDragged,
+    onEdge,
+    swiped,
+    swiping,
+    slideCount,
+    slidesToScroll,
+    infinite,
+    touchObject,
+    swipeEvent,
+    listHeight,
+    listWidth,
+  } = spec
+  if (scrolling) return
+  if (animating) return e.preventDefault()
+  if (vertical && swipeToSlide && verticalSwiping) e.preventDefault()
+  let swipeLeft,
+    state = {}
+  let curLeft = getTrackLeft(spec)
+  touchObject.curX = e.touches ? e.touches[0].pageX : e.clientX
+  touchObject.curY = e.touches ? e.touches[0].pageY : e.clientY
+  touchObject.swipeLength = Math.round(
+    Math.sqrt(Math.pow(touchObject.curX - touchObject.startX, 2)),
+  )
+  let verticalSwipeLength = Math.round(
+    Math.sqrt(Math.pow(touchObject.curY - touchObject.startY, 2)),
+  )
+  if (!verticalSwiping && !swiping && verticalSwipeLength > 10) {
+    return { scrolling: true }
+  }
+  if (verticalSwiping) touchObject.swipeLength = verticalSwipeLength
+  let positionOffset =
+    (!rtl ? 1 : -1) * (touchObject.curX > touchObject.startX ? 1 : -1)
+  if (verticalSwiping)
+    positionOffset = touchObject.curY > touchObject.startY ? 1 : -1
+
+  let dotCount = Math.ceil(slideCount / slidesToScroll)
+  let swipeDirection = getSwipeDirection(spec.touchObject, verticalSwiping)
+  let touchSwipeLength = touchObject.swipeLength
+  if (!infinite) {
+    if (
+      (currentSlide === 0 && swipeDirection === 'right') ||
+      (currentSlide + 1 >= dotCount && swipeDirection === 'left') ||
+      (!canGoNext(spec) && swipeDirection === 'left')
+    ) {
+      touchSwipeLength = touchObject.swipeLength * edgeFriction
+      if (edgeDragged === false && onEdge) {
+        onEdge(swipeDirection)
+        state['edgeDragged'] = true
+      }
+    }
+  }
+  if (!swiped && swipeEvent) {
+    swipeEvent(swipeDirection)
+    state['swiped'] = true
+  }
+  if (!vertical) {
+    if (!rtl) {
+      swipeLeft = curLeft + touchSwipeLength * positionOffset
+    } else {
+      swipeLeft = curLeft - touchSwipeLength * positionOffset
+    }
+  } else {
+    swipeLeft =
+      curLeft + touchSwipeLength * (listHeight / listWidth) * positionOffset
+  }
+  if (verticalSwiping) {
+    swipeLeft = curLeft + touchSwipeLength * positionOffset
+  }
+  state = {
+    ...state,
+    touchObject,
+    swipeLeft,
+    trackStyle: getTrackCSS({ ...spec, left: swipeLeft }),
+  }
+  if (
+    Math.abs(touchObject.curX - touchObject.startX) <
+    Math.abs(touchObject.curY - touchObject.startY) * 0.8
+  ) {
+    return state
+  }
+  if (touchObject.swipeLength > 10) {
+    state['swiping'] = true
+    e.preventDefault()
+  }
+  return state
+}
+export const swipeEnd = (e, spec) => {
+  const {
+    dragging,
+    swipe,
+    touchObject,
+    listWidth,
+    touchThreshold,
+    verticalSwiping,
+    listHeight,
+    currentSlide,
+    swipeToSlide,
+    scrolling,
+    onSwipe,
+  } = spec
+  if (!dragging) {
+    if (swipe) e.preventDefault()
+    return {}
+  }
+  let minSwipe = verticalSwiping
+    ? listHeight / touchThreshold
+    : listWidth / touchThreshold
+  let swipeDirection = getSwipeDirection(touchObject, verticalSwiping)
+  // reset the state of touch related state variables.
+  let state = {
+    dragging: false,
+    edgeDragged: false,
+    scrolling: false,
+    swiping: false,
+    swiped: false,
+    swipeLeft: null,
+    touchObject: {},
+  }
+  if (scrolling) {
+    return state
+  }
+  if (!touchObject.swipeLength) {
+    return state
+  }
+  if (touchObject.swipeLength > minSwipe) {
+    e.preventDefault()
+    if (onSwipe) {
+      onSwipe(swipeDirection)
+    }
+    let slideCount, newSlide
+    switch (swipeDirection) {
+      case 'left':
+      case 'up':
+        newSlide = currentSlide + getSlideCount(spec)
+        slideCount = swipeToSlide ? checkNavigable(spec, newSlide) : newSlide
+        state['currentDirection'] = 0
+        break
+      case 'right':
+      case 'down':
+        newSlide = currentSlide - getSlideCount(spec)
+        slideCount = swipeToSlide ? checkNavigable(spec, newSlide) : newSlide
+        state['currentDirection'] = 1
+        break
+      default:
+        slideCount = currentSlide
+    }
+    state['triggerSlideHandler'] = slideCount
+  } else {
+    // Adjust the track back to it's original position.
+    let currentLeft = getTrackLeft(spec)
+    state['trackStyle'] = getTrackAnimateCSS({ ...spec, left: currentLeft })
+  }
+  return state
+}
+export const getNavigableIndexes = spec => {
+  let max = spec.infinite ? spec.slideCount * 2 : spec.slideCount
+  let breakpoint = spec.infinite ? spec.slidesToShow * -1 : 0
+  let counter = spec.infinite ? spec.slidesToShow * -1 : 0
+  let indexes = []
+  while (breakpoint < max) {
+    indexes.push(breakpoint)
+    breakpoint = counter + spec.slidesToScroll
+    counter += Math.min(spec.slidesToScroll, spec.slidesToShow)
+  }
+  return indexes
+}
+export const checkNavigable = (spec, index) => {
+  const navigables = getNavigableIndexes(spec)
+  let prevNavigable = 0
+  if (index > navigables[navigables.length - 1]) {
+    index = navigables[navigables.length - 1]
+  } else {
+    for (let n in navigables) {
+      if (index < navigables[n]) {
+        index = prevNavigable
+        break
+      }
+      prevNavigable = navigables[n]
+    }
+  }
+  return index
+}
+
+export const getSlideCount = spec => {
+  const centerOffset = spec.centerMode
+    ? spec.slideWidth * Math.floor(spec.slidesToShow / 2)
+    : 0
+  if (spec.swipeToSlide) {
+    let swipedSlide
+    const slickList = spec.listRef
+    const slides = slickList.querySelectorAll('.slick-slide')
+    Array.from(slides).every(slide => {
+      if (!spec.vertical) {
+        if (
+          slide.offsetLeft - centerOffset + getWidth(slide) / 2 >
+          spec.swipeLeft * -1
+        ) {
+          swipedSlide = slide
+          return false
+        }
+      } else {
+        if (slide.offsetTop + getHeight(slide) / 2 > spec.swipeLeft * -1) {
+          swipedSlide = slide
+          return false
+        }
+      }
+
+      return true
+    })
+
+    if (!swipedSlide) {
+      return 0
+    }
+    const currentIndex =
+      spec.rtl === true
+        ? spec.slideCount - spec.currentSlide
+        : spec.currentSlide
+    const slidesTraversed =
+      Math.abs(swipedSlide.dataset.index - currentIndex) || 1
+    return slidesTraversed
+  } else {
+    return spec.slidesToScroll
+  }
+}
 
 // given an object and a list of keys, return new object with given keys
 export const extractObject = (spec, keys) => {
@@ -221,6 +586,35 @@ export const slideHandler = spec => {
 // get width of an element
 export const getWidth = elem => (elem && elem.offsetWidth) || 0
 export const getHeight = elem => (elem && elem.offsetHeight) || 0
+
+export const getSwipeDirection = (touchObject, verticalSwiping = false) => {
+  var xDist, yDist, r, swipeAngle
+  xDist = touchObject.startX - touchObject.curX
+  yDist = touchObject.startY - touchObject.curY
+  r = Math.atan2(yDist, xDist)
+  swipeAngle = Math.round((r * 180) / Math.PI)
+  if (swipeAngle < 0) {
+    swipeAngle = 360 - Math.abs(swipeAngle)
+  }
+  if (
+    (swipeAngle <= 45 && swipeAngle >= 0) ||
+    (swipeAngle <= 360 && swipeAngle >= 315)
+  ) {
+    return 'left'
+  }
+  if (swipeAngle >= 135 && swipeAngle <= 225) {
+    return 'right'
+  }
+  if (verticalSwiping === true) {
+    if (swipeAngle >= 35 && swipeAngle <= 135) {
+      return 'up'
+    } else {
+      return 'down'
+    }
+  }
+
+  return 'vertical'
+}
 
 // get initialized state
 export const initializedState = spec => {
