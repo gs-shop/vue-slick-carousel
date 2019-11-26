@@ -214,7 +214,7 @@ export default {
   render(h) {
     const slides = renderSlides(h, this.$props, this.$slots.default)
     return (
-      <div className="slick-track" style={this.trackStyle}>
+      <div class="slick-track" style={this.trackStyle}>
         {slides}
       </div>
     )
