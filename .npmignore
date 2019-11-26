@@ -1,0 +1,10 @@
+src
+tests
+vue.config.js
+postcss.config.js
+jest.config.js
+cypress.json
+babel.config.js
+.prettierrc
+.eslintrc.js
+.browserslistrc
