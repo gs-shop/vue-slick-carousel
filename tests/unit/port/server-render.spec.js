@@ -71,7 +71,18 @@ const prettify = element => {
 }
 
 const settingsModel = {
+  accessibility: fc.boolean(), // Enable tabbing and arrow key navigation
+  adaptiveHeight: fc.boolean(), // Adjust the slide's height automatically
+  // afterChange: () => {}, // Index change callback. `index => ...` // to be replaced
+  // appendDots: () => {}, // Custom dots templates. Works same as customPaging // to be replaced
   arrows: fc.boolean(), // Prev/Next Arrows
+  // asNavFor: undefined, // provide ref to another slider and sync it with current slider // to be replaced
+  // autoplaySpeed: 3000, // Delay between each auto scroll (in milliseconds) // not for test
+  autoplay: fc.boolean(), // auto play
+  // beforeChange: null, // Index change callback. `(oldIndex, newIndex) => ...` // not for test
+  centerMode: fc.boolean(), // Center current slide
+  centerPadding: fc.constantFrom(['100px', '150px']), // center padding
+  className: fc.constant('custom-slick'), // CSS class for inner slider div
 }
 
 describe('carousel', () => {

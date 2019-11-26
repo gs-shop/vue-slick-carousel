@@ -585,6 +585,7 @@ export default {
       'slick-slider': true,
       'slick-initialized': true,
       'slick-vertical': this.vertical,
+      [this.className]: true,
     }
     let trackProps = extractObject(this.spec, PROP_KEYS.TRACK)
     trackProps = filterUndefined({
