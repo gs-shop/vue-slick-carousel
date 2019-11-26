@@ -780,7 +780,7 @@ export const getTotalSlides = spec =>
 export const checkSpecKeys = (spec, keysArray) =>
   keysArray.reduce((value, key) => value && spec.hasOwnProperty(key), true)
     ? null
-    : console.error('Keys Missing:', spec)
+    : console.error('Keys Missing:', spec) // eslint-disable-line no-console
 
 export const getTrackCSS = spec => {
   checkSpecKeys(spec, [

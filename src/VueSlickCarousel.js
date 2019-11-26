@@ -52,6 +52,7 @@ export default {
           settings.slidesToScroll > 1 &&
           process.env.NODE_ENV !== 'production'
         ) {
+          // eslint-disable-next-line no-console
           console.warn(
             `slidesToScroll should be equal to 1 in centerMode, you are using ${settings.slidesToScroll}`,
           )
@@ -64,6 +65,7 @@ export default {
           settings.slidesToShow > 1 &&
           process.env.NODE_ENV !== 'production'
         ) {
+          // eslint-disable-next-line no-console
           console.warn(
             `slidesToShow should be equal to 1 when fade is true, you're using ${settings.slidesToShow}`,
           )
@@ -72,6 +74,7 @@ export default {
           settings.slidesToScroll > 1 &&
           process.env.NODE_ENV !== 'production'
         ) {
+          // eslint-disable-next-line no-console
           console.warn(
             `slidesToScroll should be equal to 1 when fade is true, you're using ${settings.slidesToScroll}`,
           )
@@ -85,6 +88,7 @@ export default {
         settings.variableWidth &&
         (settings.rows > 1 || settings.slidesPerRow > 1)
       ) {
+        // eslint-disable-next-line no-console
         console.warn(
           `variableWidth is not supported in case of rows > 1 or slidesPerRow > 1`,
         )
