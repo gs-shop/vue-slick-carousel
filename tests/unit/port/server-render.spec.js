@@ -13,14 +13,19 @@ import stripHtmlComments from 'strip-html-comments'
 const vueRenderer = createRenderer({
   runInNewContext: true,
 })
-
-const vueServerRender = async (itemHtmls = []) => {
+const vueServerRender = async (itemHtmls = [], settings = {}) => {
   const renderedString = await vueRenderer.renderToString(
     new Vue({
-      template: `<vue-slick-carousel>${itemHtmls.join(
+      template: `<vue-slick-carousel v-bind="settings">${itemHtmls.join(
         '',
       )}</vue-slick-carousel>`,
       components: { VueSlickCarousel },
+      props: {
+        settings: {
+          type: Object,
+          default: () => settings,
+        },
+      },
     }),
   )
 
@@ -29,11 +34,11 @@ const vueServerRender = async (itemHtmls = []) => {
 
 const reactParser = new Parser()
 
-const reactServerRender = (itemHtmls = []) => {
+const reactServerRender = (itemHtmls = [], settings = {}) => {
   const renderedString = ReactDOMServer.renderToString(
     React.createElement(
       ReactSlickCarousel,
-      null,
+      settings,
       reactParser.parse(itemHtmls.join('')),
     ),
   )
@@ -63,14 +68,19 @@ const prettify = element => {
   return prettyDiff()
 }
 
+const settingsModel = {
+  arrows: fc.boolean(), // Prev/Next Arrows
+}
+
 describe('carousel', () => {
   test('should render the same to react slick', () =>
     fc.assert(
       fc.asyncProperty(
         fc.array(fc.constantFrom('<div>item</div>'), 1, 100), // itemHtmls: array of lengths 1 ~ 100 with '<div>item</div>'
-        async itemHtmls => {
-          const vueCarousel = await vueServerRender(itemHtmls)
-          const reactCarousel = reactServerRender(itemHtmls)
+        fc.record(settingsModel, { withDeletedKeys: true }),
+        async (itemHtmls, settings) => {
+          const vueCarousel = await vueServerRender(itemHtmls, settings)
+          const reactCarousel = reactServerRender(itemHtmls, settings)
 
           expect(prettify(vueCarousel)).toEqual(prettify(reactCarousel))
         },
