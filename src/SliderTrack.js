@@ -124,7 +124,6 @@ const renderSlides = (h, spec, children) => {
       cloneSlide(child, {
         key: 'original' + getKey(child, index),
         class: slideClasses,
-        childStyle,
         style: {
           outline: 'none',
           ...childStyle,
