@@ -41,6 +41,12 @@ export default {
     return { ...initialState, currentSlide: this.initialSlide }
   },
   computed: {
+    update() {
+      // Read props that need to be listened for changes.
+      Object.keys(this.$props).forEach(key => this[key])
+      // Return a different value each time. `Date.now()` is not guaranteed to be unique.
+      return (this.updateSwitch = !this.updateSwitch)
+    },
     slideCount() {
       return this.$slots.default.length
     },
@@ -50,6 +56,11 @@ export default {
         ...this.$data,
         slideCount: this.slideCount,
       }
+    },
+  },
+  watch: {
+    update() {
+      this.propsUpdated(this.$props)
     },
   },
   created() {
@@ -115,6 +126,23 @@ export default {
       window.attachEvent('onresize', this.onWindowResized)
     }
   },
+  updated() {
+    this.checkImagesLoad()
+    this.onReInit && this.onReInit()
+    if (this.lazyLoad) {
+      let slidesToLoad = getOnDemandLazySlides({
+        ...this.$props,
+        ...this.$data,
+      })
+      if (slidesToLoad.length > 0) {
+        this.lazyLoadedList = this.lazyLoadedList.concat(slidesToLoad)
+        if (this.onLazyLoad) {
+          this.onLazyLoad(slidesToLoad)
+        }
+      }
+    }
+    this.adaptHeight()
+  },
   destroyed() {
     if (this.animationEndCallback) {
       clearTimeout(this.animationEndCallback)
@@ -136,6 +164,45 @@ export default {
     }
   },
   methods: {
+    propsUpdated(nextProps) {
+      let spec = {
+        listRef: this.$refs.list,
+        trackRef: this.$refs.track,
+        children: this.$slots.default,
+        ...nextProps,
+        ...this.$data,
+      }
+      let setTrackStyle = false
+      for (let key of Object.keys(this.$props)) {
+        if (!nextProps.hasOwnProperty(key)) {
+          setTrackStyle = true
+          break
+        }
+        if (
+          typeof nextProps[key] === 'object' ||
+          typeof nextProps[key] === 'function'
+        ) {
+          continue
+        }
+        if (nextProps[key] !== this.$props[key]) {
+          setTrackStyle = true
+          break
+        }
+      }
+      this.updateState(spec, setTrackStyle)
+      if (this.currentSlide >= this.slideCount) {
+        this.changeSlide({
+          message: 'index',
+          index: this.slideCount - nextProps.slidesToShow,
+          currentSlide: this.currentSlide,
+        })
+      }
+      if (nextProps.autoplay) {
+        this.autoPlay('update')
+      } else {
+        this.pause('paused')
+      }
+    },
     updateState(spec, setTrackStyle) {
       let updatedState = initializedState(spec)
       spec = { ...spec, ...updatedState, slideIndex: updatedState.currentSlide }
