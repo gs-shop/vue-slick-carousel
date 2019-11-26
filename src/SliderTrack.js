@@ -50,9 +50,9 @@ const getSlideStyle = spec => {
   if (spec.fade) {
     style.position = 'relative'
     if (spec.vertical) {
-      style.top = -spec.index * parseInt(spec.slideHeight)
+      style.top = `${-spec.index * parseInt(spec.slideHeight)}px`
     } else {
-      style.left = -spec.index * parseInt(spec.slideWidth)
+      style.left = `${-spec.index * parseInt(spec.slideWidth)}px`
     }
     style.opacity = spec.currentSlide === spec.index ? 1 : 0
     style.transition =

@@ -83,6 +83,12 @@ const settingsModel = {
   centerMode: fc.boolean(), // Center current slide
   centerPadding: fc.constantFrom(['100px', '150px']), // center padding
   className: fc.constant('custom-slick'), // CSS class for inner slider div
+  // customPaging: () => {}, // Custom paging templates. [Example](examples/CustomPaging.js) // not for test
+  dotsClass: fc.constant('custom-dots'), // CSS class for dots
+  dots: fc.boolean(), // dots
+  draggable: fc.boolean(), // Enable scrollable via dragging on desktop
+  easing: fc.constant('linear'), // easing
+  fade: fc.boolean(), // fade
 }
 
 describe('carousel', () => {
