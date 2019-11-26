@@ -142,7 +142,7 @@ const renderSlides = (h, spec, children) => {
         attrs: {
           tabIndex: '-1',
           'data-index': index,
-          'aria-hidden': !slideClasses['slick-active'],
+          'aria-hidden': `${!slideClasses['slick-active']}`,
         },
         childOnClickOptions,
         focusOnSelect: spec.focusOnSelect,
