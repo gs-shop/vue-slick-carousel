@@ -1,5 +1,6 @@
 src
 tests
+demo
 vue.config.js
 postcss.config.js
 jest.config.js
