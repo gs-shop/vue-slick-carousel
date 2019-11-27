@@ -175,6 +175,7 @@ export default {
   render() {
     const { settings } = this
     let children = this.$slots.default || []
+    children = children.filter(child => !!child.tag)
     let newChildren = []
     let currentWidth = null
     for (

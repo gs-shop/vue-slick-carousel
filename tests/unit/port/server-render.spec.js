@@ -185,7 +185,7 @@ describe('carousel', () => {
   test('should render the same to react slick', () =>
     fc.assert(
       fc.asyncProperty(
-        fc.array(fc.constantFrom('<div>item</div>'), 1, 100), // itemHtmls: array of lengths 1 ~ 100 with '<div>item</div>'
+        fc.array(fc.constantFrom('<div>item</div> '), 1, 100), // itemHtmls: array of lengths 1 ~ 100 with '<div>item</div>'
         fc.record(settingsModel, { withDeletedKeys: true }),
         async (itemHtmls, settings) => {
           // test only when the conditions meet
