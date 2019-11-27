@@ -151,6 +151,18 @@ const settingsModel = {
   draggable: fc.boolean(), // Enable scrollable via dragging on desktop
   easing: fc.constant('linear'), // easing
   fade: fc.boolean(), // fade
+  focusOnSelect: fc.boolean(), // Go to slide on click
+  infinite: fc.boolean(), // Infinitely wrap around contents
+  initialSlide: fc.integer(5), // Index of first slide
+  lazyLoad: fc.boolean(), // Load images or render components on demand or progressively
+  // onEdge: () => {}, // Edge dragged event in finite case, `direction => {...}` // not for test
+  // onInit: () => {}, // componentWillMount callback. `() => void` // not for test
+  // onLazyLoad: () => {}, // Callback after slides load lazily `slidesLoaded => {...}` // not for test
+  // onReInit: () => {}, // componentDidUpdate callback. `() => void` // not for test
+  // onSwipe: () => {}, // Callback after slide changes by swiping // not for test
+  pauseOnDotsHover: fc.boolean(), // Prevents autoplay while hovering on dots
+  pauseOnFocus: fc.boolean(), // Prevents autoplay while focused on slides
+  pauseOnHover: fc.boolean(), // Prevents autoplay while hovering on track
   responsive: fc.constantFrom([...settingsResponsives]), // Customize based on breakpoints (see the demo example for better understanding)
 }
 
@@ -161,6 +173,9 @@ describe('carousel', () => {
         fc.array(fc.constantFrom('<div>item</div>'), 1, 100), // itemHtmls: array of lengths 1 ~ 100 with '<div>item</div>'
         fc.record(settingsModel, { withDeletedKeys: true }),
         async (itemHtmls, settings) => {
+          // test only when the conditions meet
+          fc.pre(settings.initialSlide < itemHtmls.length)
+
           const vueCarousel = await vueServerRender(itemHtmls, settings)
           const reactCarousel = reactServerRender(itemHtmls, settings)
 
