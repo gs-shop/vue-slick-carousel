@@ -1,6 +1,6 @@
 {
   "name": "vue-slick-carousel",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "main": "dist/vue-slick-carousel.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve --open",
