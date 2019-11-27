@@ -1,4 +1,7 @@
 module.exports = {
+  pages: {
+    index: './demo/main.js',
+  },
   configureWebpack: {
     devtool: 'source-map',
     output: {
