@@ -139,7 +139,7 @@ const settingsModel = {
   // appendDots: () => {}, // Custom dots templates. Works same as customPaging // to be replaced
   arrows: fc.boolean(), // Prev/Next Arrows
   // asNavFor: undefined, // provide ref to another slider and sync it with current slider // to be replaced
-  // autoplaySpeed: 3000, // Delay between each auto scroll (in milliseconds) // not for test
+  autoplaySpeed: fc.constantFrom([3000, 5000]), // Delay between each auto scroll (in milliseconds) // not for test
   autoplay: fc.boolean(), // auto play
   // beforeChange: null, // Index change callback. `(oldIndex, newIndex) => ...` // not for test
   centerMode: fc.boolean(), // Center current slide
@@ -164,6 +164,21 @@ const settingsModel = {
   pauseOnFocus: fc.boolean(), // Prevents autoplay while focused on slides
   pauseOnHover: fc.boolean(), // Prevents autoplay while hovering on track
   responsive: fc.constantFrom([...settingsResponsives]), // Customize based on breakpoints (see the demo example for better understanding)
+  rows: fc.integer(1, 5), // number of rows per slide in the slider, (enables grid mode)
+  rtl: fc.boolean(), // Reverses the slide order
+  slide: fc.constantFrom(['div', 'span']), // Slide container type
+  slidesPerRow: fc.integer(1, 5), // number of slides to display in grid mode, this is useful with rows option
+  slidesToScroll: fc.integer(1, 5), // How many slides to scroll at once
+  slidesToShow: fc.integer(1, 5), // How many slides to show in one frame
+  speed: fc.constantFrom([500, 1000]), // Animation speed in milliseconds
+  swipeToSlide: fc.boolean(), // Enable drag/swipe irrespective of `slidesToScroll`
+  swipe: fc.boolean(), // Enable/disable swiping to change slides
+  touchMove: fc.boolean(), // touch move
+  touchThreshold: fc.integer(1, 20), // touch threshold
+  useCSS: fc.boolean(), // Enable/Disable CSS Transitions
+  useTransform: fc.boolean(), // Enable/Disable CSS transforms
+  variableWidth: fc.boolean(), // variable width
+  // vertical: fc.boolean(), // vertical // react has error on vertical settings. disabled.
 }
 
 describe('carousel', () => {
@@ -175,6 +190,13 @@ describe('carousel', () => {
         async (itemHtmls, settings) => {
           // test only when the conditions meet
           fc.pre(settings.initialSlide < itemHtmls.length)
+          fc.pre(settings.centerMode !== (settings.slidesToScroll !== 1))
+          fc.pre(settings.fade !== (settings.slidesToScroll !== 1))
+          fc.pre(settings.fade !== (settings.slidesToShow !== 1))
+          fc.pre(
+            settings.variableWidth !==
+              (settings.row !== 1 || settings.slidesPerRow),
+          )
 
           const vueCarousel = await vueServerRender(itemHtmls, settings)
           const reactCarousel = reactServerRender(itemHtmls, settings)
