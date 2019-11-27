@@ -70,6 +70,68 @@ const prettify = element => {
   return prettyDiff()
 }
 
+const settingsResponsives = [
+  [
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: 'unslick',
+    },
+  ],
+  [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2,
+      },
+    },
+  ],
+  [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+]
+
 const settingsModel = {
   accessibility: fc.boolean(), // Enable tabbing and arrow key navigation
   adaptiveHeight: fc.boolean(), // Adjust the slide's height automatically
@@ -89,6 +151,7 @@ const settingsModel = {
   draggable: fc.boolean(), // Enable scrollable via dragging on desktop
   easing: fc.constant('linear'), // easing
   fade: fc.boolean(), // fade
+  responsive: fc.constantFrom([...settingsResponsives]), // Customize based on breakpoints (see the demo example for better understanding)
 }
 
 describe('carousel', () => {
