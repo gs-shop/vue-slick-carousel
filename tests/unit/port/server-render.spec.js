@@ -139,11 +139,11 @@ const settingsModel = {
   // appendDots: () => {}, // Custom dots templates. Works same as customPaging // to be replaced
   arrows: fc.boolean(), // Prev/Next Arrows
   // asNavFor: undefined, // provide ref to another slider and sync it with current slider // to be replaced
-  autoplaySpeed: fc.constantFrom([3000, 5000]), // Delay between each auto scroll (in milliseconds) // not for test
+  autoplaySpeed: fc.constantFrom(3000, 5000), // Delay between each auto scroll (in milliseconds) // not for test
   autoplay: fc.boolean(), // auto play
   // beforeChange: null, // Index change callback. `(oldIndex, newIndex) => ...` // not for test
   centerMode: fc.boolean(), // Center current slide
-  centerPadding: fc.constantFrom(['100px', '150px']), // center padding
+  centerPadding: fc.constantFrom('100px', '150px'), // center padding
   className: fc.constant('custom-slick'), // CSS class for inner slider div
   // customPaging: () => {}, // Custom paging templates. [Example](examples/CustomPaging.js) // not for test
   dotsClass: fc.constant('custom-dots'), // CSS class for dots
@@ -163,14 +163,14 @@ const settingsModel = {
   pauseOnDotsHover: fc.boolean(), // Prevents autoplay while hovering on dots
   pauseOnFocus: fc.boolean(), // Prevents autoplay while focused on slides
   pauseOnHover: fc.boolean(), // Prevents autoplay while hovering on track
-  responsive: fc.constantFrom([...settingsResponsives]), // Customize based on breakpoints (see the demo example for better understanding)
+  responsive: fc.constantFrom(...settingsResponsives), // Customize based on breakpoints (see the demo example for better understanding)
   rows: fc.integer(1, 5), // number of rows per slide in the slider, (enables grid mode)
   rtl: fc.boolean(), // Reverses the slide order
-  slide: fc.constantFrom(['div', 'span']), // Slide container type
+  slide: fc.constantFrom('div', 'span'), // Slide container type
   slidesPerRow: fc.integer(1, 5), // number of slides to display in grid mode, this is useful with rows option
   slidesToScroll: fc.integer(1, 5), // How many slides to scroll at once
   slidesToShow: fc.integer(1, 5), // How many slides to show in one frame
-  speed: fc.constantFrom([500, 1000]), // Animation speed in milliseconds
+  speed: fc.constantFrom(500, 1000), // Animation speed in milliseconds
   swipeToSlide: fc.boolean(), // Enable drag/swipe irrespective of `slidesToScroll`
   swipe: fc.boolean(), // Enable/disable swiping to change slides
   touchMove: fc.boolean(), // touch move
