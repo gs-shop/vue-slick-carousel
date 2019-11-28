@@ -4,7 +4,7 @@ import SliderTrack from '@/SliderTrack'
 import SliderArrow from '@/SliderArrow'
 import SliderDots from '@/SliderDots'
 
-import defaultProps from '@/defaultProps'
+import { props } from '@/defaultProps'
 import initialState from '@/initialState'
 
 import { getStyle } from '@/vNodeUtils'
@@ -36,7 +36,7 @@ export default {
     SliderDots,
   },
   inheritAttrs: false,
-  props: [...Object.keys(defaultProps), 'unslick'],
+  props: { ...props, ...{ unslick: { type: Boolean, default: false } } },
   data() {
     return { ...initialState, currentSlide: this.initialSlide }
   },

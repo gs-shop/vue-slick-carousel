@@ -7,7 +7,7 @@ import {
   getStyle,
 } from '@/vNodeUtils'
 import { canUseDOM, filterUndefined } from '@/innerSliderUtils'
-import defaultProps from '@/defaultProps'
+import { props, defaultValues } from '@/defaultProps'
 import InnerSlider from '@/InnerSlider'
 
 const enquire = canUseDOM() && require('enquire.js')
@@ -18,7 +18,7 @@ export default {
     InnerSlider,
   },
   inheritAttrs: false,
-  props: Object.keys(defaultProps),
+  props,
   data() {
     return {
       breakpoint: null,
@@ -38,12 +38,12 @@ export default {
           newProps[0].settings === 'unslick'
             ? 'unslick'
             : {
-                ...defaultProps,
+                ...defaultValues,
                 ...props,
                 ...newProps[0].settings,
               }
       } else {
-        settings = { ...defaultProps, ...props }
+        settings = { ...defaultValues, ...props }
       }
 
       // force scrolling by one if centerMode is on
