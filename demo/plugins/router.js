@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import Home from '../pages'
 import Examples from '../pages/eamples'
 import exampleConfigs from '../pages/eamples/configs'
 
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: '/example/simple' },
+  { path: '/', component: Home },
   { path: '/example', redirect: '/example/simple' },
   {
     path: '/example/:example',
