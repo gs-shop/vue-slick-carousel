@@ -50,7 +50,6 @@ export default {
 
 <style lang="scss">
 @import 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900';
-@import 'https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css';
 
 body {
   font-weight: 100;
