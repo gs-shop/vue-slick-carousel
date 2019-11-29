@@ -1,30 +1,36 @@
 <template>
-  <fragment>
-    <v-row>
-      <div>{{ config.title }}</div>
-    </v-row>
-    <v-row align="center" justify="center" no-gutters>
-      <v-col xs="12" sm="6" md="5" lg="4" xl="4" class="pa-7">
-        <VueSlickCarousel v-bind="config.settings">
-          <div
-            v-for="(width, index) in slidesWidth"
-            :key="`${width}-${index}`"
-            :style="{ width: `${width}px` }"
-          >
-            <h3>{{ index + 1 }}</h3>
-          </div>
-        </VueSlickCarousel>
-      </v-col>
-      <v-col xs="12" sm="6">
-        <pre>{{ config.settings }}</pre>
-      </v-col>
-    </v-row>
-  </fragment>
+  <v-content>
+    <v-tabs v-model="tab" class="sub-menu" grow>
+      <v-tab v-for="item in menu" :key="item.path" :to="item.path">
+        {{ item.title }}
+      </v-tab>
+    </v-tabs>
+    <v-container class="fill-height" fluid>
+      <v-row align="center" justify="center" no-gutters>
+        <v-col xs="12" sm="6" md="5" lg="4" xl="4" class="pa-7">
+          <VueSlickCarousel v-bind="config.settings">
+            <div
+              v-for="(width, index) in slidesWidth"
+              :key="`${width}-${index}`"
+              :style="{ width: `${width}px` }"
+            >
+              <h3>{{ index + 1 }}</h3>
+            </div>
+          </VueSlickCarousel>
+        </v-col>
+        <v-col xs="12" sm="6">
+          <pre>{{ config.settings }}</pre>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+
+import configs from './configs'
 
 export default {
   name: 'ExamplesPage',
@@ -37,8 +43,17 @@ export default {
       () => Math.floor(Math.random() * 200) + 200,
     )
 
+    const menu = Object.keys(configs).map(key => {
+      return {
+        title: configs[key].title,
+        path: `/example/${key}`,
+      }
+    })
+
     return {
+      tab: null,
       slidesWidth,
+      menu,
     }
   },
 }

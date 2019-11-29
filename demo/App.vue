@@ -26,11 +26,7 @@
       </v-tab>
     </v-tabs>
 
-    <v-content>
-      <v-container class="fill-height" fluid>
-        <router-view></router-view>
-      </v-container>
-    </v-content>
+    <router-view></router-view>
 
     <v-footer app>
       <span>&copy; 2019</span>
