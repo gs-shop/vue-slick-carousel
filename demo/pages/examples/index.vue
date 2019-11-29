@@ -1,10 +1,12 @@
 <template>
   <v-content>
-    <v-tabs v-model="tab" class="sub-menu" grow>
-      <v-tab v-for="item in menu" :key="item.path" :to="item.path">
-        {{ item.title }}
-      </v-tab>
-    </v-tabs>
+    <v-card>
+      <v-tabs show-arrows center-active v-model="tab" class="sub-menu">
+        <v-tab v-for="item in menu" :key="item.path" :to="item.path">
+          {{ item.title }}
+        </v-tab>
+      </v-tabs>
+    </v-card>
     <v-container class="fill-height" fluid>
       <v-row align="center" justify="center" no-gutters>
         <v-col xs="12" sm="6" md="5" lg="4" xl="4" class="pa-7">
