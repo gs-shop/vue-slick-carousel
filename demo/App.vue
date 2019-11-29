@@ -1,10 +1,25 @@
 <template>
   <v-app id="inspire">
-    <h1 class="head-title py-6">
+    <h1 class="head-title py-4 pt-10" relative>
       <router-link to="/">
         vue-slick-carousel
       </router-link>
+      <v-btn
+        class="github my-7 mx-1"
+        small
+        absolute
+        dark
+        fab
+        top
+        right
+        color="secondary"
+      >
+        <a href="https://github.com/kyuwoo-choi/vue-slick-carousel">
+          <v-icon dark>fab fa-github</v-icon>
+        </a>
+      </v-btn>
     </h1>
+
     <v-tabs v-model="tab" class="head-menu" grow>
       <v-tab v-for="item in menu" :key="item.path" :to="item.path">
         {{ item.title }}
@@ -35,7 +50,6 @@ export default {
   data() {
     return {
       tab: null,
-      items: ['Home', 'API', 'Examples'],
       menu: [
         { title: 'Home', path: '/' },
         { title: 'Example', path: '/example' },
@@ -78,5 +92,10 @@ a {
 }
 .v-tabs-slider {
   color: var(--v-primary-lighten2) !important;
+}
+.v-btn {
+  &.github {
+    color: var(--v-primary-base) !important;
+  }
 }
 </style>
