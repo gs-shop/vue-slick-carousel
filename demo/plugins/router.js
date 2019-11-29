@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Home from '../pages'
-import Examples from '../pages/eamples'
-import exampleConfigs from '../pages/eamples/configs'
+import Examples from '../pages/examples'
+import exampleConfigs from '../pages/examples/configs'
 
 Vue.use(VueRouter)
 
