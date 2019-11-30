@@ -9,7 +9,7 @@
     </v-card>
     <v-container class="fill-height" fluid>
       <v-row align="center" justify="center" no-gutters>
-        <v-col xs="12" sm="6" md="5" lg="4" xl="4" class="pa-7">
+        <v-col xs="12" sm="6" class="pa-7">
           <VueSlickCarousel v-bind="config.settings">
             <div
               v-for="(width, index) in slidesWidth"
@@ -20,8 +20,21 @@
             </div>
           </VueSlickCarousel>
         </v-col>
-        <v-col xs="12" sm="6">
-          <pre>{{ config.settings }}</pre>
+        <v-col xs="12" sm="6" class="pa-7">
+          <v-row>
+            <prism
+              language="html"
+              :code="exampleVueTemplate"
+              class="code"
+            ></prism>
+          </v-row>
+          <v-row>
+            <prism
+              language="javascript"
+              :code="JSON.stringify(config.settings, null, 2)"
+              class="code"
+            ></prism>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>
@@ -29,13 +42,24 @@
 </template>
 
 <script>
+import Prism from 'vue-prismjs'
+
+import 'prismjs/themes/prism-tomorrow.css'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
 import configs from './configs'
 
+const exampleVueTemplate = `<VueSlickCarousel v-bind="settings">
+  <div><h3>1</h3></div>
+  /*...*/
+</VueSlickCarousel>`
+
 export default {
   name: 'ExamplesPage',
+  components: {
+    Prism,
+  },
   props: {
     config: Object,
   },
@@ -56,6 +80,7 @@ export default {
       tab: null,
       slidesWidth,
       menu,
+      exampleVueTemplate,
     }
   },
 }
