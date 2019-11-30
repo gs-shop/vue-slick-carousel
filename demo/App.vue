@@ -82,7 +82,7 @@ a {
     color: var(--v-primary-base) !important;
     background-color: var(--v-secondary-base) !important;
     &.v-tab--active {
-      color: var(--v-primary-base-lighten2) !important;
+      color: var(--v-primary-lighten2) !important;
     }
   }
 }
