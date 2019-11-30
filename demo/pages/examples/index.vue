@@ -86,19 +86,34 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 h3 {
   line-height: 200px;
-  background: #000000;
-  opacity: 0.75;
+  background-color: var(--v-secondary-base);
   font-size: 24px;
   margin: 10px;
   text-align: center;
-  color: #ffffff;
+  color: var(--v-primary-lighten2);
   font-weight: 300;
 }
-.slick-arrow:before {
-  color: #000000;
-  opacity: 0.75;
+.slick-slider {
+  ::v-deep .slick-dots button::before {
+    color: var(--v-secondary-base);
+    opacity: 0.25;
+  }
+  ::v-deep .slick-arrow:before,
+  ::v-deep .slick-dots .slick-active button::before {
+    color: var(--v-secondary-base);
+    opacity: 1;
+  }
+}
+
+.code {
+  width: 100%;
+  background-color: var(--v-secondary-base);
+  ::v-deep code {
+    width: 100%;
+    background-color: var(--v-secondary-base);
+  }
 }
 </style>
