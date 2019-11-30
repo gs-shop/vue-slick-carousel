@@ -1,59 +1,32 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app clipped>
-      <v-list dense>
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-view-dashboard</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Dashboard</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-settings</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Settings</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
+    <h1 class="head-title py-4 pt-10" relative>
+      <router-link to="/">
+        vue-slick-carousel
+      </router-link>
+      <v-btn
+        class="github my-7 mx-1"
+        small
+        absolute
+        dark
+        fab
+        top
+        right
+        color="secondary"
+      >
+        <a href="https://github.com/kyuwoo-choi/vue-slick-carousel">
+          <v-icon dark>fab fa-github</v-icon>
+        </a>
+      </v-btn>
+    </h1>
 
-    <v-app-bar app clipped-left>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>vue-slick-carousel</v-toolbar-title>
-    </v-app-bar>
+    <v-tabs v-model="tab" class="head-menu" grow>
+      <v-tab v-for="item in menu" :key="item.path" :to="item.path">
+        {{ item.title }}
+      </v-tab>
+    </v-tabs>
 
-    <v-content>
-      <v-container class="fill-height" fluid>
-        <v-row align="center" justify="center">
-          <v-col cols="9">
-            <VueSlickCarousel>
-              <div>
-                <img src="https://picsum.photos/400/300?random=1" />
-              </div>
-              <div>
-                <img src="https://picsum.photos/400/300?random=2" />
-              </div>
-              <div>
-                <img src="https://picsum.photos/400/300?random=3" />
-              </div>
-              <div>
-                <img src="https://picsum.photos/400/300?random=4" />
-              </div>
-              <div>
-                <img src="https://picsum.photos/400/300?random=5" />
-              </div>
-              <div>
-                <img src="https://picsum.photos/400/300?random=6" />
-              </div>
-            </VueSlickCarousel>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-content>
+    <router-view></router-view>
 
     <v-footer app>
       <span>&copy; 2019</span>
@@ -62,26 +35,60 @@
 </template>
 
 <script>
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
-
 export default {
   name: 'app',
+  props: {
+    propsA: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
-      drawer: null,
-      settings: {
-        slidesToShow: 1,
-      },
+      tab: null,
+      menu: [
+        { title: 'Home', path: '/' },
+        { title: 'Example', path: '/example' },
+      ],
     }
-  },
-  created() {
-    this.$vuetify.theme.dark = true
   },
 }
 </script>
 
-<style>
+<style lang="scss">
 @import 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900';
-@import 'https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css';
+
+body {
+  font-weight: 100;
+}
+a {
+  text-decoration: none;
+}
+.head-title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 100;
+  color: var(--v-primary-base);
+  background-color: var(--v-secondary-base);
+}
+
+.head-menu {
+  flex: 0 1 auto;
+  .v-tab {
+    font-weight: 300;
+    color: var(--v-primary-base) !important;
+    background-color: var(--v-secondary-base) !important;
+    &.v-tab--active {
+      color: var(--v-primary-lighten2) !important;
+    }
+  }
+}
+.v-tabs-slider {
+  color: var(--v-primary-lighten2) !important;
+}
+.v-btn {
+  &.github {
+    color: var(--v-primary-base) !important;
+  }
+}
 </style>
