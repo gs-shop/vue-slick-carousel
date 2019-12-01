@@ -144,19 +144,11 @@ export default {
 
         breakpoints.forEach((breakpoint, index) => {
           // media query for each breakpoint
-          let bQuery
-          if (index === 0) {
-            bQuery = json2mq({
-              minWidth: 0,
-              maxWidth: breakpoint,
-            })
-          } else {
-            bQuery = json2mq({
-              minWidth: breakpoints[index - 1] + 1,
-              maxWidth: breakpoint,
-            })
-          }
-          this.media(bQuery, () => {
+          const mediaQuery = json2mq({
+            minWidth: index === 0 ? 0 : breakpoints[index - 1] + 1,
+            maxWidth: breakpoint,
+          })
+          this.media(mediaQuery, () => {
             this.breakpoint = breakpoint
           })
         })
