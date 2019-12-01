@@ -116,10 +116,6 @@ export default {
         slide.onblur = this.pauseOnFocus ? this.onSlideBlur : null
       },
     )
-    // To support server-side rendering
-    if (!window) {
-      return
-    }
     if (window.addEventListener) {
       window.addEventListener('resize', this.onWindowResized)
     } else {
