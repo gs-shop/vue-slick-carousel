@@ -40,9 +40,11 @@ export default {
     }
     setVNodeData(arrow, 'key', key)
     mergeVNodeData(arrow, 'class', classes)
-    mergeVNodeData(arrow, 'on', {
-      click: clickHandler,
-    })
+    if (clickHandler) {
+      mergeVNodeData(arrow, 'on', {
+        click: clickHandler,
+      })
+    }
 
     return arrow
   },
