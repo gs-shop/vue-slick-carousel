@@ -101,10 +101,16 @@ h3 {
     color: var(--v-secondary-base);
     opacity: 0.25;
   }
-  ::v-deep .slick-arrow:before,
   ::v-deep .slick-dots .slick-active button::before {
+    opacity: 1;
+  }
+
+  ::v-deep .slick-arrow:before {
     color: var(--v-secondary-base);
     opacity: 1;
+  }
+  ::v-deep .slick-arrow.slick-disabled:before {
+    opacity: 0.25;
   }
 }
 
