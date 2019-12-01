@@ -139,7 +139,8 @@ export default {
     }
     this.adaptHeight()
   },
-  destroyed() {
+  beforeDestroy() {
+    this.ro.unobserve(this.$refs.list)
     if (this.animationEndCallback) {
       clearTimeout(this.animationEndCallback)
     }
