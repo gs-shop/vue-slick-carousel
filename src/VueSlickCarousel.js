@@ -143,6 +143,7 @@ export default {
       this.responsiveMediaHandlers.push({ query, handler })
     },
     makeBreakpoints() {
+      this.breakpoint = null
       this.responsiveMediaHandlers = []
 
       // handles responsive breakpoints
