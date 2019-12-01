@@ -1,5 +1,6 @@
 import json2mq from 'json2mq'
 
+import mixinPropsUpdated from '@/mixinPropsUpdated'
 import {
   cloneVNode,
   mergeVNodeData,
@@ -17,6 +18,7 @@ export default {
   components: {
     InnerSlider,
   },
+  mixins: [mixinPropsUpdated],
   inheritAttrs: false,
   props,
   data() {
@@ -97,17 +99,6 @@ export default {
 
       return settings
     },
-    update() {
-      // Read props that need to be listened for changes.
-      Object.keys(this.$props).forEach(key => this[key])
-      // Return a different value each time. `Date.now()` is not guaranteed to be unique.
-      return (this.updateSwitch = !this.updateSwitch)
-    },
-  },
-  watch: {
-    update() {
-      this.onPropUpdated()
-    },
   },
   created() {
     this.makeBreakpoints()
@@ -131,7 +122,7 @@ export default {
     slickPlay() {
       this.$refs.innerSlider.autoPlay('play')
     },
-    onPropUpdated() {
+    onPropsUpdated() {
       this.clearBreakpoints()
       this.makeBreakpoints()
     },

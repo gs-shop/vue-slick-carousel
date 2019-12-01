@@ -7,6 +7,7 @@ import SliderDots from '@/SliderDots'
 import { props } from '@/defaultProps'
 import initialState from '@/initialState'
 
+import mixinPropsUpdated from '@/mixinPropsUpdated'
 import { getStyle } from '@/vNodeUtils'
 import {
   PROP_KEYS,
@@ -35,18 +36,13 @@ export default {
     SliderArrow,
     SliderDots,
   },
+  mixins: [mixinPropsUpdated],
   inheritAttrs: false,
   props: { ...props, ...{ unslick: { type: Boolean, default: false } } },
   data() {
     return { ...initialState, currentSlide: this.initialSlide }
   },
   computed: {
-    update() {
-      // Read props that need to be listened for changes.
-      Object.keys(this.$props).forEach(key => this[key])
-      // Return a different value each time. `Date.now()` is not guaranteed to be unique.
-      return (this.updateSwitch = !this.updateSwitch)
-    },
     slideCount() {
       return this.$slots.default.length
     },
@@ -56,11 +52,6 @@ export default {
         ...this.$data,
         slideCount: this.slideCount,
       }
-    },
-  },
-  watch: {
-    update() {
-      this.propsUpdated(this.$props)
     },
   },
   created() {
@@ -161,7 +152,8 @@ export default {
     }
   },
   methods: {
-    propsUpdated(nextProps) {
+    onPropsUpdated() {
+      const nextProps = this.$props
       let spec = {
         listRef: this.$refs.list,
         trackRef: this.$refs.track,
