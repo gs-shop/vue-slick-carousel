@@ -97,17 +97,23 @@ export default {
 
       return settings
     },
+    update() {
+      // Read props that need to be listened for changes.
+      Object.keys(this.$props).forEach(key => this[key])
+      // Return a different value each time. `Date.now()` is not guaranteed to be unique.
+      return (this.updateSwitch = !this.updateSwitch)
+    },
+  },
+  watch: {
+    update() {
+      this.onPropUpdated()
+    },
   },
   created() {
-    // non-reactive data
-    this.responsiveMediaHandlers = []
-
     this.makeBreakpoints()
   },
   beforeDestroy() {
-    this.responsiveMediaHandlers.forEach(obj =>
-      enquire.unregister(obj.query, obj.handler),
-    )
+    this.clearBreakpoints()
   },
   methods: {
     slickPrev() {
@@ -125,6 +131,16 @@ export default {
     slickPlay() {
       this.$refs.innerSlider.autoPlay('play')
     },
+    onPropUpdated() {
+      this.clearBreakpoints()
+      this.makeBreakpoints()
+    },
+    clearBreakpoints() {
+      this.responsiveMediaHandlers.forEach(obj =>
+        enquire.unregister(obj.query, obj.handler),
+      )
+      this.responsiveMediaHandlers = []
+    },
     media(query, handler) {
       // javascript handler for  css media query
       // when not using server side rendering
@@ -136,6 +152,8 @@ export default {
       this.responsiveMediaHandlers.push({ query, handler })
     },
     makeBreakpoints() {
+      this.responsiveMediaHandlers = []
+
       // handles responsive breakpoints
       if (this.responsive) {
         let breakpoints = this.responsive.map(breakpt => breakpt.breakpoint)
