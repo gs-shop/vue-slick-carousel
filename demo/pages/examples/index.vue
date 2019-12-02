@@ -8,8 +8,13 @@
       </v-tabs>
     </v-card>
     <v-container class="fill-height" fluid>
-      <v-row align="center" justify="center" no-gutters>
-        <v-col xs="12" sm="6" class="pa-7">
+      <v-row
+        align="center"
+        justify="center"
+        no-gutters
+        class="carousel-wrapper"
+      >
+        <v-col cols="12" class="pa-7">
           <VueSlickCarousel v-bind="config.settings" :style="style">
             <div
               v-for="(width, index) in slidesWidth"
@@ -20,17 +25,17 @@
             </div>
           </VueSlickCarousel>
         </v-col>
-        <v-col xs="12" sm="6" class="pa-7">
-          <v-row>
-            <prism language="html" :code="template" class="code"></prism>
-          </v-row>
-          <v-row>
-            <prism
-              language="javascript"
-              :code="JSON.stringify(config.settings, null, 2)"
-              class="code"
-            ></prism>
-          </v-row>
+      </v-row>
+      <v-row>
+        <v-col sm="12" md="6" class="pa-7">
+          <prism language="html" :code="template" class="code"></prism>
+        </v-col>
+        <v-col sm="12" md="6" class="pa-7">
+          <prism
+            language="javascript"
+            :code="JSON.stringify(config.settings, null, 2)"
+            class="code"
+          ></prism>
         </v-col>
       </v-row>
     </v-container>
@@ -99,6 +104,9 @@ h3 {
   color: var(--v-primary-lighten2);
   font-weight: 300;
 }
+.carousel-wrapper {
+  min-height: 440px;
+}
 .slick-slider {
   ::v-deep .slick-dots button::before {
     color: var(--v-secondary-base);
@@ -119,6 +127,7 @@ h3 {
 
 .code {
   width: 100%;
+  max-height: 300px;
   background-color: var(--v-secondary-base);
   ::v-deep code {
     width: 100%;
