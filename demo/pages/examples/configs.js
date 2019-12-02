@@ -1,3 +1,8 @@
+const verticalTemplate = `<VueSlickCarousel v-bind="settings" :style="{height: '37xpx'}">
+  <div><h3>1</h3></div>
+  /*...*/
+</VueSlickCarousel>`
+
 export default {
   simple: {
     title: 'Simple Slides',
@@ -167,6 +172,7 @@ export default {
   },
   'vertical-mode': {
     title: 'Vertical Mode',
+    template: verticalTemplate,
     settings: {
       dots: true,
       infinite: true,
@@ -200,6 +206,7 @@ export default {
   },
   'vertical-swipe-to-slide': {
     title: 'Vertical Swipe To Slide',
+    template: verticalTemplate,
     settings: {
       dots: true,
       infinite: true,

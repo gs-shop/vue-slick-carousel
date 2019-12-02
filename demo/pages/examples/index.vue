@@ -10,7 +10,7 @@
     <v-container class="fill-height" fluid>
       <v-row align="center" justify="center" no-gutters>
         <v-col xs="12" sm="6" class="pa-7">
-          <VueSlickCarousel v-bind="config.settings">
+          <VueSlickCarousel v-bind="config.settings" :style="style">
             <div
               v-for="(width, index) in slidesWidth"
               :key="`${width}-${index}`"
@@ -22,11 +22,7 @@
         </v-col>
         <v-col xs="12" sm="6" class="pa-7">
           <v-row>
-            <prism
-              language="html"
-              :code="exampleVueTemplate"
-              class="code"
-            ></prism>
+            <prism language="html" :code="template" class="code"></prism>
           </v-row>
           <v-row>
             <prism
@@ -63,12 +59,21 @@ export default {
   props: {
     config: Object,
   },
+  computed: {
+    slidesWidth() {
+      return Array.from(
+        { length: this.config.numSlides || 6 },
+        () => Math.floor(Math.random() * 200) + 200,
+      )
+    },
+    style() {
+      return { height: this.config.settings.vertical ? '372px' : '' }
+    },
+    template() {
+      return this.config.template ? this.config.template : exampleVueTemplate
+    },
+  },
   data() {
-    const slidesWidth = Array.from(
-      { length: this.config.numSlides || 6 },
-      () => Math.floor(Math.random() * 200) + 200,
-    )
-
     const menu = Object.keys(configs).map(key => {
       return {
         title: configs[key].title,
@@ -78,9 +83,7 @@ export default {
 
     return {
       tab: null,
-      slidesWidth,
       menu,
-      exampleVueTemplate,
     }
   },
 }
@@ -88,7 +91,7 @@ export default {
 
 <style lang="scss" scoped>
 h3 {
-  line-height: 200px;
+  line-height: 100px;
   background-color: var(--v-secondary-base);
   font-size: 24px;
   margin: 10px;
