@@ -15,6 +15,7 @@ import {
   changeSlide,
   extractObject,
   filterUndefined,
+  filterUndefinedOrNull,
   getHeight,
   getPreClones,
   getPostClones,
@@ -616,14 +617,14 @@ export default {
       )
     }
 
-    var verticalHeightStyle = null
+    var verticalHeightStyle = {}
     if (this.vertical) {
       verticalHeightStyle = {
         height: this.listHeight,
       }
     }
 
-    var centerPaddingStyle = null
+    var centerPaddingStyle = {}
     if (this.vertical === false) {
       if (this.centerMode === true) {
         centerPaddingStyle = {
@@ -637,9 +638,15 @@ export default {
         }
       }
     }
-    let listStyle = {}
+    let listStyle = {
+      ...this.$parent.$vnode.data.style,
+    }
     if (!this.unslick) {
-      listStyle = { ...verticalHeightStyle, ...centerPaddingStyle }
+      listStyle = {
+        ...listStyle,
+        ...filterUndefinedOrNull(verticalHeightStyle),
+        ...centerPaddingStyle,
+      }
     }
 
     const { accessibility, dragging, touchMove } = this

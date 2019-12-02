@@ -173,6 +173,14 @@ export const filterUndefined = props =>
       return obj
     }, {})
 
+export const filterUndefinedOrNull = props =>
+  Object.keys(props)
+    .filter(key => props[key] !== undefined && props[key] !== null)
+    .reduce((obj, key) => {
+      obj[key] = props[key]
+      return obj
+    }, {})
+
 export const swipeStart = (e, swipe, draggable) => {
   e.target.tagName === 'IMG' && e.preventDefault()
   if (!swipe || (!draggable && e.type.indexOf('mouse') !== -1)) return ''
