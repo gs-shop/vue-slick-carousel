@@ -65,7 +65,7 @@ export default {
   },
   data() {
     const slidesWidth = Array.from(
-      { length: 10 },
+      { length: this.config.numSlides || 6 },
       () => Math.floor(Math.random() * 200) + 200,
     )
 

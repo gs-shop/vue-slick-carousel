@@ -11,6 +11,7 @@ export default {
   },
   multiple: {
     title: 'Multiple Slides',
+    numSlides: 9,
     settings: {
       dots: true,
       infinite: true,
@@ -21,6 +22,7 @@ export default {
   },
   responsive: {
     title: 'Responsive',
+    numSlides: 8,
     settings: {
       dots: true,
       infinite: false,
@@ -68,6 +70,7 @@ export default {
   },
   'multiple-rows': {
     title: 'Multiple Rows',
+    numSlides: 16,
     settings: {
       className: 'center',
       centerMode: true,
@@ -92,6 +95,7 @@ export default {
   },
   fade: {
     title: 'Fade',
+    numSlides: 4,
     settings: {
       dots: true,
       fade: true,
@@ -103,6 +107,7 @@ export default {
   },
   'lazy-load': {
     title: 'Lazy Load',
+    numSlides: 4,
     settings: {
       dots: true,
       fade: true,
