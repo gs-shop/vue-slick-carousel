@@ -226,7 +226,10 @@ export default {
     }
 
     return (
-      <InnerSlider ref="innerSlider" {...{ props: settings }}>
+      <InnerSlider
+        ref="innerSlider"
+        {...{ props: settings }}
+        key={JSON.stringify(settings)}>
         {newChildren}
       </InnerSlider>
     )
