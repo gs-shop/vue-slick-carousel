@@ -44,7 +44,7 @@ const getSlideStyle = spec => {
   let style = {}
 
   if (spec.variableWidth === undefined || spec.variableWidth === false) {
-    style.width = spec.slideWidth
+    style.width = `${spec.slideWidth}px`
   }
 
   if (spec.fade) {
