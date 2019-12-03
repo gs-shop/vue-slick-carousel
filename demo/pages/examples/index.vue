@@ -7,30 +7,37 @@
         </v-tab>
       </v-tabs>
     </v-card>
-    <v-container class="fill-height" fluid>
+    <v-container fluid>
       <v-row
         align="center"
         justify="center"
         no-gutters
         class="carousel-wrapper"
       >
-        <v-col cols="12" class="pa-7">
-          <VueSlickCarousel v-bind="config.settings" :style="style">
+        <v-col cols="8" class="pa-7">
+          <VueSlickCarousel
+            v-bind="config.settings"
+            :style="style"
+            :class="classes"
+          >
             <div
               v-for="(width, index) in slidesWidth"
               :key="`${width}-${index}`"
               :style="{ width: `${width}px` }"
             >
-              <h3>{{ index + 1 }}</h3>
+              <h1>{{ index + 1 }}</h1>
             </div>
           </VueSlickCarousel>
         </v-col>
       </v-row>
+      <v-row class="pl-7 pr-7"><hr width="100%" /></v-row>
       <v-row>
         <v-col sm="12" md="6" class="pa-7">
+          <h2># Template</h2>
           <prism language="html" :code="template" class="code"></prism>
         </v-col>
         <v-col sm="12" md="6" class="pa-7">
+          <h2># Settings</h2>
           <prism
             language="javascript"
             :code="JSON.stringify(config.settings, null, 2)"
@@ -77,6 +84,10 @@ export default {
     template() {
       return this.config.template ? this.config.template : exampleVueTemplate
     },
+    classes() {
+      const { vertical, rows } = this.config.settings
+      return { 'short-row': vertical || rows > 1 ? true : false, vertical }
+    },
   },
   data() {
     const menu = Object.keys(configs).map(key => {
@@ -95,17 +106,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h3 {
-  line-height: 100px;
-  background-color: var(--v-secondary-base);
-  font-size: 24px;
-  margin: 10px;
-  text-align: center;
-  color: var(--v-primary-lighten2);
+::v-deep * {
   font-weight: 300;
+  color: var(--v-secondary-base);
+}
+.slick-slider {
+  h1 {
+    line-height: 300px;
+    background-color: var(--v-secondary-base);
+    margin: 10px;
+    text-align: center;
+    color: var(--v-primary-lighten2);
+  }
+  &.short-row h1 {
+    line-height: 100px;
+  }
+}
+.vertical {
+  height: 372px;
 }
 .carousel-wrapper {
-  min-height: 440px;
+  min-height: 430px;
 }
 .slick-slider {
   ::v-deep .slick-dots button::before {
@@ -127,7 +148,8 @@ h3 {
 
 .code {
   width: 100%;
-  max-height: 300px;
+  max-height: 200px;
+  overflow: auto;
   background-color: var(--v-secondary-base);
   ::v-deep code {
     width: 100%;
