@@ -433,6 +433,7 @@ export default {
         trackRef: this.$refs.track,
         listRef: this.$refs.list,
         slideIndex: this.currentSlide,
+        onEdge: e => this.$parent.$emit('edge', e),
       })
       if (!state) return
       if (state['swiping']) {

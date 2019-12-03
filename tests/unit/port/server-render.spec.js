@@ -154,7 +154,6 @@ const settingsModel = {
   infinite: fc.boolean(), // Infinitely wrap around contents
   initialSlide: fc.integer(5), // Index of first slide
   lazyLoad: fc.boolean(), // Load images or render components on demand or progressively
-  // onEdge: () => {}, // Edge dragged event in finite case, `direction => {...}` // not for test
   // onInit: () => {}, // componentWillMount callback. `() => void` // not for test
   // onLazyLoad: () => {}, // Callback after slides load lazily `slidesLoaded => {...}` // not for test
   // onReInit: () => {}, // componentDidUpdate callback. `() => void` // not for test

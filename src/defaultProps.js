@@ -37,7 +37,6 @@ export const props = {
       </button>
     ),
   },
-  onEdge: { type: Function, default: null },
   onInit: { type: Function, default: null },
   onLazyLoadError: { type: Function, default: null },
   onReInit: { type: Function, default: null },
