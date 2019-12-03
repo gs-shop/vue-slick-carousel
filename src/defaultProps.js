@@ -62,7 +62,6 @@ export const props = {
   slidesToShow: { type: Number, default: 1 },
   speed: { type: Number, default: 500 },
   swipe: { type: Boolean, default: true },
-  swipeEvent: { type: Function, default: null },
   swipeToSlide: { type: Boolean, default: false },
   touchMove: { type: Boolean, default: true },
   touchThreshold: { type: Number, default: 5 },
