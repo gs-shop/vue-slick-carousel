@@ -73,136 +73,131 @@ const getSlideStyle = spec => {
 const getKey = (child, fallbackKey) =>
   (child.key != 'null' && String(child.key)) || fallbackKey
 
-const cloneSlide = (slide, options) => {
-  let clone = cloneVNode(slide)
-  clone.key = options.key
-  mergeVNodeData(clone, 'class', options.class)
-  mergeVNodeData(clone, 'attrs', options.attrs)
-  mergeVNodeData(clone, 'style', options.style)
-  mergeVNodeData(clone, 'on', {
-    click: e => {
-      getData(slide, 'on.click', () => {})(e)
-      if (options.focusOnSelect) {
-        options.focusOnSelect(options.childOnClickOptions)
-      }
-    },
-  })
-
-  return clone
-}
-
-const renderSlides = (h, spec, children) => {
-  let key
-  let slides = []
-  let preCloneSlides = []
-  let postCloneSlides = []
-  let childrenCount = children.length
-  let startIndex = lazyStartIndex(spec)
-  let endIndex = lazyEndIndex(spec)
-
-  children.forEach((elem, index) => {
-    let child
-    let childOnClickOptions = {
-      message: 'children',
-      index: index,
-      slidesToScroll: spec.slidesToScroll,
-      currentSlide: spec.currentSlide,
-    }
-
-    // in case of lazyLoad, whether or not we want to fetch the slide
-    if (
-      !spec.lazyLoad ||
-      (spec.lazyLoad && spec.lazyLoadedList.indexOf(index) >= 0)
-    ) {
-      child = elem
-    } else {
-      child = <div />
-    }
-    let childStyle = getSlideStyle({ ...spec, index })
-    let slideClasses = getSlideClasses({ ...spec, index })
-    // push a cloned element of the desired slide
-    slides.push(
-      cloneSlide(child, {
-        key: 'original' + getKey(child, index),
-        class: slideClasses,
-        style: {
-          outline: 'none',
-          ...childStyle,
-        },
-        attrs: {
-          tabIndex: '-1',
-          'data-index': index,
-          'aria-hidden': `${!slideClasses['slick-active']}`,
-        },
-        childOnClickOptions,
-        focusOnSelect: spec.focusOnSelect,
-      }),
-    )
-
-    // if slide needs to be precloned or postcloned
-    if (spec.infinite && spec.fade === false) {
-      let preCloneNo = childrenCount - index
-      if (
-        preCloneNo <= getPreClones(spec) &&
-        childrenCount !== spec.slidesToShow
-      ) {
-        key = -preCloneNo
-        if (key >= startIndex) {
-          child = elem
-        }
-        slideClasses = getSlideClasses({ ...spec, index: key })
-        preCloneSlides.push(
-          cloneSlide(child, {
-            key: 'precloned' + getKey(child, key),
-            class: slideClasses,
-            style: childStyle,
-            attrs: {
-              tabIndex: '-1',
-              'data-index': key,
-              'aria-hidden': `${!slideClasses['slick-active']}`,
-            },
-            childOnClickOptions,
-            focusOnSelect: spec.focusOnSelect,
-          }),
-        )
-      }
-
-      if (childrenCount !== spec.slidesToShow) {
-        key = childrenCount + index
-        if (key < endIndex) {
-          child = elem
-        }
-        slideClasses = getSlideClasses({ ...spec, index: key })
-        postCloneSlides.push(
-          cloneSlide(child, {
-            key: 'postcloned' + getKey(child, key),
-            class: slideClasses,
-            style: childStyle,
-            attrs: {
-              tabIndex: '-1',
-              'data-index': key,
-              'aria-hidden': `${!slideClasses['slick-active']}`,
-            },
-            childOnClickOptions,
-            focusOnSelect: spec.focusOnSelect,
-          }),
-        )
-      }
-    }
-  })
-
-  if (spec.rtl) {
-    return preCloneSlides.concat(slides, postCloneSlides).reverse()
-  } else {
-    return preCloneSlides.concat(slides, postCloneSlides)
-  }
-}
-
 export default {
   name: 'SliderTrack',
   props: PROP_KEYS.TRACK,
-  render(h) {
-    const slides = renderSlides(h, this.$props, this.$slots.default)
+  methods: {
+    cloneSlide(slide, options) {
+      let clone = cloneVNode(slide)
+      clone.key = options.key
+      mergeVNodeData(clone, 'class', options.class)
+      mergeVNodeData(clone, 'attrs', options.attrs)
+      mergeVNodeData(clone, 'style', options.style)
+      mergeVNodeData(clone, 'on', {
+        click: e => {
+          getData(slide, 'on.click', () => {})(e)
+          this.$emit('childClicked', options.childOnClickOptions)
+        },
+      })
+
+      return clone
+    },
+    renderSlides(spec, children) {
+      let key
+      let slides = []
+      let preCloneSlides = []
+      let postCloneSlides = []
+      let childrenCount = children.length
+      let startIndex = lazyStartIndex(spec)
+      let endIndex = lazyEndIndex(spec)
+
+      children.forEach((elem, index) => {
+        let child
+        let childOnClickOptions = {
+          message: 'children',
+          index: index,
+          slidesToScroll: spec.slidesToScroll,
+          currentSlide: spec.currentSlide,
+        }
+
+        // in case of lazyLoad, whether or not we want to fetch the slide
+        if (
+          !spec.lazyLoad ||
+          (spec.lazyLoad && spec.lazyLoadedList.indexOf(index) >= 0)
+        ) {
+          child = elem
+        } else {
+          child = <div />
+        }
+        let childStyle = getSlideStyle({ ...spec, index })
+        let slideClasses = getSlideClasses({ ...spec, index })
+        // push a cloned element of the desired slide
+        slides.push(
+          this.cloneSlide(child, {
+            key: 'original' + getKey(child, index),
+            class: slideClasses,
+            style: {
+              outline: 'none',
+              ...childStyle,
+            },
+            attrs: {
+              tabIndex: '-1',
+              'data-index': index,
+              'aria-hidden': `${!slideClasses['slick-active']}`,
+            },
+            childOnClickOptions,
+          }),
+        )
+
+        // if slide needs to be precloned or postcloned
+        if (spec.infinite && spec.fade === false) {
+          let preCloneNo = childrenCount - index
+          if (
+            preCloneNo <= getPreClones(spec) &&
+            childrenCount !== spec.slidesToShow
+          ) {
+            key = -preCloneNo
+            if (key >= startIndex) {
+              child = elem
+            }
+            slideClasses = getSlideClasses({ ...spec, index: key })
+            preCloneSlides.push(
+              this.cloneSlide(child, {
+                key: 'precloned' + getKey(child, key),
+                class: slideClasses,
+                style: childStyle,
+                attrs: {
+                  tabIndex: '-1',
+                  'data-index': key,
+                  'aria-hidden': `${!slideClasses['slick-active']}`,
+                },
+                childOnClickOptions,
+              }),
+            )
+          }
+
+          if (childrenCount !== spec.slidesToShow) {
+            key = childrenCount + index
+            if (key < endIndex) {
+              child = elem
+            }
+            slideClasses = getSlideClasses({ ...spec, index: key })
+            postCloneSlides.push(
+              this.cloneSlide(child, {
+                key: 'postcloned' + getKey(child, key),
+                class: slideClasses,
+                style: childStyle,
+                attrs: {
+                  tabIndex: '-1',
+                  'data-index': key,
+                  'aria-hidden': `${!slideClasses['slick-active']}`,
+                },
+                childOnClickOptions,
+              }),
+            )
+          }
+        }
+      }, this)
+
+      if (spec.rtl) {
+        return preCloneSlides.concat(slides, postCloneSlides).reverse()
+      } else {
+        return preCloneSlides.concat(slides, postCloneSlides)
+      }
+    },
+  },
+  render() {
+    const slides = this.renderSlides(this.$props, this.$slots.default)
     return (
       <div class="slick-track" style={this.trackStyle}>
         {slides}

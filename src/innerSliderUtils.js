@@ -444,7 +444,6 @@ export const PROP_KEYS = {
     'speed',
     'infinite',
     'centerMode',
-    'focusOnSelect',
     'currentSlide',
     'lazyLoad',
     'lazyLoadedList',
@@ -460,7 +459,6 @@ export const PROP_KEYS = {
     'variableWidth',
     'unslick',
     'centerPadding',
-    'focusOnSelect',
   ],
   DOT: [
     'dotsClass',

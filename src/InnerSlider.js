@@ -567,7 +567,9 @@ export default {
       this.autoplay && this.autoplaying === 'focused' && this.autoPlay('blur')
     },
     selectHandler(options) {
-      this.changeSlide(options)
+      if (this.focusOnSelect) {
+        this.changeSlide(options)
+      }
     },
   },
   render() {
@@ -580,7 +582,6 @@ export default {
     let trackProps = extractObject(this.spec, PROP_KEYS.TRACK)
     trackProps = filterUndefined({
       ...trackProps,
-      focusOnSelect: this.focusOnSelect ? this.selectHandler : undefined,
     })
     const { pauseOnHover } = this
     const trackNativeOn = filterUndefined({
@@ -674,7 +675,8 @@ export default {
           <SliderTrack
             ref="track"
             {...{ props: trackProps }}
-            {...{ nativeOn: trackNativeOn }}>
+            {...{ nativeOn: trackNativeOn }}
+            onChildClicked={this.selectHandler}>
             {this.$slots.default}
           </SliderTrack>
         </div>
