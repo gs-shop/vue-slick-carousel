@@ -71,7 +71,7 @@ const getSlideStyle = spec => {
 }
 
 const getKey = (child, fallbackKey) =>
-  (child.key != 'null' && String(child.key)) || fallbackKey
+  (child.key != null && String(child.key)) || fallbackKey
 
 export default {
   name: 'SliderTrack',
