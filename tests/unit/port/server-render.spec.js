@@ -135,7 +135,6 @@ const settingsResponsives = [
 const settingsModel = {
   accessibility: fc.boolean(), // Enable tabbing and arrow key navigation
   adaptiveHeight: fc.boolean(), // Adjust the slide's height automatically
-  // afterChange: () => {}, // Index change callback. `index => ...` // to be replaced
   // appendDots: () => {}, // Custom dots templates. Works same as customPaging // to be replaced
   arrows: fc.boolean(), // Prev/Next Arrows
   // asNavFor: undefined, // provide ref to another slider and sync it with current slider // to be replaced

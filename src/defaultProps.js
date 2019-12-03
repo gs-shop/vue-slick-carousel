@@ -1,7 +1,6 @@
 export const props = {
   accessibility: { type: Boolean, default: true },
   adaptiveHeight: { type: Boolean, default: false },
-  afterChange: { type: Function, default: null },
   appendDots: {
     type: Function,
     default: (h, dots) => <ul style={{ display: 'block' }}>{dots}</ul>,

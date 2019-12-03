@@ -265,7 +265,7 @@ export default {
       }
     },
     slideHandler(index, dontAnimate = false) {
-      const { asNavFor, beforeChange, onLazyLoad, speed, afterChange } = this
+      const { asNavFor, beforeChange, onLazyLoad, speed } = this
       // capture currentslide before state is updated
       const currentSlide = this.currentSlide
       let { state, nextState } = slideHandler({
@@ -292,7 +292,7 @@ export default {
             this.animating = animating
           }, 10),
         )
-        afterChange && afterChange(state.currentSlide)
+        this.$parent.$emit('afterChange', state.currentSlide)
         // delete this.animationEndCallback
         this.animationEndCallback = undefined
       }, speed)
