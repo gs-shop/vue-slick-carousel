@@ -62,9 +62,7 @@ export default {
     this.debouncedResize = null
 
     this.ssrInit()
-    if (this.onInit) {
-      this.onInit()
-    }
+    this.$parent.$emit('init')
     if (this.lazyLoad) {
       let slidesToLoad = getOnDemandLazySlides(this.spec)
       if (slidesToLoad.length > 0) {
