@@ -70,7 +70,8 @@ const getSlideStyle = spec => {
   return style
 }
 
-const getKey = (child, fallbackKey) => child.key || fallbackKey
+const getKey = (child, fallbackKey) =>
+  (child.key != 'null' && String(child.key)) || fallbackKey
 
 const cloneSlide = (slide, options) => {
   let clone = cloneVNode(slide)
