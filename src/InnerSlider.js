@@ -302,7 +302,9 @@ export default {
       this.debouncedResize()
     },
     resizeWindow(setTrackStyle = true) {
-      if (!this.$refs.track.$el) return
+      if (!(this.$refs.track && this.$refs.track.$el)) {
+        return
+      }
       let spec = {
         listRef: this.$refs.list,
         trackRef: this.$refs.track,
