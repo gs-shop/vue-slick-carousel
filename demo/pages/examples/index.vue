@@ -25,7 +25,11 @@
               :key="`${width}-${index}`"
               :style="{ width: `${width}px` }"
             >
-              <h1>{{ index + 1 }}</h1>
+              <img
+                v-if="config.image"
+                :src="`https://picsum.photos/300/300?random=${index}`"
+              />
+              <h1 v-else>{{ index + 1 }}</h1>
             </div>
           </VueSlickCarousel>
         </v-col>
@@ -120,6 +124,10 @@ export default {
   }
   &.short-row h1 {
     line-height: 100px;
+  }
+  img {
+    height: 300px;
+    margin: 10px auto;
   }
 }
 .vertical {

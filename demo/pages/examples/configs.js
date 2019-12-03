@@ -2,6 +2,10 @@ const verticalTemplate = `<VueSlickCarousel v-bind="settings" :style="{height: '
   <div><h3>1</h3></div>
   /*...*/
 </VueSlickCarousel>`
+const imageTemplate = `<VueSlickCarousel v-bind="settings">
+  <div><img src="https://picsum.photos/300/300" /></div>
+  /*...*/
+</VueSlickCarousel>`
 
 export default {
   simple: {
@@ -101,6 +105,8 @@ export default {
   fade: {
     title: 'Fade',
     numSlides: 4,
+    image: true,
+    template: imageTemplate,
     settings: {
       dots: true,
       fade: true,
@@ -113,7 +119,10 @@ export default {
   'lazy-load': {
     title: 'Lazy Load',
     numSlides: 4,
+    image: true,
+    template: imageTemplate,
     settings: {
+      lazyLoad: true,
       dots: true,
       fade: true,
       infinite: true,
