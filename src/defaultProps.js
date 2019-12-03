@@ -37,7 +37,6 @@ export const props = {
       </button>
     ),
   },
-  onLazyLoadError: { type: Function, default: null },
   onReInit: { type: Function, default: null },
   pauseOnDotsHover: { type: Boolean, default: false },
   pauseOnFocus: { type: Boolean, default: false },

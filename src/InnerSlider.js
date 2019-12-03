@@ -352,7 +352,7 @@ export default {
             image.onload = handler
             image.onerror = () => {
               handler()
-              this.onLazyLoadError && this.onLazyLoadError()
+              this.$parent.$emit('lazyLoadError')
             }
           }
         }
