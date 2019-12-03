@@ -114,7 +114,7 @@ export default {
   },
   updated() {
     this.checkImagesLoad()
-    this.onReInit && this.onReInit()
+    this.$parent.$emit('reInit')
     if (this.lazyLoad) {
       let slidesToLoad = getOnDemandLazySlides({
         ...this.$props,
