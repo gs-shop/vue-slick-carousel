@@ -343,7 +343,7 @@ export default {
             image.onload = () => {
               this.adaptHeight()
               this.callbackTimers.push(
-                setTimeout(this.onWindowResized, this.props.speed),
+                setTimeout(this.onWindowResized, this.speed),
               )
             }
           } else {
