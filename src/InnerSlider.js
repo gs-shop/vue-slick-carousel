@@ -607,14 +607,19 @@ export default {
 
     let prevArrow, nextArrow
     let arrowProps = extractObject(this.spec, PROP_KEYS.ARROW)
-    arrowProps.clickHandler = this.changeSlide
 
     if (this.arrows) {
       prevArrow = (
-        <SliderArrow {...{ props: { ...arrowProps, type: 'previous' } }} />
+        <SliderArrow
+          {...{ props: { ...arrowProps, type: 'previous' } }}
+          onArrowClicked={this.changeSlide}
+        />
       )
       nextArrow = (
-        <SliderArrow {...{ props: { ...arrowProps, type: 'next' } }} />
+        <SliderArrow
+          {...{ props: { ...arrowProps, type: 'next' } }}
+          onArrowClicked={this.changeSlide}
+        />
       )
     }
 

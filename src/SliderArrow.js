@@ -3,10 +3,10 @@ import { mergeVNodeData, setVNodeData } from '@/vNodeUtils'
 
 export default {
   name: 'SliderArrow',
-  props: [...PROP_KEYS.ARROW, 'clickHandler', 'type'],
+  props: [...PROP_KEYS.ARROW, 'type'],
   render(h) {
     let classes = { 'slick-arrow': true }
-    let clickHandler = this.clickHandler.bind(this, { message: this.type })
+    let clickable = true
     let arrow
     let key
     if (this.type === 'previous') {
@@ -16,7 +16,7 @@ export default {
         (this.currentSlide === 0 || this.slideCount <= this.slidesToShow)
       ) {
         classes['slick-disabled'] = true
-        clickHandler = null
+        clickable = false
       }
 
       key = '0'
@@ -29,7 +29,7 @@ export default {
       classes['slick-next'] = true
       if (!canGoNext(this.$props)) {
         classes['slick-disabled'] = true
-        clickHandler = null
+        clickable = false
       }
       key = '1'
       arrow = this.nextArrow(h, {
@@ -40,11 +40,13 @@ export default {
     }
     setVNodeData(arrow, 'key', key)
     mergeVNodeData(arrow, 'class', classes)
-    if (clickHandler) {
-      mergeVNodeData(arrow, 'on', {
-        click: clickHandler,
-      })
-    }
+    mergeVNodeData(arrow, 'on', {
+      click: () => {
+        if (clickable) {
+          this.$emit('arrowClicked', { message: this.type })
+        }
+      },
+    })
 
     return arrow
   },
