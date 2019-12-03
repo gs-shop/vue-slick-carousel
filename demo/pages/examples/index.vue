@@ -29,7 +29,9 @@
                 v-if="config.image"
                 :src="`https://picsum.photos/300/300?random=${index}`"
               />
-              <h1 v-else>{{ index + 1 }}</h1>
+              <h1 v-else>
+                {{ config.settings.variableWidth ? `${width}px` : index + 1 }}
+              </h1>
             </div>
           </VueSlickCarousel>
         </v-col>
@@ -79,7 +81,7 @@ export default {
     slidesWidth() {
       return Array.from(
         { length: this.config.numSlides || 6 },
-        () => Math.floor(Math.random() * 200) + 200,
+        () => Math.floor(Math.random() * 300) + 100,
       )
     },
     style() {
