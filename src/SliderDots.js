@@ -16,7 +16,7 @@ const getDotCount = spec => {
 
 export default {
   name: 'SliderDots',
-  props: [...PROP_KEYS.DOT, 'clickHandler'],
+  props: PROP_KEYS.DOT,
   render(h) {
     let dotCount = getDotCount({
       slideCount: this.slideCount,
@@ -48,9 +48,11 @@ export default {
         currentSlide: this.currentSlide,
       }
 
-      let onClick = this.clickHandler.bind(this, dotOptions)
       return (
-        <li key={i} class={className} onClick={onClick}>
+        <li
+          key={i}
+          class={className}
+          onClick={() => this.$emit('dotClicked', dotOptions)}>
           {this.customPaging(h, i)}
         </li>
       )

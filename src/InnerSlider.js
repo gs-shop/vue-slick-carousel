@@ -593,7 +593,6 @@ export default {
     let dots
     if (this.dots === true && this.slideCount >= this.slidesToShow) {
       let dotProps = extractObject(this.spec, PROP_KEYS.DOT)
-      dotProps.clickHandler = this.changeSlide
       const { pauseOnDotsHover } = this
       const dotNativeOn = filterUndefined({
         mouseenter: pauseOnDotsHover ? this.onDotsLeave : undefined,
@@ -601,7 +600,11 @@ export default {
         mouseleave: pauseOnDotsHover ? this.onDotsLeave : undefined,
       })
       dots = (
-        <SliderDots {...{ props: dotProps }} {...{ nativeOn: dotNativeOn }} />
+        <SliderDots
+          {...{ props: dotProps }}
+          {...{ nativeOn: dotNativeOn }}
+          onDotClicked={this.changeSlide}
+        />
       )
     }
 

@@ -466,7 +466,6 @@ export const PROP_KEYS = {
     'slidesToShow',
     'currentSlide',
     'slidesToScroll',
-    'clickHandler',
     'children',
     'customPaging',
     'infinite',
