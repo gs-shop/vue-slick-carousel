@@ -259,7 +259,7 @@ export default {
       }
     },
     slideHandler(index, dontAnimate = false) {
-      const { asNavFor, beforeChange, speed } = this
+      const { asNavFor, speed } = this
       // capture currentslide before state is updated
       const currentSlide = this.currentSlide
       let { state, nextState } = slideHandler({
@@ -270,7 +270,7 @@ export default {
         useCSS: this.useCSS && !dontAnimate,
       })
       if (!state) return
-      beforeChange && beforeChange(currentSlide, state.currentSlide)
+      this.$parent.$emit('beforeChange', currentSlide, state.currentSlide)
       let slidesToLoad = state.lazyLoadedList.filter(
         value => this.lazyLoadedList.indexOf(value) < 0,
       )

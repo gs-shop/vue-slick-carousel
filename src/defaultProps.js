@@ -8,7 +8,6 @@ export const props = {
   arrows: { type: Boolean, default: true },
   autoplay: { type: Boolean, default: false },
   autoplaySpeed: { type: Number, default: 3000 },
-  beforeChange: { type: Function, default: null },
   centerMode: { type: Boolean, default: false },
   centerPadding: { type: String, default: '50px' },
   className: { type: String, default: '' },

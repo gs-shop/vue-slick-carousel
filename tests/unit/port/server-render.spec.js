@@ -140,7 +140,6 @@ const settingsModel = {
   // asNavFor: undefined, // provide ref to another slider and sync it with current slider // to be replaced
   autoplaySpeed: fc.constantFrom(3000, 5000), // Delay between each auto scroll (in milliseconds) // not for test
   autoplay: fc.boolean(), // auto play
-  // beforeChange: null, // Index change callback. `(oldIndex, newIndex) => ...` // not for test
   centerMode: fc.boolean(), // Center current slide
   centerPadding: fc.constantFrom('100px', '150px'), // center padding
   className: fc.constant('custom-slick'), // CSS class for inner slider div
