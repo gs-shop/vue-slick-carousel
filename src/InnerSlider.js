@@ -67,9 +67,7 @@ export default {
       let slidesToLoad = getOnDemandLazySlides(this.spec)
       if (slidesToLoad.length > 0) {
         this.lazyLoadedList = this.lazyLoadedList.concat(slidesToLoad)
-        if (this.onLazyLoad) {
-          this.onLazyLoad(slidesToLoad)
-        }
+        this.$parent.$emit('lazyLoad', slidesToLoad)
       }
     }
   },
@@ -122,9 +120,7 @@ export default {
       })
       if (slidesToLoad.length > 0) {
         this.lazyLoadedList = this.lazyLoadedList.concat(slidesToLoad)
-        if (this.onLazyLoad) {
-          this.onLazyLoad(slidesToLoad)
-        }
+        this.$parent.$emit('lazyLoad', slidesToLoad)
       }
     }
     this.adaptHeight()
@@ -263,7 +259,7 @@ export default {
       }
     },
     slideHandler(index, dontAnimate = false) {
-      const { asNavFor, beforeChange, onLazyLoad, speed } = this
+      const { asNavFor, beforeChange, speed } = this
       // capture currentslide before state is updated
       const currentSlide = this.currentSlide
       let { state, nextState } = slideHandler({
@@ -278,7 +274,9 @@ export default {
       let slidesToLoad = state.lazyLoadedList.filter(
         value => this.lazyLoadedList.indexOf(value) < 0,
       )
-      onLazyLoad && slidesToLoad.length > 0 && onLazyLoad(slidesToLoad)
+      if (slidesToLoad.length) {
+        this.$parent.$emit('lazyLoad', slidesToLoad)
+      }
       Object.assign(this.$data, state)
       asNavFor && asNavFor.innerSlider.slideHandler(index)
       if (!nextState) return
@@ -383,9 +381,7 @@ export default {
       }
       if (slidesToLoad.length > 0) {
         this.lazyLoadedList = this.lazyLoadedList.concat(slidesToLoad)
-        if (this.onLazyLoad) {
-          this.onLazyLoad(slidesToLoad)
-        }
+        this.$parent.$emit('lazyLoad', slidesToLoad)
       } else {
         if (this.lazyLoadTimer) {
           clearInterval(this.lazyLoadTimer)

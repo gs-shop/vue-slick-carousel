@@ -154,7 +154,6 @@ const settingsModel = {
   infinite: fc.boolean(), // Infinitely wrap around contents
   initialSlide: fc.integer(5), // Index of first slide
   lazyLoad: fc.boolean(), // Load images or render components on demand or progressively
-  // onLazyLoad: () => {}, // Callback after slides load lazily `slidesLoaded => {...}` // not for test
   // onSwipe: () => {}, // Callback after slide changes by swiping // not for test
   pauseOnDotsHover: fc.boolean(), // Prevents autoplay while hovering on dots
   pauseOnFocus: fc.boolean(), // Prevents autoplay while focused on slides
