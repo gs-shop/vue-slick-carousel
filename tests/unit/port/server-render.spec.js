@@ -135,13 +135,11 @@ const settingsResponsives = [
 const settingsModel = {
   accessibility: fc.boolean(), // Enable tabbing and arrow key navigation
   adaptiveHeight: fc.boolean(), // Adjust the slide's height automatically
-  // afterChange: () => {}, // Index change callback. `index => ...` // to be replaced
   // appendDots: () => {}, // Custom dots templates. Works same as customPaging // to be replaced
   arrows: fc.boolean(), // Prev/Next Arrows
   // asNavFor: undefined, // provide ref to another slider and sync it with current slider // to be replaced
   autoplaySpeed: fc.constantFrom(3000, 5000), // Delay between each auto scroll (in milliseconds) // not for test
   autoplay: fc.boolean(), // auto play
-  // beforeChange: null, // Index change callback. `(oldIndex, newIndex) => ...` // not for test
   centerMode: fc.boolean(), // Center current slide
   centerPadding: fc.constantFrom('100px', '150px'), // center padding
   className: fc.constant('custom-slick'), // CSS class for inner slider div
@@ -155,10 +153,6 @@ const settingsModel = {
   infinite: fc.boolean(), // Infinitely wrap around contents
   initialSlide: fc.integer(5), // Index of first slide
   lazyLoad: fc.boolean(), // Load images or render components on demand or progressively
-  // onEdge: () => {}, // Edge dragged event in finite case, `direction => {...}` // not for test
-  // onInit: () => {}, // componentWillMount callback. `() => void` // not for test
-  // onLazyLoad: () => {}, // Callback after slides load lazily `slidesLoaded => {...}` // not for test
-  // onReInit: () => {}, // componentDidUpdate callback. `() => void` // not for test
   // onSwipe: () => {}, // Callback after slide changes by swiping // not for test
   pauseOnDotsHover: fc.boolean(), // Prevents autoplay while hovering on dots
   pauseOnFocus: fc.boolean(), // Prevents autoplay while focused on slides

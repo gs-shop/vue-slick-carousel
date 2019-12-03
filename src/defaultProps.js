@@ -1,7 +1,6 @@
 export const props = {
   accessibility: { type: Boolean, default: true },
   adaptiveHeight: { type: Boolean, default: false },
-  afterChange: { type: Function, default: null },
   appendDots: {
     type: Function,
     default: (h, dots) => <ul style={{ display: 'block' }}>{dots}</ul>,
@@ -9,7 +8,6 @@ export const props = {
   arrows: { type: Boolean, default: true },
   autoplay: { type: Boolean, default: false },
   autoplaySpeed: { type: Number, default: 3000 },
-  beforeChange: { type: Function, default: null },
   centerMode: { type: Boolean, default: false },
   centerPadding: { type: String, default: '50px' },
   className: { type: String, default: '' },
@@ -38,10 +36,6 @@ export const props = {
       </button>
     ),
   },
-  onEdge: { type: Function, default: null },
-  onInit: { type: Function, default: null },
-  onLazyLoadError: { type: Function, default: null },
-  onReInit: { type: Function, default: null },
   pauseOnDotsHover: { type: Boolean, default: false },
   pauseOnFocus: { type: Boolean, default: false },
   pauseOnHover: { type: Boolean, default: true },
@@ -67,7 +61,6 @@ export const props = {
   slidesToShow: { type: Number, default: 1 },
   speed: { type: Number, default: 500 },
   swipe: { type: Boolean, default: true },
-  swipeEvent: { type: Function, default: null },
   swipeToSlide: { type: Boolean, default: false },
   touchMove: { type: Boolean, default: true },
   touchThreshold: { type: Number, default: 5 },

@@ -62,16 +62,12 @@ export default {
     this.debouncedResize = null
 
     this.ssrInit()
-    if (this.onInit) {
-      this.onInit()
-    }
+    this.$parent.$emit('init')
     if (this.lazyLoad) {
       let slidesToLoad = getOnDemandLazySlides(this.spec)
       if (slidesToLoad.length > 0) {
         this.lazyLoadedList = this.lazyLoadedList.concat(slidesToLoad)
-        if (this.onLazyLoad) {
-          this.onLazyLoad(slidesToLoad)
-        }
+        this.$parent.$emit('lazyLoad', slidesToLoad)
       }
     }
   },
@@ -116,7 +112,7 @@ export default {
   },
   updated() {
     this.checkImagesLoad()
-    this.onReInit && this.onReInit()
+    this.$parent.$emit('reInit')
     if (this.lazyLoad) {
       let slidesToLoad = getOnDemandLazySlides({
         ...this.$props,
@@ -124,9 +120,7 @@ export default {
       })
       if (slidesToLoad.length > 0) {
         this.lazyLoadedList = this.lazyLoadedList.concat(slidesToLoad)
-        if (this.onLazyLoad) {
-          this.onLazyLoad(slidesToLoad)
-        }
+        this.$parent.$emit('lazyLoad', slidesToLoad)
       }
     }
     this.adaptHeight()
@@ -265,7 +259,7 @@ export default {
       }
     },
     slideHandler(index, dontAnimate = false) {
-      const { asNavFor, beforeChange, onLazyLoad, speed, afterChange } = this
+      const { asNavFor, speed } = this
       // capture currentslide before state is updated
       const currentSlide = this.currentSlide
       let { state, nextState } = slideHandler({
@@ -276,11 +270,13 @@ export default {
         useCSS: this.useCSS && !dontAnimate,
       })
       if (!state) return
-      beforeChange && beforeChange(currentSlide, state.currentSlide)
+      this.$parent.$emit('beforeChange', currentSlide, state.currentSlide)
       let slidesToLoad = state.lazyLoadedList.filter(
         value => this.lazyLoadedList.indexOf(value) < 0,
       )
-      onLazyLoad && slidesToLoad.length > 0 && onLazyLoad(slidesToLoad)
+      if (slidesToLoad.length) {
+        this.$parent.$emit('lazyLoad', slidesToLoad)
+      }
       Object.assign(this.$data, state)
       asNavFor && asNavFor.innerSlider.slideHandler(index)
       if (!nextState) return
@@ -292,7 +288,7 @@ export default {
             this.animating = animating
           }, 10),
         )
-        afterChange && afterChange(state.currentSlide)
+        this.$parent.$emit('afterChange', state.currentSlide)
         // delete this.animationEndCallback
         this.animationEndCallback = undefined
       }, speed)
@@ -354,7 +350,7 @@ export default {
             image.onload = handler
             image.onerror = () => {
               handler()
-              this.onLazyLoadError && this.onLazyLoadError()
+              this.$parent.$emit('lazyLoadError')
             }
           }
         }
@@ -385,9 +381,7 @@ export default {
       }
       if (slidesToLoad.length > 0) {
         this.lazyLoadedList = this.lazyLoadedList.concat(slidesToLoad)
-        if (this.onLazyLoad) {
-          this.onLazyLoad(slidesToLoad)
-        }
+        this.$parent.$emit('lazyLoad', slidesToLoad)
       } else {
         if (this.lazyLoadTimer) {
           clearInterval(this.lazyLoadTimer)
@@ -433,6 +427,8 @@ export default {
         trackRef: this.$refs.track,
         listRef: this.$refs.list,
         slideIndex: this.currentSlide,
+        onEdge: e => this.$parent.$emit('edge', e),
+        swipeEvent: e => this.$parent.$emit('swipe', e),
       })
       if (!state) return
       if (state['swiping']) {
@@ -567,7 +563,9 @@ export default {
       this.autoplay && this.autoplaying === 'focused' && this.autoPlay('blur')
     },
     selectHandler(options) {
-      this.changeSlide(options)
+      if (this.focusOnSelect) {
+        this.changeSlide(options)
+      }
     },
   },
   render() {
@@ -580,7 +578,6 @@ export default {
     let trackProps = extractObject(this.spec, PROP_KEYS.TRACK)
     trackProps = filterUndefined({
       ...trackProps,
-      focusOnSelect: this.focusOnSelect ? this.selectHandler : undefined,
     })
     const { pauseOnHover } = this
     const trackNativeOn = filterUndefined({
@@ -592,7 +589,6 @@ export default {
     let dots
     if (this.dots === true && this.slideCount >= this.slidesToShow) {
       let dotProps = extractObject(this.spec, PROP_KEYS.DOT)
-      dotProps.clickHandler = this.changeSlide
       const { pauseOnDotsHover } = this
       const dotNativeOn = filterUndefined({
         mouseenter: pauseOnDotsHover ? this.onDotsLeave : undefined,
@@ -600,20 +596,29 @@ export default {
         mouseleave: pauseOnDotsHover ? this.onDotsLeave : undefined,
       })
       dots = (
-        <SliderDots {...{ props: dotProps }} {...{ nativeOn: dotNativeOn }} />
+        <SliderDots
+          {...{ props: dotProps }}
+          {...{ nativeOn: dotNativeOn }}
+          onDotClicked={this.changeSlide}
+        />
       )
     }
 
     let prevArrow, nextArrow
     let arrowProps = extractObject(this.spec, PROP_KEYS.ARROW)
-    arrowProps.clickHandler = this.changeSlide
 
     if (this.arrows) {
       prevArrow = (
-        <SliderArrow {...{ props: { ...arrowProps, type: 'previous' } }} />
+        <SliderArrow
+          {...{ props: { ...arrowProps, type: 'previous' } }}
+          onArrowClicked={this.changeSlide}
+        />
       )
       nextArrow = (
-        <SliderArrow {...{ props: { ...arrowProps, type: 'next' } }} />
+        <SliderArrow
+          {...{ props: { ...arrowProps, type: 'next' } }}
+          onArrowClicked={this.changeSlide}
+        />
       )
     }
 
@@ -674,7 +679,8 @@ export default {
           <SliderTrack
             ref="track"
             {...{ props: trackProps }}
-            {...{ nativeOn: trackNativeOn }}>
+            {...{ nativeOn: trackNativeOn }}
+            onChildClicked={this.selectHandler}>
             {this.$slots.default}
           </SliderTrack>
         </div>
