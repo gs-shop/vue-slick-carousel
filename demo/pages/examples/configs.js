@@ -1,4 +1,4 @@
-const verticalTemplate = `<VueSlickCarousel v-bind="settings" :style="{height: '37xpx'}">
+const verticalTemplate = `<VueSlickCarousel v-bind="settings" :style="{height: '372px'}">
   <div><h3>1</h3></div>
   /*...*/
 </VueSlickCarousel>`
