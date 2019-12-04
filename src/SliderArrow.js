@@ -4,11 +4,14 @@ import { mergeVNodeData, setVNodeData } from '@/vNodeUtils'
 export default {
   name: 'SliderArrow',
   props: [...PROP_KEYS.ARROW, 'type'],
-  render(h) {
+  render() {
     let classes = { 'slick-arrow': true }
     let clickable = true
     let arrow
-    let key
+    let option = {
+      currentSlide: this.currentSlide,
+      slideCount: this.slideCount,
+    }
     if (this.type === 'previous') {
       classes['slick-prev'] = true
       if (
@@ -19,26 +22,31 @@ export default {
         clickable = false
       }
 
-      key = '0'
-      arrow = this.prevArrow(h, {
-        key,
-        currentSlide: this.currentSlide,
-        slideCount: this.slideCount,
-      })
+      option.key = '0'
+      arrow = this.prevArrow ? (
+        this.prevArrow(option)[0]
+      ) : (
+        <button type="button" data-role="none" style="display: block;">
+          Previous
+        </button>
+      )
     } else {
       classes['slick-next'] = true
       if (!canGoNext(this.$props)) {
         classes['slick-disabled'] = true
         clickable = false
       }
-      key = '1'
-      arrow = this.nextArrow(h, {
-        key,
-        currentSlide: this.currentSlide,
-        slideCount: this.slideCount,
-      })
+
+      option.key = '1'
+      arrow = this.nextArrow ? (
+        this.nextArrow(option)[0]
+      ) : (
+        <button type="button" data-role="none" style="display: block;">
+          Next
+        </button>
+      )
     }
-    setVNodeData(arrow, 'key', key)
+    setVNodeData(arrow, 'key', option.key)
     mergeVNodeData(arrow, 'class', classes)
     mergeVNodeData(arrow, 'on', {
       click: () => {

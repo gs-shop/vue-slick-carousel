@@ -39,7 +39,12 @@ export default {
   },
   mixins: [mixinPropsUpdated],
   inheritAttrs: false,
-  props: { ...props, ...{ unslick: { type: Boolean, default: false } } },
+  props: {
+    ...props,
+    unslick: { type: Boolean, default: false },
+    prevArrow: Function,
+    nextArrow: Function,
+  },
   data() {
     return { ...initialState, currentSlide: this.initialSlide }
   },

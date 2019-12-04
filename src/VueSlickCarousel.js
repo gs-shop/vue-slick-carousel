@@ -176,6 +176,8 @@ export default {
   },
   render() {
     const { settings } = this
+    settings.prevArrow = this.$scopedSlots.prevArrow
+    settings.nextArrow = this.$scopedSlots.nextArrow
     let children = this.$slots.default || []
     children = children.filter(child => !!child.tag)
     let newChildren = []

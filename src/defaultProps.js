@@ -23,35 +23,9 @@ export const props = {
   infinite: { type: Boolean, default: true },
   initialSlide: { type: Number, default: 0 },
   lazyLoad: { type: Boolean, default: false },
-  nextArrow: {
-    type: Function,
-    default: (h, options) => (
-      <button
-        key={options.key}
-        type="button"
-        data-role="none"
-        style="display: block;">
-        {' '}
-        Next
-      </button>
-    ),
-  },
   pauseOnDotsHover: { type: Boolean, default: false },
   pauseOnFocus: { type: Boolean, default: false },
   pauseOnHover: { type: Boolean, default: true },
-  prevArrow: {
-    type: Function,
-    default: (h, options) => (
-      <button
-        key={options.key}
-        type="button"
-        data-role="none"
-        style="display: block;">
-        {' '}
-        Previous
-      </button>
-    ),
-  },
   responsive: { type: Array, default: null },
   rows: { type: Number, default: 1 },
   rtl: { type: Boolean, default: false },
