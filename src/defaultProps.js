@@ -2,6 +2,7 @@ export const props = {
   accessibility: { type: Boolean, default: true },
   adaptiveHeight: { type: Boolean, default: false },
   arrows: { type: Boolean, default: true },
+  asNavFor: { type: Object, default: null },
   autoplay: { type: Boolean, default: false },
   autoplaySpeed: { type: Number, default: 3000 },
   centerMode: { type: Boolean, default: false },

@@ -12,13 +12,15 @@
         align="center"
         justify="center"
         no-gutters
-        class="carousel-wrapper"
+        :class="{ 'carousel-wrapper': true, 'as-nav-for': config.asNavFor }"
       >
         <v-col cols="8" class="pa-7">
           <VueSlickCarousel
             v-bind="config.settings"
             :style="style"
             :class="classes"
+            ref="c1"
+            :asNavFor="config.asNavFor ? $refs.c2 : null"
           >
             <div
               v-for="(width, index) in slidesWidth"
@@ -36,13 +38,52 @@
           </VueSlickCarousel>
         </v-col>
       </v-row>
+      <v-row
+        v-if="config.asNavFor"
+        align="center"
+        justify="center"
+        no-gutters
+        class="carousel-wrapper as-nav-for"
+      >
+        <v-col cols="8" class="pa-7">
+          <VueSlickCarousel
+            v-bind="config.asNavFor.settings"
+            :style="style"
+            :class="classes"
+            ref="c2"
+            :asNavFor="$refs.c1"
+          >
+            <div
+              v-for="(width, index) in slidesWidth"
+              :key="`${width}-${index}`"
+              :style="{ width: `${width}px` }"
+            >
+              <h1>
+                {{
+                  config.asNavFor.settings.variableWidth
+                    ? `${width}px`
+                    : index + 1
+                }}
+              </h1>
+            </div>
+          </VueSlickCarousel>
+        </v-col>
+      </v-row>
       <v-row class="pl-7 pr-7"><hr width="100%" /></v-row>
       <v-row>
         <v-col sm="12" md="6" class="pa-7">
           <h2># Template</h2>
           <prism language="html" :code="template" class="code"></prism>
         </v-col>
-        <v-col sm="12" md="6" class="pa-7">
+        <v-col v-if="config.asNavFor" sm="12" md="6" class="pa-7">
+          <h2># Template</h2>
+          <prism
+            language="html"
+            :code="config.asNavFor.template"
+            class="code"
+          ></prism>
+        </v-col>
+        <v-col v-else sm="12" md="6" class="pa-7">
           <h2># Settings</h2>
           <prism
             language="javascript"
@@ -91,8 +132,9 @@ export default {
       return this.config.template ? this.config.template : exampleVueTemplate
     },
     classes() {
+      const { asNavFor } = this.config
       const { vertical, rows } = this.config.settings
-      return { 'short-row': vertical || rows > 1 ? true : false, vertical }
+      return { 'short-row': vertical || rows > 1 || asNavFor, vertical }
     },
   },
   data() {
@@ -137,6 +179,9 @@ export default {
 }
 .carousel-wrapper {
   min-height: 430px;
+  &.as-nav-for {
+    min-height: 180px;
+  }
 }
 .slick-slider {
   ::v-deep .slick-dots button::before {

@@ -6,6 +6,21 @@ const imageTemplate = `<VueSlickCarousel v-bind="settings">
   <div><img src="https://picsum.photos/300/300" /></div>
   /*...*/
 </VueSlickCarousel>`
+const asNavForTemplate = `<VueSlickCarousel
+  ref="c1"
+  :asNavFor="$refs.c2"
+  :focusOnSelect="true">
+  <div><h3>1</h3></div>
+  /*...*/
+</VueSlickCarousel>`
+const asNavForTemplate2 = `<VueSlickCarousel
+  ref="c2"
+  :asNavFor="$refs.c1"
+  :slidesToShow="4"
+  :focusOnSelect="true">
+  <div><h3>1</h3></div>
+  /*...*/
+</VueSlickCarousel>`
 
 export default {
   simple: {
@@ -224,6 +239,15 @@ export default {
       vertical: true,
       verticalSwiping: true,
       swipeToSlide: true,
+    },
+  },
+  'as-nav-for': {
+    title: 'As Navigation For',
+    template: asNavForTemplate,
+    settings: { focusOnSelect: true },
+    asNavFor: {
+      template: asNavForTemplate2,
+      settings: { slidesToShow: 4, focusOnSelect: true },
     },
   },
 }

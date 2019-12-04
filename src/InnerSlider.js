@@ -284,7 +284,9 @@ export default {
         this.$parent.$emit('lazyLoad', slidesToLoad)
       }
       Object.assign(this.$data, state)
-      asNavFor && asNavFor.innerSlider.slideHandler(index)
+      if (asNavFor) {
+        asNavFor.slickGoTo(index)
+      }
       if (!nextState) return
       this.animationEndCallback = setTimeout(() => {
         const { animating, ...firstBatch } = nextState

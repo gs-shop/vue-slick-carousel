@@ -232,7 +232,7 @@ export default {
       <InnerSlider
         ref="innerSlider"
         {...{ props: settings }}
-        key={JSON.stringify(settings)}>
+        key={Object.values(settings).join('')}>
         {newChildren}
       </InnerSlider>
     )
