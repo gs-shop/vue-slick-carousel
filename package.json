@@ -1,6 +1,6 @@
 {
   "name": "vue-slick-carousel",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-beta.0",
   "scripts": {
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build --target lib ./src/VueSlickCarousel.js",
