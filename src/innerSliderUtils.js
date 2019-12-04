@@ -469,7 +469,6 @@ export const PROP_KEYS = {
     'children',
     'customPaging',
     'infinite',
-    'appendDots',
   ],
   ARROW: [
     'infinite',
