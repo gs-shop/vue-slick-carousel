@@ -1,10 +1,6 @@
 export const props = {
   accessibility: { type: Boolean, default: true },
   adaptiveHeight: { type: Boolean, default: false },
-  appendDots: {
-    type: Function,
-    default: (h, dots) => <ul style={{ display: 'block' }}>{dots}</ul>,
-  },
   arrows: { type: Boolean, default: true },
   autoplay: { type: Boolean, default: false },
   autoplaySpeed: { type: Number, default: 3000 },
@@ -12,7 +8,6 @@ export const props = {
   centerPadding: { type: String, default: '50px' },
   className: { type: String, default: '' },
   cssEase: { type: String, default: 'ease' },
-  customPaging: { type: Function, default: (h, i) => <button>{i + 1}</button> },
   dots: { type: Boolean, default: false },
   dotsClass: { type: String, default: 'slick-dots' },
   draggable: { type: Boolean, default: true },

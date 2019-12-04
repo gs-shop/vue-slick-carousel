@@ -1,5 +1,4 @@
 import { PROP_KEYS } from '@/innerSliderUtils'
-import { mergeVNodeData } from '@/vNodeUtils'
 
 const getDotCount = spec => {
   let dots
@@ -17,7 +16,7 @@ const getDotCount = spec => {
 export default {
   name: 'SliderDots',
   props: PROP_KEYS.DOT,
-  render(h) {
+  render() {
     let dotCount = getDotCount({
       slideCount: this.slideCount,
       slidesToScroll: this.slidesToScroll,
@@ -48,21 +47,31 @@ export default {
         currentSlide: this.currentSlide,
       }
 
+      const customPaging = this.customPaging ? (
+        this.customPaging(i)[0]
+      ) : (
+        <button>{i + 1}</button>
+      )
+
       return (
         <li
           key={i}
           class={className}
           onClick={() => this.$emit('dotClicked', dotOptions)}>
-          {this.customPaging(h, i)}
+          {customPaging}
         </li>
       )
     })
 
-    const wrapper = this.appendDots(h, dots)
-    mergeVNodeData(wrapper, 'class', {
+    const wrapperStyle = { display: 'block' }
+    const wrapperClass = {
       [this.dotsClass]: true,
-    })
-    wrapper.children = dots
-    return wrapper
+    }
+
+    return (
+      <ul style={wrapperStyle} class={wrapperClass}>
+        {dots}
+      </ul>
+    )
   },
 }

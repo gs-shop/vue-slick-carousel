@@ -178,6 +178,7 @@ export default {
     const { settings } = this
     settings.prevArrow = this.$scopedSlots.prevArrow
     settings.nextArrow = this.$scopedSlots.nextArrow
+    settings.customPaging = this.$scopedSlots.customPaging
     let children = this.$slots.default || []
     children = children.filter(child => !!child.tag)
     let newChildren = []

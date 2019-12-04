@@ -135,7 +135,6 @@ const settingsResponsives = [
 const settingsModel = {
   accessibility: fc.boolean(), // Enable tabbing and arrow key navigation
   adaptiveHeight: fc.boolean(), // Adjust the slide's height automatically
-  // appendDots: () => {}, // Custom dots templates. Works same as customPaging // to be replaced
   arrows: fc.boolean(), // Prev/Next Arrows
   // asNavFor: undefined, // provide ref to another slider and sync it with current slider // to be replaced
   autoplaySpeed: fc.constantFrom(3000, 5000), // Delay between each auto scroll (in milliseconds) // not for test
@@ -143,7 +142,6 @@ const settingsModel = {
   centerMode: fc.boolean(), // Center current slide
   centerPadding: fc.constantFrom('100px', '150px'), // center padding
   className: fc.constant('custom-slick'), // CSS class for inner slider div
-  // customPaging: () => {}, // Custom paging templates. [Example](examples/CustomPaging.js) // not for test
   dotsClass: fc.constant('custom-dots'), // CSS class for dots
   dots: fc.boolean(), // dots
   draggable: fc.boolean(), // Enable scrollable via dragging on desktop

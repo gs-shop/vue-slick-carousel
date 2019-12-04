@@ -44,6 +44,7 @@ export default {
     unslick: { type: Boolean, default: false },
     prevArrow: Function,
     nextArrow: Function,
+    customPaging: Function,
   },
   data() {
     return { ...initialState, currentSlide: this.initialSlide }
