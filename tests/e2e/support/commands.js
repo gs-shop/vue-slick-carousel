@@ -7,19 +7,17 @@
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This is will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getCenterXY', el => {
+  if (el) {
+    cy.get(el).then($el => {
+      const { left, right, top, bottom } = $el[0].getBoundingClientRect()
+
+      return { x: (left + right) / 2, y: (top + bottom) / 2 }
+    })
+  } else {
+    const { viewportWidth, viewportHeight } = Cypress.config()
+
+    return { x: viewportWidth / 2, y: viewportHeight / 2 }
+  }
+})
