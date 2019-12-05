@@ -161,6 +161,7 @@ export default {
   'adaptive-height': {
     title: 'Adaptive Height',
     settings: {
+      accessibility: false,
       className: '',
       dots: true,
       infinite: true,
@@ -221,10 +222,7 @@ export default {
     settings: {
       dots: true,
       infinite: true,
-      slidesToShow: 3,
       slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 2000,
       rtl: true,
     },
   },
