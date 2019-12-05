@@ -168,6 +168,7 @@ export default {
   'auto-play': {
     title: 'Auto Play',
     settings: {
+      arrows: false,
       dots: true,
       infinite: true,
       slidesToShow: 3,

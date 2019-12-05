@@ -34,6 +34,18 @@ describe('Settings', () => {
       })
     })
   })
+  describe('arrows', () => {
+    it('enables left/right arrows', () => {
+      cy.visit('/example/simple')
+      cy.get('.slick-prev').should('exist')
+      cy.get('.slick-next').should('exist')
+    })
+    it('disables left/right arrows', () => {
+      cy.visit('/example/auto-play')
+      cy.get('.slick-prev').should('not.exist')
+      cy.get('.slick-next').should('not.exist')
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/example/rtl')
