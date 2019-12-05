@@ -46,6 +46,19 @@ describe('Settings', () => {
       cy.get('.slick-next').should('not.exist')
     })
   })
+  describe('asNavFor', () => {
+    it('syncs two slides', () => {
+      cy.visit('/example/as-nav-for')
+      let currentSlide
+      cy.get('.carousel-wrapper:nth-of-type(1) .slick-prev').click()
+      cy.get('.carousel-wrapper:nth-of-type(1) .slick-current').then($slide => {
+        currentSlide = $slide.text()
+      })
+      cy.get('.carousel-wrapper:nth-of-type(2) .slick-current').then($slide => {
+        expect($slide.text()).to.contains(currentSlide)
+      })
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/example/rtl')
