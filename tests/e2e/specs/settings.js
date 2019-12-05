@@ -1,3 +1,5 @@
+import exampleConfig from '../../../demo/pages/examples/configs'
+
 describe('Settings', () => {
   describe('accessibility', () => {
     it('enables key navigation', () => {
@@ -88,6 +90,43 @@ describe('Settings', () => {
       cy.getCenterXY('[data-index="1"]').then(center => (slideCenter = center))
       cy.getCenterXY().then(viewportCenter => {
         expect(slideCenter.x).to.be.closeTo(viewportCenter.x, 10)
+      })
+    })
+  })
+  describe('centerPadding', () => {
+    it('should set padding on inner slider', () => {
+      cy.visit('/example/center-mode')
+      cy.get('.slick-list').then($innerSlider => {
+        const { centerPadding: settingsCenterPadding } = exampleConfig[
+          'center-mode'
+        ].settings
+        const {
+          paddingTop,
+          paddingRight,
+          paddingBottom,
+          paddingLeft,
+        } = getComputedStyle($innerSlider[0])
+        expect(paddingLeft).to.equal(settingsCenterPadding)
+        expect(paddingRight).to.equal(settingsCenterPadding)
+        expect(paddingTop).to.equal('0px')
+        expect(paddingBottom).to.equal('0px')
+      })
+
+      cy.visit('/example/vertical-swipe-to-slide')
+      cy.get('.slick-list').then($innerSlider => {
+        const { centerPadding: settingsCenterPadding } = exampleConfig[
+          'vertical-swipe-to-slide'
+        ].settings
+        const {
+          paddingTop,
+          paddingRight,
+          paddingBottom,
+          paddingLeft,
+        } = getComputedStyle($innerSlider[0])
+        expect(paddingTop).to.equal(settingsCenterPadding)
+        expect(paddingBottom).to.equal(settingsCenterPadding)
+        expect(paddingLeft).to.equal('0px')
+        expect(paddingRight).to.equal('0px')
       })
     })
   })

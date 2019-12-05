@@ -226,6 +226,8 @@ export default {
     title: 'Vertical Swipe To Slide',
     template: verticalTemplate,
     settings: {
+      centerMode: true,
+      centerPadding: '30px',
       dots: true,
       infinite: true,
       slidesToShow: 3,
