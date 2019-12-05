@@ -59,6 +59,19 @@ describe('Settings', () => {
       })
     })
   })
+  describe('autoplay', () => {
+    it('should change the current slide over time', () => {
+      cy.visit('/example/auto-play')
+      let currentSlide
+      cy.get('.slick-current').then($slide => {
+        currentSlide = $slide.text()
+      })
+      cy.wait(200)
+      cy.get('.slick-current').then($slide => {
+        expect($slide.text()).not.to.equal(currentSlide)
+      })
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/example/rtl')
