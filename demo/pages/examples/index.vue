@@ -133,8 +133,13 @@ export default {
     },
     classes() {
       const { asNavFor } = this.config
-      const { vertical, rows } = this.config.settings
-      return { 'short-row': vertical || rows > 1 || asNavFor, vertical }
+      const { vertical, rows, adaptiveHeight } = this.config.settings
+
+      return {
+        'short-row': vertical || rows > 1 || asNavFor,
+        'adaptive-height': adaptiveHeight,
+        vertical,
+      }
     },
   },
   data() {
@@ -172,6 +177,9 @@ export default {
   img {
     height: 300px;
     margin: 10px auto;
+  }
+  &.adaptive-height .slick-slide:nth-of-type(even) h1 {
+    line-height: 200px;
   }
 }
 .vertical {
