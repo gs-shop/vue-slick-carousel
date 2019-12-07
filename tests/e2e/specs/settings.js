@@ -130,6 +130,13 @@ describe('Settings', () => {
       })
     })
   })
+  describe('className', () => {
+    it('should add given className to sliderr', () => {
+      cy.visit('/example/center-mode')
+      const { className } = exampleConfig['center-mode'].settings
+      cy.get('.slick-slider').should('have.class', className)
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/example/rtl')
