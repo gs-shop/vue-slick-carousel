@@ -137,6 +137,16 @@ describe('Settings', () => {
       cy.get('.slick-slider').should('have.class', className)
     })
   })
+  describe('dots', () => {
+    it('should enable dots', () => {
+      cy.visit('/example/simple')
+      cy.get('.slick-dots').should('exist')
+    })
+    it('should disable dots', () => {
+      cy.visit('/example/multiple-rows')
+      cy.get('.slick-dots').should('not.exist')
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/example/rtl')
