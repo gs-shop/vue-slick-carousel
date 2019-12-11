@@ -1,6 +1,6 @@
 # vue-slick-carousel
 
-> 🚥 Vue carousel with true SSR written for faster [Luxstay](https://www.luxstay.com). This is a port of [react-slick](https://github.com/akiran/react-slick).
+> 🚥 Vue Slick Carousel with True SSR Written for Faster [Luxstay](https://www.luxstay.com). This Is a Port of [react-slick](https://github.com/akiran/react-slick).
 
 [![npm version](https://img.shields.io/npm/v/vue-slick-carousel.svg)](https://www.npmjs.com/package/vue-slick-carousel)
 [![license](https://img.shields.io/npm/l/vue-slick-carousel)](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/LICENSE)
