@@ -1,6 +1,6 @@
 # vue-slick-carousel
 
-> 🚥 Vue carousel with true SSR written for [Luxstay](https://www.luxstay.com). This is a port of [react-slick](https://github.com/akiran/react-slick).
+> 🚥 Vue carousel with true SSR written for faster [Luxstay](https://www.luxstay.com). This is a port of [react-slick](https://github.com/akiran/react-slick).
 
 [![npm version](https://img.shields.io/npm/v/vue-slick-carousel.svg)](https://www.npmjs.com/package/vue-slick-carousel)
 [![license](https://img.shields.io/npm/l/vue-slick-carousel)](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/LICENSE)
@@ -11,49 +11,79 @@
 <img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square"
       alt="Gitmoji">
 </a>
+<br/>
 
-## Project setup
+<img src="https://user-images.githubusercontent.com/1215767/70643037-a8697b00-1c83-11ea-9bc0-a3ce71d0ef62.gif" width="100%">
 
-```bash
-yarn install
-```
+<br/>
 
-### Compiles and hot-reloads for development
+## 🚚 Installation
 
-```bash
-yarn run serve
-```
-
-### Compiles and minifies for production
+### yarn/npm
 
 ```bash
-yarn run build
+npm i vue-slick-carousel
+# or
+yarn add vue-slick-carousel
 ```
 
-### Run your tests
+### cdn
 
 ```bash
-yarn run test
+# latest
+https://unpkg.com/vue-slick-carousel
+
+# specific version
+https://unpkg.com/vue-slick-carousel@1.0.0-beta.0
 ```
 
-### Lints and fixes files
+<br/>
 
-```bash
-yarn run lint
+## 🚀 Quick Start
+
+```html
+<template>
+  <div>
+    <VueSlickCarousel v-bind="settings">
+      <div><h3>1</h3></div>
+      <div><h3>2</h3></div>
+      <div><h3>3</h3></div>
+      <div><h3>4</h3></div>
+    </VueSlickCarousel>
+  </div>
+</template>
+<script>
+  // require styles from slick-carousel
+  import 'slick-carousel/slick/slick.css'
+  import 'slick-carousel/slick/slick-theme.css'
+
+  import VueSlickCarousel from 'vue-slick-carousel'
+
+  export default {
+    name: 'MyAwesomeComponent',
+    components: { VueSlickCarousel },
+    data() {
+      return {
+        settings: {
+          dots: true,
+          infinite: true,
+        },
+      }
+    },
+  }
+</script>
 ```
 
-### Run your end-to-end tests
+<br/>
 
-```bash
-yarn run test:e2e
-```
+## 📚 Docs
 
-### Run your unit tests
+- [contributing](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/CONTRIBUTING.md)
+- [commit message convention](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/COMMIT_MESSAGE_CONVENTION.md)
+- [code of conduct](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/CODE_OF_CONDUCT.md)
 
-```bash
-yarn run test:unit
-```
+<br/>
 
-### Customize configuration
+## 🔖 License
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+This software is licensed under the [MIT](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/LICENSE).
