@@ -18,3 +18,15 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+::v-deep * {
+  font-weight: 300 !important;
+  color: var(--v-secondary-base);
+}
+::v-deep pre[class*='language-'] {
+  background-color: var(--v-secondary-base);
+  ::v-deep code {
+    background-color: var(--v-secondary-base);
+  }
+}
+</style>
