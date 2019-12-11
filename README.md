@@ -1,39 +1,89 @@
 # vue-slick-carousel
 
-## Project setup
-```
-yarn install
+> 🚥 Vue carousel with true SSR written for faster [Luxstay](https://www.luxstay.com). This is a port of [react-slick](https://github.com/akiran/react-slick).
+
+[![npm version](https://img.shields.io/npm/v/vue-slick-carousel.svg)](https://www.npmjs.com/package/vue-slick-carousel)
+[![license](https://img.shields.io/npm/l/vue-slick-carousel)](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/LICENSE)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/kyuwoo-choi/vue-slick-carousel/issues?&q=is%3Aissue+is%3Aopen)
+[![code with hearth by GSShop](https://img.shields.io/badge/gsshop-%3C%2F%3E%20-cadb2a.svg)](https://github.com/gs-shop)
+[![hearth for Luxstay](https://img.shields.io/badge/luxstay-%20%E2%99%A5%20-ff3333.svg)](https://github.com/gs-shop)
+<a href="https://gitmoji.carloscuesta.me">
+<img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square"
+      alt="Gitmoji">
+</a>
+<br/>
+
+<img src="https://user-images.githubusercontent.com/1215767/70643037-a8697b00-1c83-11ea-9bc0-a3ce71d0ef62.gif" width="100%">
+
+<br/>
+
+## 🚚 Installation
+
+### yarn/npm
+
+```bash
+npm i vue-slick-carousel
+# or
+yarn add vue-slick-carousel
 ```
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
+### cdn
+
+```bash
+# latest
+https://unpkg.com/vue-slick-carousel
+
+# specific version
+https://unpkg.com/vue-slick-carousel@1.0.0-beta.0
 ```
 
-### Compiles and minifies for production
-```
-yarn run build
+<br/>
+
+## 🚀 Quick Start
+
+```html
+<template>
+  <div>
+    <VueSlickCarousel v-bind="settings">
+      <div><h3>1</h3></div>
+      <div><h3>2</h3></div>
+      <div><h3>3</h3></div>
+      <div><h3>4</h3></div>
+    </VueSlickCarousel>
+  </div>
+</template>
+<script>
+  // require styles from slick-carousel
+  import 'slick-carousel/slick/slick.css'
+  import 'slick-carousel/slick/slick-theme.css'
+
+  import VueSlickCarousel from 'vue-slick-carousel'
+
+  export default {
+    name: 'MyAwesomeComponent',
+    components: { VueSlickCarousel },
+    data() {
+      return {
+        settings: {
+          dots: true,
+          infinite: true,
+        },
+      }
+    },
+  }
+</script>
 ```
 
-### Run your tests
-```
-yarn run test
-```
+<br/>
 
-### Lints and fixes files
-```
-yarn run lint
-```
+## 📚 Docs
 
-### Run your end-to-end tests
-```
-yarn run test:e2e
-```
+- [contributing](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/CONTRIBUTING.md)
+- [commit message convention](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/COMMIT_MESSAGE_CONVENTION.md)
+- [code of conduct](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/CODE_OF_CONDUCT.md)
 
-### Run your unit tests
-```
-yarn run test:unit
-```
+<br/>
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 🔖 License
+
+This software is licensed under the [MIT](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/LICENSE).

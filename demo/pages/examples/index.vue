@@ -216,6 +216,7 @@ export default {
   background-color: var(--v-secondary-base);
   ::v-deep code {
     width: 100%;
+    box-shadow: unset;
     background-color: var(--v-secondary-base);
   }
 }
