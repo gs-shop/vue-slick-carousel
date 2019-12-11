@@ -19,13 +19,14 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-::v-deep * {
+.markdown-body ::v-deep > * {
   font-weight: 300 !important;
   color: var(--v-secondary-base);
 }
 ::v-deep pre[class*='language-'] {
   background-color: var(--v-secondary-base);
-  ::v-deep code {
+  code {
+    box-shadow: unset;
     background-color: var(--v-secondary-base);
   }
 }
