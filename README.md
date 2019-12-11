@@ -2,7 +2,6 @@
 
 > 🚥 Vue carousel with true SSR written for [Luxstay](https://www.luxstay.com). This is a port of [react-slick](https://github.com/akiran/react-slick).
 
-[![github release version](https://img.shields.io/github/v/release/kyuwoo-choi/vue-slick-carousel.svg?include_prereleases)](https://github.com/kyuwoo-choi/vue-slick-carousel/releases/latest)
 [![npm version](https://img.shields.io/npm/v/vue-slick-carousel.svg)](https://www.npmjs.com/package/vue-slick-carousel)
 [![license](https://img.shields.io/npm/l/vue-slick-carousel)](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/LICENSE)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/kyuwoo-choi/vue-slick-carousel/issues?&q=is%3Aissue+is%3Aopen)
