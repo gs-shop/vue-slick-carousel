@@ -22,11 +22,6 @@ module.exports = {
           return Prism.highlight(code, Prism.languages[lang], lang)
         },
         gfm: true,
-        sanitize: true,
-        sanitizer: function(html) {
-          console.log(html)
-          return html
-        },
       })
   },
   configureWebpack: {
