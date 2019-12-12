@@ -54,3 +54,16 @@
 |             |                                                                      |         | dontAnimate:Boolean - disables animation | false   |
 | slickPlay   | starts the autoplay                                                  | -       |                                          |         |
 | slickPause  | pauses the autoplay                                                  | -       |                                          |         |
+
+## Events
+
+| Event name    | Description                    | Arguments                                  |
+| ------------- | ------------------------------ | ------------------------------------------ |
+| init          | first initialization           | -                                          |
+| reInit        | component update               | -                                          |
+| lazyLoad      | slides load lazily             | slidesToLoad:Array                         |
+| lazyLoadError | image fails to load            | slidesToLoad:Array                         |
+| beforeChange  | before current slide change    | oldSlideIndex:Number, newSlideIndex:Number |
+| afterChange   | after current slide change     | slideIndex:Number                          |
+| edge          | edge dragged in finite case    | -                                          |
+| swipe         | after slide changes by swiping | -                                          |
