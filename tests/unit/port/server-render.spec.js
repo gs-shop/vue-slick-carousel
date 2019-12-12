@@ -145,7 +145,6 @@ const settingsModel = {
   dotsClass: fc.constant('custom-dots'), // CSS class for dots
   dots: fc.boolean(), // dots
   draggable: fc.boolean(), // Enable scrollable via dragging on desktop
-  easing: fc.constant('linear'), // easing
   fade: fc.boolean(), // fade
   focusOnSelect: fc.boolean(), // Go to slide on click
   infinite: fc.boolean(), // Infinitely wrap around contents

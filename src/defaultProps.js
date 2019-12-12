@@ -12,7 +12,6 @@ export const props = {
   dots: { type: Boolean, default: false },
   dotsClass: { type: String, default: 'slick-dots' },
   draggable: { type: Boolean, default: true },
-  easing: { type: String, default: 'linear' },
   edgeFriction: { type: Number, default: 0.35 },
   fade: { type: Boolean, default: false },
   focusOnSelect: { type: Boolean, default: false },
