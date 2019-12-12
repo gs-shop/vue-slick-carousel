@@ -48,6 +48,7 @@ export default {
       tab: null,
       menu: [
         { title: 'Home', path: '/' },
+        { title: 'API', path: '/api' },
         { title: 'Example', path: '/example' },
       ],
     }
