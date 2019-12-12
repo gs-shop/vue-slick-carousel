@@ -49,6 +49,7 @@ Find the whole type in [gitmoji](https://gitmoji.carloscuesta.me/).
 ## BREAKING CHANGE
 
 - This commit contains breaking change(s).
-- start with the word BREAKING CHANGE: with a space or two newlines. The rest of the commit message is then used for this.
+- must type :boom: in commit title.
+- start description with the word BREAKING CHANGE: with a space or two newlines. The rest of the commit message is then used for this.
 
 This convention is based on [tui.editor](https://github.com/nhn/tui.editor/blob/master/docs/COMMIT_MESSAGE_CONVENTION.md), [AngularJS](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commits) and [ESLint](https://eslint.org/docs/developer-guide/contributing/pull-requests#step2)
