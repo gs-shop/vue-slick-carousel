@@ -48,12 +48,12 @@
 
 | Method name | Description                                                          | Returns | Parameters                               | Default |
 | ----------- | -------------------------------------------------------------------- | ------- | ---------------------------------------- | ------- |
-| slickPrev   | go to the previous slide                                             | -       |                                          | -       |
-| slickNext   | go to the next slide                                                 | -       |                                          | -       |
-| slickGoTo   | go to slide index, if dontAnimate=true, it happens without animation | -       | slide:Number - slide number              | null    |
+| prev        | go to the previous slide                                             | -       |                                          | -       |
+| next        | go to the next slide                                                 | -       |                                          | -       |
+| goTo        | go to slide index, if dontAnimate=true, it happens without animation | -       | slide:Number - slide number              | null    |
 |             |                                                                      |         | dontAnimate:Boolean - disables animation | false   |
-| slickPlay   | starts the autoplay                                                  | -       |                                          |         |
-| slickPause  | pauses the autoplay                                                  | -       |                                          |         |
+| play        | starts the autoplay                                                  | -       |                                          |         |
+| pause       | pauses the autoplay                                                  | -       |                                          |         |
 
 ## Events
 

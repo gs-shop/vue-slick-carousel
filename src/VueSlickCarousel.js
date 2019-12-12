@@ -107,19 +107,19 @@ export default {
     this.clearBreakpoints()
   },
   methods: {
-    slickPrev() {
-      this.$refs.innerSlider.slickPrev()
+    prev() {
+      this.$refs.innerSlider.prev()
     },
-    slickNext() {
-      this.$refs.innerSlider.slickNext()
+    next() {
+      this.$refs.innerSlider.next()
     },
-    slickGoTo(slide, dontAnimate = false) {
-      this.$refs.innerSlider.slickGoTo(slide, dontAnimate)
+    goTo(slide, dontAnimate = false) {
+      this.$refs.innerSlider.goTo(slide, dontAnimate)
     },
-    slickPause() {
+    pause() {
       this.$refs.innerSlider.pause('paused')
     },
-    slickPlay() {
+    play() {
       this.$refs.innerSlider.autoPlay('play')
     },
     onPropsUpdated() {

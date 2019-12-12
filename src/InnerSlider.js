@@ -285,7 +285,7 @@ export default {
       }
       Object.assign(this.$data, state)
       if (asNavFor) {
-        asNavFor.slickGoTo(index)
+        asNavFor.goTo(index)
       }
       if (!nextState) return
       this.animationEndCallback = setTimeout(() => {
@@ -465,7 +465,7 @@ export default {
         this.enableBodyScroll()
       }
     },
-    slickPrev() {
+    prev() {
       // this and fellow methods are wrapped in setTimeout
       // to make sure initialize setState has happened before
       // any of such methods are called
@@ -473,12 +473,12 @@ export default {
         setTimeout(() => this.changeSlide({ message: 'previous' }), 0),
       )
     },
-    slickNext() {
+    next() {
       this.callbackTimers.push(
         setTimeout(() => this.changeSlide({ message: 'next' }), 0),
       )
     },
-    slickGoTo(slide, dontAnimate = false) {
+    goTo(slide, dontAnimate = false) {
       slide = Number(slide)
       if (isNaN(slide)) return ''
       this.callbackTimers.push(
