@@ -22,6 +22,7 @@ SOFTWARE.
 
 ---
 
-vue-slick-carousel was ported from react-slick:
+vue-slick-carousel was ported from react-slick & slick-carousel:
 
 Copyright (c) 2014 Kiran Abburi
+Copyright (c) 2017 Ken Wheeler
