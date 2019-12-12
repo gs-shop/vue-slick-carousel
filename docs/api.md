@@ -67,3 +67,14 @@
 | afterChange   | after current slide change     | slideIndex:Number                          |
 | edge          | edge dragged in finite case    | -                                          |
 | swipe         | after slide changes by swiping | -                                          |
+
+## Slots
+
+| Name         | Description                           | Bindings                                     |
+| ------------ | ------------------------------------- | -------------------------------------------- |
+| prevArrow    | replaces prev arrow with given child  | currentSlide:Number - index of current slide |
+|              |                                       | slideCount:Number - number of slides         |
+| nextArrow    | replaces next arrow with given child  | currentSlide:Number - index of current slide |
+|              |                                       | slideCount:Number - number of slides         |
+| customPaging | replaces paging dots with given child | Number - index of a dot                      |
+| default      | slides children                       |                                              |
