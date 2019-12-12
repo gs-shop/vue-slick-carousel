@@ -149,7 +149,7 @@ const settingsModel = {
   focusOnSelect: fc.boolean(), // Go to slide on click
   infinite: fc.boolean(), // Infinitely wrap around contents
   initialSlide: fc.integer(5), // Index of first slide
-  lazyLoad: fc.boolean(), // Load images or render components on demand or progressively
+  lazyLoad: fc.constantFrom('ondemand', 'progressive'), // Load images or render components on demand or progressively
   // onSwipe: () => {}, // Callback after slide changes by swiping // not for test
   pauseOnDotsHover: fc.boolean(), // Prevents autoplay while hovering on dots
   pauseOnFocus: fc.boolean(), // Prevents autoplay while focused on slides

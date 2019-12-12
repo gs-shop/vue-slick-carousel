@@ -137,7 +137,7 @@ export default {
     image: true,
     template: imageTemplate,
     settings: {
-      lazyLoad: true,
+      lazyLoad: 'ondemand',
       dots: true,
       fade: true,
       infinite: true,

@@ -17,7 +17,7 @@ export const props = {
   focusOnSelect: { type: Boolean, default: false },
   infinite: { type: Boolean, default: true },
   initialSlide: { type: Number, default: 0 },
-  lazyLoad: { type: Boolean, default: false },
+  lazyLoad: { type: String, default: null },
   pauseOnDotsHover: { type: Boolean, default: false },
   pauseOnFocus: { type: Boolean, default: false },
   pauseOnHover: { type: Boolean, default: true },
