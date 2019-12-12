@@ -78,6 +78,7 @@ https://unpkg.com/vue-slick-carousel@1.0.0-beta.0
 
 ## 📚 Docs
 
+- [settings props](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/api.md#props)
 - [contributing](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/CONTRIBUTING.md)
 - [commit message convention](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/COMMIT_MESSAGE_CONVENTION.md)
 - [code of conduct](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/CODE_OF_CONDUCT.md)
