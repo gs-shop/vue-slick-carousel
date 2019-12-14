@@ -55,9 +55,9 @@ See [API](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/API
   </div>
 </template>
 <script>
-  // require styles from slick-carousel
-  import 'slick-carousel/slick/slick.css'
-  import 'slick-carousel/slick/slick-theme.css'
+  // require slick styles
+  import 'vue-slick-carousel/dist/slick.css'
+  import 'vue-slick-carousel/dist/slick-theme.css'
 
   import VueSlickCarousel from 'vue-slick-carousel'
 
