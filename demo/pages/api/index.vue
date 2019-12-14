@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import apiDoc from '../../../docs/api.md'
+import apiDoc from '../../../docs/API.md'
 import MarkdownContent from '../../components/MarkdownContent'
 
 export default {

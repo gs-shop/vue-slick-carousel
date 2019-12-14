@@ -71,7 +71,7 @@ If you are changing functionality, update the tests if you need to.
 
 #### Commit
 
-Follow our [commit message conventions](./COMMIT_MESSAGE_CONVENTION.md).
+Follow our [commit message conventions](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/COMMIT_MESSAGE_CONVENTION.md).
 
 ### Yes! Pull request
 
@@ -95,6 +95,6 @@ If it has related to issues, add links to the issues(like `#123`) in the descrip
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Code of Conduct](./CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to kyuwoo.choi@gmail.com.
+This project and everyone participating in it is governed by the [Code of Conduct](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to kyuwoo.choi@gmail.com.
 
 > This Guide is base on [tui.editor](https://github.com/nhn/tui.editor/blob/master/CONTRIBUTING.md), [atom](https://github.com/atom/atom/blob/master/CONTRIBUTING.md), [CocoaPods](http://guides.cocoapods.org/contributing/contribute-to-cocoapods.html) and [ESLint](http://eslint.org/docs/developer-guide/contributing/pull-requests)

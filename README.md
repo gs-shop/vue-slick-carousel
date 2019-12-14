@@ -78,13 +78,13 @@ https://unpkg.com/vue-slick-carousel@1.0.0-beta.0
 
 ## 📚 Docs
 
-- [settings props](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/api.md#props)
-- [methods](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/api.md#methods)
-- [events](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/api.md#events)
-- [slots](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/api.md#slots)
-- [contributing](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/CONTRIBUTING.md)
-- [commit message convention](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/COMMIT_MESSAGE_CONVENTION.md)
-- [code of conduct](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/CODE_OF_CONDUCT.md)
+- [settings props](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/API.md#props)
+- [methods](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/API.md#methods)
+- [events](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/API.md#events)
+- [slots](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/API.md#slots)
+- [contributing](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/CONTRIBUTING.md)
+- [commit message convention](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/COMMIT_MESSAGE_CONVENTION.md)
+- [code of conduct](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/CODE_OF_CONDUCT.md)
 
 <br/>
 
