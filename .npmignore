@@ -9,3 +9,4 @@ yarn-error.log
 .prettierrc
 .eslintrc.js
 .browserslistrc
+dist/demo.html
