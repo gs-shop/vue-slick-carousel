@@ -5,7 +5,11 @@ loadLanguages(['bash'])
 
 module.exports = {
   pages: {
-    index: './demo/main.js',
+    index: {
+      entry: './demo/main.js',
+      template: './demo/template.html',
+      title: 'Vue Slick Carousel',
+    },
   },
   publicPath: '.',
   chainWebpack: config => {
