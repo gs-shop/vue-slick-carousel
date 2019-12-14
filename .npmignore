@@ -1,5 +1,6 @@
-tests
-demo
+demo/
+tests/
+gh-pages/
 vue.config.js
 postcss.config.js
 jest.config.js
@@ -10,4 +11,3 @@ yarn-error.log
 .eslintrc.js
 .browserslistrc
 dist/demo.html
-gh-pages/
