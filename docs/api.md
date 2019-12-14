@@ -2,6 +2,44 @@
 
 ## Props
 
+### Passing Setting Props
+
+```html
+<template>
+  <VueSlickCarousel :arrows="true" :dots="true">
+    <div><h3>1</h3></div>
+    /*...*/
+  </VueSlickCarousel>
+</template>
+```
+
+### Passing Settings Object by `v-bind`
+
+```html
+<template>
+  <VueSlickCarousel v-bind="settings">
+    <div><h3>1</h3></div>
+    /*...*/
+  </VueSlickCarousel>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        settings: {
+          arrows: true,
+          dots: true,
+        },
+      }
+    },
+  }
+</script>
+```
+
+### All Props
+
+Check out [demo examples](https://kyuwoo-choi.github.io/vue-slick-carousel/#/example) for settings usage.
+
 | Prop name        | Description                                                                                                                                                                      | Type    | Values                | Default      |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --------------------- | ------------ |
 | accessibility    | enables tabbing and arrow key navigation                                                                                                                                         | boolean | -                     | true         |
