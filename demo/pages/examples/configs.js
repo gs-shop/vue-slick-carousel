@@ -96,7 +96,6 @@ export default {
     title: 'Multiple Rows',
     numSlides: 16,
     settings: {
-      className: 'center',
       centerMode: true,
       infinite: true,
       centerPadding: '60px',
@@ -109,7 +108,6 @@ export default {
   'center-mode': {
     title: 'Center Mode',
     settings: {
-      className: 'center',
       centerMode: true,
       infinite: true,
       centerPadding: '60px',
@@ -149,7 +147,6 @@ export default {
   'variable-width': {
     title: 'Variable Width',
     settings: {
-      className: 'slider variable-width',
       dots: true,
       infinite: true,
       centerMode: true,
@@ -162,7 +159,6 @@ export default {
     title: 'Adaptive Height',
     settings: {
       accessibility: false,
-      className: '',
       dots: true,
       infinite: true,
       slidesToShow: 1,

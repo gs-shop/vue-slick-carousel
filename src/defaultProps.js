@@ -7,7 +7,6 @@ export const props = {
   autoplaySpeed: { type: Number, default: 3000 },
   centerMode: { type: Boolean, default: false },
   centerPadding: { type: String, default: '50px' },
-  className: { type: String, default: '' },
   cssEase: { type: String, default: 'ease' },
   dots: { type: Boolean, default: false },
   dotsClass: { type: String, default: 'slick-dots' },
