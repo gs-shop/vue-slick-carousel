@@ -1,22 +1,22 @@
 <template>
   <v-content>
     <v-container ref="api" class="markdown-body"></v-container>
+    <v-container>
+      <MarkdownContent :content="apiDoc"></MarkdownContent>
+    </v-container>
   </v-content>
 </template>
 
 <script>
 import apiDoc from '../../../docs/api.md'
-import 'github-markdown-css'
+import MarkdownContent from '../../components/MarkdownContent'
 
 export default {
-  mounted() {
-    this.$refs.api.innerHTML = apiDoc
+  components: { MarkdownContent },
+  data() {
+    return {
+      apiDoc,
+    }
   },
 }
 </script>
-<style lang="scss" scoped>
-.markdown-body ::v-deep > * {
-  font-weight: 300 !important;
-  color: var(--v-secondary-base);
-}
-</style>
