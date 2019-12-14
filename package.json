@@ -4,6 +4,7 @@
   "scripts": {
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build --target lib ./src/VueSlickCarousel.js",
+    "build:demo": "vue-cli-service build --dest gh-pages && gh-pages -d gh-pages",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
@@ -32,6 +33,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^5.0.0",
     "fast-check": "1.19.0",
+    "gh-pages": "2.1.1",
     "github-markdown-css": "3.0.1",
     "html-loader": "0.5.5",
     "html-to-react": "1.4.2",
