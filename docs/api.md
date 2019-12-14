@@ -84,6 +84,29 @@ Check out [demo examples](https://kyuwoo-choi.github.io/vue-slick-carousel/#/exa
 
 ## Methods
 
+### Calling Methods
+
+```html
+<template>
+  <VueSlickCarousel ref="carousel">
+    <div><h3>1</h3></div>
+    /*...*/
+  </VueSlickCarousel>
+  <button @click="showNext">show me the next</button>
+</template>
+<script>
+  export default {
+    methods: {
+      showNext() {
+        this.$refs.carousel.next()
+      },
+    },
+  }
+</script>
+```
+
+### All Methods
+
 | Method name | Description                                                          | Returns | Parameters                               | Default |
 | ----------- | -------------------------------------------------------------------- | ------- | ---------------------------------------- | ------- |
 | prev        | go to the previous slide                                             | -       |                                          | -       |
