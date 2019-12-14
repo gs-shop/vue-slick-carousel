@@ -7,6 +7,7 @@ module.exports = {
   pages: {
     index: './demo/main.js',
   },
+  publicPath: '.',
   chainWebpack: config => {
     config.module
       .rule('md')
