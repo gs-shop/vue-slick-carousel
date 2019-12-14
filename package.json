@@ -1,6 +1,26 @@
 {
   "name": "vue-slick-carousel",
   "version": "1.0.0-beta.0",
+  "description": "Vue Slick Carousel with True SSR Written for Faster Luxstay",
+  "keywords": [
+    "vue",
+    "slick",
+    "carousel",
+    "slider",
+    "ssr",
+    "pwa",
+    "nuxt"
+  ],
+  "homepage": "https://kyuwoo-choi.github.io/vue-slick-carousel/",
+  "bugs": {
+    "url": "https://github.com/kyuwoo-choi/vue-slick-carousel/issues"
+  },
+  "license": "MIT",
+  "author": "KyuWoo Choi <kyuwoo.choi@gmail.com> (https://kyu.io/)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kyuwoo-choi/vue-slick-carousel.git"
+  },
   "scripts": {
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build --target lib ./src/VueSlickCarousel.js && cpx \"node_modules/slick-carousel/slick/*.css\" dist/",
