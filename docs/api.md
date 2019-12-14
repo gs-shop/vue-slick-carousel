@@ -118,6 +118,28 @@ Check out [demo examples](https://kyuwoo-choi.github.io/vue-slick-carousel/#/exa
 
 ## Events
 
+### Listening to Events
+
+```html
+<template>
+  <VueSlickCarousel @init="onInitCarousel">
+    <div><h3>1</h3></div>
+    /*...*/
+  </VueSlickCarousel>
+</template>
+<script>
+  export default {
+    methods: {
+      onInitCarousel() {
+        console.log('our carousel is ready')
+      },
+    },
+  }
+</script>
+```
+
+### All Events
+
 | Event name    | Description                    | Arguments                                  |
 | ------------- | ------------------------------ | ------------------------------------------ |
 | init          | first initialization           | -                                          |
