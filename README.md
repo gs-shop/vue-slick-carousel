@@ -41,6 +41,8 @@ https://unpkg.com/vue-slick-carousel@1.0.0-beta.0
 
 ## 🚀 Quick Start
 
+See [API](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/API.md) & [Examples](https://kyuwoo-choi.github.io/vue-slick-carousel/#/example/) to learn advanced usage.
+
 ```html
 <template>
   <div>
@@ -78,6 +80,7 @@ https://unpkg.com/vue-slick-carousel@1.0.0-beta.0
 
 ## 📚 Docs
 
+- [examples](https://kyuwoo-choi.github.io/vue-slick-carousel/#/example/)
 - [settings props](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/API.md#props)
 - [methods](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/API.md#methods)
 - [events](https://github.com/kyuwoo-choi/vue-slick-carousel/blob/master/docs/API.md#events)
