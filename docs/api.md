@@ -153,6 +153,30 @@ Check out [demo examples](https://kyuwoo-choi.github.io/vue-slick-carousel/#/exa
 
 ## Slots
 
+### Customizing Arrows & Dots
+
+```html
+<template>
+  <VueSlickCarousel @init="onInitCarousel">
+    <div><h3>1</h3></div>
+    /*...*/
+    <template #prevArrow="arrowOption">
+      <div class="custom-arrow">
+        {{ arrowOption.currentSlide }}/{{ arrowOption.slideCount }}
+      </div>
+    </template>
+    /*...*/
+    <template #customPaging="page">
+      <div class="custom-dot">
+        {{ page }}
+      </div>
+    </template>
+  </VueSlickCarousel>
+</template>
+```
+
+### All Slots
+
 | Name         | Description                           | Bindings                                     |
 | ------------ | ------------------------------------- | -------------------------------------------- |
 | prevArrow    | replaces prev arrow with given child  | currentSlide:Number - index of current slide |
