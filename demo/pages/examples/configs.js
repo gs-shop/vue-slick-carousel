@@ -97,6 +97,7 @@ export default {
     numSlides: 16,
     settings: {
       centerMode: true,
+      centerPadding: '20px',
       infinite: true,
       slidesToShow: 3,
       speed: 500,
@@ -108,8 +109,8 @@ export default {
     title: 'Center Mode',
     settings: {
       centerMode: true,
+      centerPadding: '20px',
       infinite: true,
-      centerPadding: '60px',
       slidesToShow: 3,
       speed: 500,
     },
@@ -149,6 +150,7 @@ export default {
       dots: true,
       infinite: true,
       centerMode: true,
+      centerPadding: '20px',
       slidesToShow: 1,
       slidesToScroll: 1,
       variableWidth: true,
