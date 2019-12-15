@@ -122,7 +122,7 @@ export default {
       const { min, max } =
         this.screen === 'mobile'
           ? { min: 50, max: 150 }
-          : { min: 100, max: 400 }
+          : { min: 200, max: 400 }
 
       return Array.from(
         { length: this.config.numSlides || 6 },
