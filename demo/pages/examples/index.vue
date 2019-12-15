@@ -165,39 +165,51 @@ export default {
 }
 .slick-slider {
   h1 {
-    line-height: 300px;
     background-color: var(--v-secondary-base);
-    margin: 10px;
     text-align: center;
     color: var(--v-primary-lighten2);
+    line-height: 100px;
+    margin: 1px;
+    font-size: 1em;
+    @media (min-width: 1024px) {
+      line-height: 300px;
+      margin: 10px;
+      font-size: 2em;
+    }
   }
   &.short-row h1 {
-    line-height: 100px;
+    line-height: 50px;
+    @media (min-width: 1024px) {
+      line-height: 100px;
+    }
   }
   img {
-    height: 300px;
-    margin: 10px auto;
+    height: 100px;
+    margin: 1px auto;
+    @media (min-width: 1024px) {
+      height: 300px;
+      margin: 10px auto;
+    }
   }
   &.adaptive-height .slick-slide:nth-of-type(even) h1 {
     line-height: 200px;
   }
-}
-.vertical {
-  height: 372px;
-}
-.carousel-wrapper {
-  min-height: 430px;
-  &.as-nav-for {
-    min-height: 180px;
-  }
-}
-.slick-slider {
-  ::v-deep .slick-dots button::before {
-    color: var(--v-secondary-base);
-    opacity: 0.25;
-  }
-  ::v-deep .slick-dots .slick-active button::before {
-    opacity: 1;
+
+  ::v-deep .slick-dots {
+    padding: 0px;
+    li {
+      width: 10px;
+      @media (min-width: 1024px) {
+        width: 20px;
+      }
+    }
+    button::before {
+      color: var(--v-secondary-base);
+      opacity: 0.25;
+    }
+    .slick-active button::before {
+      opacity: 1;
+    }
   }
 
   ::v-deep .slick-arrow:before {
@@ -206,6 +218,21 @@ export default {
   }
   ::v-deep .slick-arrow.slick-disabled:before {
     opacity: 0.25;
+  }
+}
+.vertical {
+  height: 372px;
+}
+.carousel-wrapper {
+  min-height: 170px;
+  @media (min-width: 1024px) {
+    min-height: 430px;
+  }
+  &.as-nav-for {
+    min-height: 110px;
+    @media (min-width: 1024px) {
+      min-height: 180px;
+    }
   }
 }
 
