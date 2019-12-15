@@ -17,7 +17,6 @@
         <v-col cols="8" class="pa-7">
           <VueSlickCarousel
             v-bind="config.settings"
-            :style="style"
             :class="classes"
             ref="c1"
             :asNavFor="config.asNavFor ? $refs.c2 : null"
@@ -48,7 +47,6 @@
         <v-col cols="8" class="pa-7">
           <VueSlickCarousel
             v-bind="config.asNavFor.settings"
-            :style="style"
             :class="classes"
             ref="c2"
             :asNavFor="$refs.c1"
@@ -125,9 +123,6 @@ export default {
         () => Math.floor(Math.random() * 300) + 100,
       )
     },
-    style() {
-      return { height: this.config.settings.vertical ? '372px' : '' }
-    },
     template() {
       return this.config.template ? this.config.template : exampleVueTemplate
     },
@@ -138,7 +133,6 @@ export default {
       return {
         'short-row': vertical || rows > 1 || asNavFor,
         'adaptive-height': adaptiveHeight,
-        vertical,
       }
     },
   },
@@ -219,9 +213,6 @@ export default {
   ::v-deep .slick-arrow.slick-disabled:before {
     opacity: 0.25;
   }
-}
-.vertical {
-  height: 372px;
 }
 .carousel-wrapper {
   min-height: 170px;

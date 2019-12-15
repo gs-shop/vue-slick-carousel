@@ -634,7 +634,7 @@ export default {
     var verticalHeightStyle = {}
     if (this.vertical) {
       verticalHeightStyle = {
-        height: this.listHeight,
+        height: `${this.listHeight}px`,
       }
     }
 
