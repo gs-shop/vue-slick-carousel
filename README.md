@@ -46,32 +46,24 @@ See [API](https://github.com/gs-shop/vue-slick-carousel/blob/master/docs/API.md)
 ```html
 <template>
   <div>
-    <VueSlickCarousel v-bind="settings">
-      <div><h3>1</h3></div>
-      <div><h3>2</h3></div>
-      <div><h3>3</h3></div>
-      <div><h3>4</h3></div>
+    <VueSlickCarousel :arrows="true" :dots="true">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
     </VueSlickCarousel>
   </div>
 </template>
+
 <script>
-  // require slick styles
   import 'vue-slick-carousel/dist/slick.css'
   import 'vue-slick-carousel/dist/slick-theme.css'
 
   import VueSlickCarousel from 'vue-slick-carousel'
 
   export default {
-    name: 'MyAwesomeComponent',
+    name: 'MyComponent',
     components: { VueSlickCarousel },
-    data() {
-      return {
-        settings: {
-          dots: true,
-          infinite: true,
-        },
-      }
-    },
   }
 </script>
 ```
