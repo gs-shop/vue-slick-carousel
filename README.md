@@ -50,9 +50,6 @@ yarn add vue-slick-carousel
 ```bash
 # latest
 https://unpkg.com/vue-slick-carousel
-
-# specific version
-https://unpkg.com/vue-slick-carousel@1.0.0-beta.0
 ```
 
 <br/>
