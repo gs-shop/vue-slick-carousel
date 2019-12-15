@@ -96,8 +96,6 @@ export default {
     title: 'Multiple Rows',
     numSlides: 16,
     settings: {
-      centerMode: true,
-      centerPadding: '20px',
       infinite: true,
       slidesToShow: 3,
       speed: 500,
