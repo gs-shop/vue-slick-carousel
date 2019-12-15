@@ -38,7 +38,7 @@
 
 ### All Props
 
-Check out [demo examples](https://kyuwoo-choi.github.io/vue-slick-carousel/#/example) for settings usage.
+Check out [demo examples](https://gs-shop.github.io/vue-slick-carousel/#/example) for settings usage.
 
 | Prop name        | Description                                                                                                                                                                      | Type    | Values                | Default      |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --------------------- | ------------ |

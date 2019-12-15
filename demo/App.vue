@@ -14,7 +14,7 @@
         right
         color="secondary"
       >
-        <a href="https://github.com/kyuwoo-choi/vue-slick-carousel">
+        <a href="https://github.com/gs-shop/vue-slick-carousel">
           <v-icon dark>fab fa-github</v-icon>
         </a>
       </v-btn>
