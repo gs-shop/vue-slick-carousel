@@ -96,6 +96,7 @@
 
 <script>
 import Prism from 'vue-prismjs'
+import enquire from 'enquire.js'
 
 import 'prismjs/themes/prism-tomorrow.css'
 import 'slick-carousel/slick/slick.css'
@@ -118,9 +119,14 @@ export default {
   },
   computed: {
     slidesWidth() {
+      const { min, max } =
+        this.screen === 'mobile'
+          ? { min: 50, max: 150 }
+          : { min: 100, max: 400 }
+
       return Array.from(
         { length: this.config.numSlides || 6 },
-        () => Math.floor(Math.random() * 300) + 100,
+        () => Math.floor(Math.random() * (max - min)) + min,
       )
     },
     template() {
@@ -146,8 +152,22 @@ export default {
 
     return {
       tab: null,
+      screen: 'mobile',
       menu,
     }
+  },
+  created() {
+    enquire.register('(min-width: 0px) and (max-width: 600px)', this.onMobile)
+    enquire.register('(min-width: 601px)', this.onDesktop)
+    console.log('asdf')
+  },
+  methods: {
+    onMobile() {
+      this.screen = 'mobile'
+    },
+    onDesktop() {
+      this.screen = 'desktop'
+    },
   },
 }
 </script>
