@@ -159,7 +159,6 @@ export default {
   created() {
     enquire.register('(min-width: 0px) and (max-width: 600px)', this.onMobile)
     enquire.register('(min-width: 601px)', this.onDesktop)
-    console.log('asdf')
   },
   methods: {
     onMobile() {
