@@ -8,7 +8,7 @@ module.exports = {
     index: {
       entry: './demo/main.js',
       template: './demo/template.html',
-      title: 'Vue Slick Carousel',
+      title: '🚥 Vue Slick Carousel with True SSR Written for Faster Luxstay',
     },
   },
   publicPath: '.',
