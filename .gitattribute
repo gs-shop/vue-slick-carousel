@@ -1,0 +1,2 @@
+src/**/*.js linguist-language=Vue
+demo/**/*.js linguist-language=Vue
