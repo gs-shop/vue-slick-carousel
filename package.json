@@ -23,7 +23,7 @@
   },
   "scripts": {
     "serve": "vue-cli-service serve --open",
-    "build": "vue-cli-service build --target lib ./src/VueSlickCarousel.js && cpx \"node_modules/slick-carousel/slick/*.css\" dist/",
+    "build": "vue-cli-service build --target lib ./src/VueSlickCarousel.js",
     "build:demo": "vue-cli-service build --dest gh-pages && gh-pages -d gh-pages",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
@@ -36,6 +36,7 @@
     "enquire.js": "2.1.6",
     "json2mq": "0.2.0",
     "lodash": "4.17.15",
+    "slick-carousel": "1.8.1",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -48,7 +49,6 @@
     "@vue/eslint-config-prettier": "^5.0.0",
     "@vue/test-utils": "^1.0.0-beta.29",
     "babel-eslint": "^10.0.3",
-    "cpx": "^1.5.0",
     "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^5.0.0",
@@ -67,7 +67,6 @@
     "react-slick": "^0.25.2",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
-    "slick-carousel": "1.8.1",
     "strip-html-comments": "^1.0.0",
     "vue-cli-plugin-vuetify": "^2.0.2",
     "vue-fragment": "^1.5.1",

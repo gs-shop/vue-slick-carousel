@@ -71,8 +71,9 @@ See [API](https://github.com/gs-shop/vue-slick-carousel/blob/master/docs/API.md)
 </template>
 
 <script>
-  import 'vue-slick-carousel/dist/slick.css'
-  import 'vue-slick-carousel/dist/slick-theme.css'
+  // require styles from slick-carousel
+  import 'slick-carousel/slick/slick.css'
+  import 'slick-carousel/slick/slick-theme.css'
 
   import VueSlickCarousel from 'vue-slick-carousel'
 
