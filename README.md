@@ -1,3 +1,13 @@
+> Urgent Notice for installation error for 1.0.0-beta.2
+> Currently npm registry has publish failure issue since Dec 16, 14:14 UTC.
+> Before resolving this issue, install with below steps.
+> This message will be removed when the issue is fixed.
+
+```sh
+yarn add vue-slick-carousel@1.0.0-beta.1
+yarn add slick-carousel
+```
+
 # vue-slick-carousel
 
 > 🚥 Vue Slick Carousel with True SSR Written for Faster [Luxstay](https://www.luxstay.com). This Is a Port of [react-slick](https://github.com/akiran/react-slick).
