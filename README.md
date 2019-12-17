@@ -29,9 +29,21 @@
 
 vue-slick-carousel inherits the long-loved slick-carousel features, offers a variety of functions. It has been completely rewritten as a vue component. If you were trying to use the slick-carousel in the vue, it would be a perfect choice. You can use it in a vue component manner without any disparity. It also makes it easy to solve difficult problems such as custom arrows/dots.
 
-It is designed to support SSR from the start. So far, we have confirmed that the vue-slick-carousel is the only carousel that supports SSR with rich features. If you value website performance, you are in the right place.
-
 Find out all available features on [setting props](https://github.com/gs-shop/vue-slick-carousel/blob/master/docs/API.md#props) and see how that works on [examples](https://gs-shop.github.io/vue-slick-carousel/#/example/).
+
+<br/>
+
+## True SSR
+
+|             [no-ssr-slick](https://codesandbox.io/s/github/kyuwoo-choi/nuxt-no-ssr-slick-example)             |       [vue-slick-carousel](https://codesandbox.io/s/github/kyuwoo-choi/nuxt-vue-slick-carousel-example)       |
+| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+| ![image](https://user-images.githubusercontent.com/1215767/71011941-a3984180-2131-11ea-8fb5-bbcdaf5740c7.png) | ![image](https://user-images.githubusercontent.com/1215767/71011993-b3b02100-2131-11ea-9295-4aca745f0706.png) |
+|                                           FCP: 1920ms & LCP: 3090ms                                           |                                           FCP: 620ms & LCP: 1850ms                                            |
+
+It is designed to support SSR from the start. vue-slick-carousel supports true SSR. No more `no-ssr` or `client-only` to make it work anyway. If you value website performance, you are in the right place.
+
+Here're nuxt examples for you to test yourself:
+[no-ssr-slick](https://codesandbox.io/s/github/kyuwoo-choi/nuxt-no-ssr-slick-example) vs [vue-slick-carousel](https://codesandbox.io/s/github/kyuwoo-choi/nuxt-vue-slick-carousel-example)
 
 <br/>
 
