@@ -23,7 +23,7 @@
   },
   "scripts": {
     "serve": "vue-cli-service serve --open",
-    "build": "vue-cli-service build --target lib ./src/VueSlickCarousel.js",
+    "build": "vue-cli-service build --target lib ./src/VueSlickCarousel.vue",
     "build:demo": "vue-cli-service build --dest gh-pages && gh-pages -d gh-pages",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",

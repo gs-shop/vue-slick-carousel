@@ -1,3 +1,4 @@
+<script>
 import { PROP_KEYS } from '@/innerSliderUtils'
 
 const getDotCount = spec => {
@@ -75,3 +76,4 @@ export default {
     )
   },
 }
+</script>

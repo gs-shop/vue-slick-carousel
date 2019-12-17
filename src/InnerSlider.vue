@@ -1,3 +1,4 @@
+<script>
 import debounce from 'lodash.debounce'
 
 import SliderTrack from '@/SliderTrack'
@@ -699,3 +700,4 @@ export default {
     )
   },
 }
+</script>

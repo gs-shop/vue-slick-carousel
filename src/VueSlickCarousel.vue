@@ -1,3 +1,4 @@
+<script>
 import json2mq from 'json2mq'
 
 import mixinPropsUpdated from '@/mixinPropsUpdated'
@@ -238,3 +239,4 @@ export default {
     )
   },
 }
+</script>

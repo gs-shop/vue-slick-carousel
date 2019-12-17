@@ -1,3 +1,4 @@
+<script>
 import {
   PROP_KEYS,
   lazyStartIndex,
@@ -208,3 +209,4 @@ export default {
     )
   },
 }
+</script>

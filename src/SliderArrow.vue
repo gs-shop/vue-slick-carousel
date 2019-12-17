@@ -1,3 +1,4 @@
+<script>
 import { PROP_KEYS, canGoNext } from '@/innerSliderUtils'
 import { mergeVNodeData, setVNodeData } from '@/vNodeUtils'
 
@@ -59,3 +60,4 @@ export default {
     return arrow
   },
 }
+</script>
