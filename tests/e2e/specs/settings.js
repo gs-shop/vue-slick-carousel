@@ -130,13 +130,6 @@ describe('Settings', () => {
       })
     })
   })
-  describe('className', () => {
-    it('should add given className to sliderr', () => {
-      cy.visit('/#/example/center-mode')
-      const { className } = exampleConfig['center-mode'].settings
-      cy.get('.slick-slider').should('have.class', className)
-    })
-  })
   describe('dots', () => {
     it('should enable dots', () => {
       cy.visit('/#/example/simple')
