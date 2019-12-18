@@ -108,6 +108,7 @@ export default {
     settings: {
       centerMode: true,
       centerPadding: '20px',
+      focusOnSelect: true,
       infinite: true,
       slidesToShow: 3,
       speed: 500,
