@@ -3,14 +3,14 @@ import exampleConfig from '../../../demo/pages/examples/configs'
 describe('Settings', () => {
   describe('accessibility', () => {
     it('enables key navigation', () => {
-      cy.visit('/example/simple')
+      cy.visit('/#/example/simple')
       cy.get('.slick-slider').type('{rightarrow}')
       cy.get('.slick-track .slick-slide:nth-child(2)').should('be.visible')
       cy.get('.slick-slider').type('{leftarrow}')
       cy.get('.slick-track .slick-slide:nth-child(1)').should('be.visible')
     })
     it('disables key navigation', () => {
-      cy.visit('/example/adaptive-height')
+      cy.visit('/#/example/adaptive-height')
       cy.get('.slick-slider').type('{rightarrow}')
       cy.get('.slick-track .slick-slide:nth-child(1)').should('be.visible')
       cy.get('.slick-slider').type('{leftarrow}')
@@ -19,7 +19,7 @@ describe('Settings', () => {
   })
   describe('adaptiveHeight', () => {
     it('adapt slider height to match the height of the current slide', () => {
-      cy.visit('/example/adaptive-height')
+      cy.visit('/#/example/adaptive-height')
       let slideHeight
       cy.get('.slick-active').then($slide => {
         slideHeight = $slide[0].offsetHeight
@@ -38,19 +38,19 @@ describe('Settings', () => {
   })
   describe('arrows', () => {
     it('enables left/right arrows', () => {
-      cy.visit('/example/simple')
+      cy.visit('/#/example/simple')
       cy.get('.slick-prev').should('exist')
       cy.get('.slick-next').should('exist')
     })
     it('disables left/right arrows', () => {
-      cy.visit('/example/auto-play')
+      cy.visit('/#/example/auto-play')
       cy.get('.slick-prev').should('not.exist')
       cy.get('.slick-next').should('not.exist')
     })
   })
   describe('asNavFor', () => {
     it('syncs two slides', () => {
-      cy.visit('/example/as-nav-for')
+      cy.visit('/#/example/as-nav-for')
       let currentSlide
       cy.get('.carousel-wrapper:nth-of-type(1) .slick-prev').click()
       cy.get('.carousel-wrapper:nth-of-type(1) .slick-current').then($slide => {
@@ -63,7 +63,7 @@ describe('Settings', () => {
   })
   describe('autoplay', () => {
     it('should change the current slide over time', () => {
-      cy.visit('/example/auto-play')
+      cy.visit('/#/example/auto-play')
       let currentSlide
       cy.get('.slick-current').then($slide => {
         currentSlide = $slide.text()
@@ -76,7 +76,7 @@ describe('Settings', () => {
   })
   describe('centerMode', () => {
     it('should center the current slide', () => {
-      cy.visit('/example/center-mode')
+      cy.visit('/#/example/center-mode')
       let slideCenter
       cy.getCenterXY('.slick-current').then(center => (slideCenter = center))
       cy.getCenterXY().then(viewportCenter => {
@@ -84,7 +84,7 @@ describe('Settings', () => {
       })
     })
     it('should center the clicked slide', () => {
-      cy.visit('/example/center-mode')
+      cy.visit('/#/example/center-mode')
       cy.get('[data-index="1"]').click()
       let slideCenter
       cy.getCenterXY('[data-index="1"]').then(center => (slideCenter = center))
@@ -95,7 +95,7 @@ describe('Settings', () => {
   })
   describe('centerPadding', () => {
     it('should set padding on inner slider', () => {
-      cy.visit('/example/center-mode')
+      cy.visit('/#/example/center-mode')
       cy.get('.slick-list').then($innerSlider => {
         const { centerPadding: settingsCenterPadding } = exampleConfig[
           'center-mode'
@@ -112,7 +112,7 @@ describe('Settings', () => {
         expect(paddingBottom).to.equal('0px')
       })
 
-      cy.visit('/example/vertical-swipe-to-slide')
+      cy.visit('/#/example/vertical-swipe-to-slide')
       cy.get('.slick-list').then($innerSlider => {
         const { centerPadding: settingsCenterPadding } = exampleConfig[
           'vertical-swipe-to-slide'
@@ -132,24 +132,24 @@ describe('Settings', () => {
   })
   describe('className', () => {
     it('should add given className to sliderr', () => {
-      cy.visit('/example/center-mode')
+      cy.visit('/#/example/center-mode')
       const { className } = exampleConfig['center-mode'].settings
       cy.get('.slick-slider').should('have.class', className)
     })
   })
   describe('dots', () => {
     it('should enable dots', () => {
-      cy.visit('/example/simple')
+      cy.visit('/#/example/simple')
       cy.get('.slick-dots').should('exist')
     })
     it('should disable dots', () => {
-      cy.visit('/example/multiple-rows')
+      cy.visit('/#/example/multiple-rows')
       cy.get('.slick-dots').should('not.exist')
     })
   })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
-      cy.visit('/example/rtl')
+      cy.visit('/#/example/rtl')
       cy.get('.slick-slider').type('{rightarrow}')
       cy.get('.slick-track .slick-slide:nth-child(5)').should('be.visible')
       cy.get('.slick-slider').type('{leftarrow}')
