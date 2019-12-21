@@ -27,6 +27,7 @@ export default {
     title: 'Simple Slides',
     settings: {
       dots: true,
+      dotsClass: 'slick-dots custom-dot-class',
       infinite: false,
       speed: 500,
       slidesToShow: 1,

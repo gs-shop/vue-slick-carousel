@@ -140,6 +140,12 @@ describe('Settings', () => {
       cy.get('.slick-dots').should('not.exist')
     })
   })
+  describe('dotClass', () => {
+    it('should set given class to dots', () => {
+      cy.visit('/#/example/simple')
+      cy.get('.slick-dots').should('have.class', 'custom-dot-class')
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/#/example/rtl')
