@@ -146,6 +146,26 @@ describe('Settings', () => {
       cy.get('.slick-dots').should('have.class', 'custom-dot-class')
     })
   })
+  describe('draggable', () => {
+    it('should enable drag ability', () => {
+      cy.visit('/#/example/simple')
+      let currentSlide
+      cy.get('.slick-current').then($slide => {
+        currentSlide = $slide.text()
+      })
+      cy.getCenterXY('.slick-current').then(center => {
+        cy.get('.slick-current')
+          .trigger('mousedown', { which: 1 }) // mouse down left button
+          .trigger('mousemove', {
+            clientX: center.x - 500,
+          })
+          .trigger('mouseup', { force: true })
+      })
+      cy.get('.slick-current').then($slide => {
+        expect($slide.text()).not.to.equal(currentSlide)
+      })
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/#/example/rtl')
