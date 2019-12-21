@@ -166,6 +166,27 @@ describe('Settings', () => {
       })
     })
   })
+  describe('edgeFriction', () => {
+    it('should resist drag', () => {
+      cy.visit('/#/example/simple')
+      const { edgeFriction } = exampleConfig['simple'].settings
+      let originalCenter
+      cy.getCenterXY('.slick-current').then(center => {
+        originalCenter = center
+        cy.get('.slick-current')
+          .trigger('mousedown', { which: 1 }) // mouse down left button
+          .trigger('mousemove', {
+            clientX: center.x + 500,
+          })
+      })
+      cy.getCenterXY('.slick-current').then(center => {
+        expect(center.x).to.be.closeTo(
+          originalCenter.x + 500 * edgeFriction,
+          10,
+        )
+      })
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/#/example/rtl')
