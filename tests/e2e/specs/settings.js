@@ -153,14 +153,7 @@ describe('Settings', () => {
       cy.get('.slick-current').then($slide => {
         currentSlide = $slide.text()
       })
-      cy.getCenterXY('.slick-current').then(center => {
-        cy.get('.slick-current')
-          .trigger('mousedown', { which: 1 }) // mouse down left button
-          .trigger('mousemove', {
-            clientX: center.x - 500,
-          })
-          .trigger('mouseup', { force: true })
-      })
+      cy.dragAndDrop('.slick-current', { x: -500 })
       cy.get('.slick-current').then($slide => {
         expect($slide.text()).not.to.equal(currentSlide)
       })
@@ -173,12 +166,8 @@ describe('Settings', () => {
       let originalCenter
       cy.getCenterXY('.slick-current').then(center => {
         originalCenter = center
-        cy.get('.slick-current')
-          .trigger('mousedown', { which: 1 }) // mouse down left button
-          .trigger('mousemove', {
-            clientX: center.x + 500,
-          })
       })
+      cy.drag('.slick-current', { x: 500 })
       cy.getCenterXY('.slick-current').then(center => {
         expect(center.x).to.be.closeTo(
           originalCenter.x + 500 * edgeFriction,

@@ -21,3 +21,25 @@ Cypress.Commands.add('getCenterXY', el => {
     return { x: viewportWidth / 2, y: viewportHeight / 2 }
   }
 })
+
+Cypress.Commands.add('drag', (el, diff) => {
+  return cy.getCenterXY(el).then(center => {
+    const coordination = {}
+    if (typeof diff.x === 'number') {
+      coordination.clientX = center.x + diff.x
+    }
+    if (typeof diff.y === 'number') {
+      coordination.clientY = center.y + diff.y
+    }
+    return cy
+      .get(el)
+      .trigger('mousedown', { which: 1 }) // mouse down left button
+      .trigger('mousemove', coordination)
+  })
+})
+
+Cypress.Commands.add('dragAndDrop', (el, diff) => {
+  return cy.drag(el, diff).then(() => {
+    return cy.get(el).trigger('mouseup', { force: true })
+  })
+})
