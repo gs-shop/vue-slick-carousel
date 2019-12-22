@@ -176,6 +176,30 @@ describe('Settings', () => {
       })
     })
   })
+  describe('focusOnSelect', () => {
+    it('should move the clicked slide to the first', () => {
+      cy.visit('/#/example/multiple')
+      let firstSlideCenter
+      cy.getCenterXY('.slick-current').then(center => {
+        firstSlideCenter = center
+      })
+      cy.get('[data-index="1"]').click()
+      cy.getCenterXY('[data-index="1"]').then(center => {
+        expect(center.x).to.be.closeTo(firstSlideCenter.x, 10)
+      })
+    })
+    it('should not move the clicked slide to the first if disabled', () => {
+      cy.visit('/#/example/responsive')
+      let firstSlideCenter
+      cy.getCenterXY('.slick-current').then(center => {
+        firstSlideCenter = center
+      })
+      cy.get('[data-index="1"]').click()
+      cy.getCenterXY('[data-index="1"]').then(center => {
+        expect(center.x).not.to.be.closeTo(firstSlideCenter.x, 10)
+      })
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/#/example/rtl')

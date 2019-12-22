@@ -40,6 +40,7 @@ export default {
     numSlides: 9,
     settings: {
       dots: true,
+      focusOnSelect: true,
       infinite: true,
       speed: 500,
       slidesToShow: 3,
