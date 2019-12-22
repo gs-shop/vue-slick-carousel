@@ -224,6 +224,15 @@ describe('Settings', () => {
       })
     })
   })
+  describe('initialSlide', () => {
+    it('should set first slide', () => {
+      const { initialSlide } = exampleConfig['resizable'].settings
+      cy.visit('/#/example/resizable')
+      cy.get('.slick-current').then($slide => {
+        expect($slide.text().trim()).to.equal(String(initialSlide + 1))
+      })
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/#/example/rtl')

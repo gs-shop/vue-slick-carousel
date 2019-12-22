@@ -90,6 +90,7 @@ export default {
     settings: {
       dots: true,
       infinite: true,
+      initialSlide: 2,
       speed: 500,
       slidesToShow: 3,
       slidesToScroll: 1,
