@@ -194,6 +194,7 @@ export default {
       autoplay: true,
       autoplaySpeed: 2000,
       pauseOnDotsHover: true,
+      pauseOnFocus: true,
       pauseOnHover: true,
     },
   },
