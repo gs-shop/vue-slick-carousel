@@ -275,6 +275,19 @@ describe('Settings', () => {
       })
     })
   })
+  describe('responsive', () => {
+    it('should apply settings given to the screen sizes', () => {
+      cy.visit('/#/example/responsive')
+      cy.viewport(1025, 660)
+      cy.get('.slick-list .slick-active').should('have.length', 4)
+      cy.viewport(1024, 660)
+      cy.get('.slick-list .slick-active').should('have.length', 3)
+      cy.viewport(600, 660)
+      cy.get('.slick-list .slick-active').should('have.length', 2)
+      cy.viewport(480, 660)
+      cy.get('.slick-list .slick-active').should('have.length', 1)
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/#/example/rtl')
