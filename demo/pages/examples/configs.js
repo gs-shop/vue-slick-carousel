@@ -193,6 +193,7 @@ export default {
       slidesToScroll: 1,
       autoplay: true,
       autoplaySpeed: 2000,
+      pauseOnDotsHover: true,
       pauseOnHover: true,
     },
   },
