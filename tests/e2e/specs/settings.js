@@ -233,6 +233,20 @@ describe('Settings', () => {
       })
     })
   })
+  describe('pauseOnHover', () => {
+    it('should pause auto play', () => {
+      cy.visit('/#/example/pause-on-hover')
+      cy.get('.slick-current').trigger('mouseover')
+      let currentSlide
+      cy.get('.slick-current').then($slide => {
+        currentSlide = $slide.text().trim()
+      })
+      cy.wait(200)
+      cy.get('.slick-current').then($slide => {
+        expect($slide.text().trim()).to.equal(currentSlide)
+      })
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/#/example/rtl')
