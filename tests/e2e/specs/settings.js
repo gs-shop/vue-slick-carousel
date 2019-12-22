@@ -200,6 +200,30 @@ describe('Settings', () => {
       })
     })
   })
+  describe('infinite', () => {
+    it('should navigate around ends', () => {
+      cy.visit('/#/example/multiple')
+      let currentSlide
+      cy.get('.slick-current').then($slide => {
+        currentSlide = $slide.text().trim()
+      })
+      cy.get('.slick-prev').click()
+      cy.get('.slick-current').then($slide => {
+        expect($slide.text().trim()).not.to.equal(currentSlide)
+      })
+    })
+    it('should not navigate around ends if disabled', () => {
+      cy.visit('/#/example/simple')
+      let currentSlide
+      cy.get('.slick-current').then($slide => {
+        currentSlide = $slide.text().trim()
+      })
+      cy.get('.slick-prev').click()
+      cy.get('.slick-current').then($slide => {
+        expect($slide.text().trim()).to.equal(currentSlide)
+      })
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/#/example/rtl')
