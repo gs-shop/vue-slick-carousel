@@ -308,6 +308,23 @@ describe('Settings', () => {
       })
     })
   })
+  describe('swipeToSlide', () => {
+    it('should enable swiping number of slides irrespective of slidesToScroll', () => {
+      cy.visit('/#/example/resizable')
+      let firstSlideCenter
+      cy.getCenterXY('.slick-current').then(center => {
+        firstSlideCenter = center
+      })
+      let slideDiffX
+      cy.getCenterXY('[data-index="2"]').then(center => {
+        slideDiffX = firstSlideCenter.x - center.x
+      })
+      cy.swipe('.slick-current', { x: slideDiffX }, true)
+      cy.get('.slick-current').then($slide => {
+        expect($slide.text().trim()).to.equal('3')
+      })
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/#/example/rtl')
