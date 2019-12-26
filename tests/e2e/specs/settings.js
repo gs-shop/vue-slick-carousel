@@ -78,7 +78,9 @@ describe('Settings', () => {
     it('should center the current slide', () => {
       cy.visit('/#/example/center-mode')
       let slideCenter
-      cy.getCenterXY('.slick-current').then(center => (slideCenter = center))
+      cy.getCenterXY('.slick-current').then(center => {
+        slideCenter = center
+      })
       cy.getCenterXY().then(viewportCenter => {
         expect(slideCenter.x).to.be.closeTo(viewportCenter.x, 10)
       })
@@ -87,7 +89,9 @@ describe('Settings', () => {
       cy.visit('/#/example/center-mode')
       cy.get('[data-index="1"]').click()
       let slideCenter
-      cy.getCenterXY('[data-index="1"]').then(center => (slideCenter = center))
+      cy.getCenterXY('[data-index="1"]').then(center => {
+        slideCenter = center
+      })
       cy.getCenterXY().then(viewportCenter => {
         expect(slideCenter.x).to.be.closeTo(viewportCenter.x, 10)
       })
