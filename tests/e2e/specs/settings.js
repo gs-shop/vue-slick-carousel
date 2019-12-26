@@ -295,6 +295,19 @@ describe('Settings', () => {
       cy.get('.slick-current > div').should('have.length', rows)
     })
   })
+  describe('swipe', () => {
+    it('should enable swipe ability', () => {
+      cy.visit('/#/example/simple')
+      let currentSlide
+      cy.get('.slick-current').then($slide => {
+        currentSlide = $slide.text()
+      })
+      cy.swipe('.slick-current', { x: -500 }, true)
+      cy.get('.slick-current').then($slide => {
+        expect($slide.text()).not.to.equal(currentSlide)
+      })
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/#/example/rtl')

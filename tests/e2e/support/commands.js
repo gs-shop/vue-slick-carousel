@@ -22,7 +22,7 @@ Cypress.Commands.add('getCenterXY', el => {
   }
 })
 
-Cypress.Commands.add('drag', (el, diff) => {
+Cypress.Commands.add('drag', (el, diff, touch = false) => {
   return cy.getCenterXY(el).then(center => {
     const coordination = {}
     if (typeof diff.x === 'number') {
@@ -33,13 +33,19 @@ Cypress.Commands.add('drag', (el, diff) => {
     }
     return cy
       .get(el)
-      .trigger('mousedown', { which: 1 }) // mouse down left button
-      .trigger('mousemove', coordination)
+      .trigger(touch ? 'touchstart' : 'mousedown', { which: 1 }) // mouse down left button
+      .trigger(touch ? 'touchmove' : 'mousemove', coordination)
   })
 })
 
-Cypress.Commands.add('dragAndDrop', (el, diff) => {
-  return cy.drag(el, diff).then(() => {
-    return cy.get(el).trigger('mouseup', { force: true })
+Cypress.Commands.add('dragAndDrop', (el, diff, touch) => {
+  return cy.drag(el, diff, touch).then(() => {
+    return cy.get(el).trigger(touch ? 'touchend' : 'mouseup', { force: true })
+  })
+})
+
+Cypress.Commands.add('swipe', (el, diff) => {
+  return cy.drag(el, diff, true).then(() => {
+    return cy.get(el).trigger('touchend', { force: true })
   })
 })
