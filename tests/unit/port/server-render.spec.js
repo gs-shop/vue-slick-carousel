@@ -158,7 +158,6 @@ const settingsModel = {
   responsive: fc.constantFrom(...settingsResponsives), // Customize based on breakpoints (see the demo example for better understanding)
   rows: fc.integer(1, 5), // number of rows per slide in the slider, (enables grid mode)
   rtl: fc.boolean(), // Reverses the slide order
-  slide: fc.constantFrom('div', 'span'), // Slide container type
   slidesPerRow: fc.integer(1, 5), // number of slides to display in grid mode, this is useful with rows option
   slidesToScroll: fc.integer(1, 5), // How many slides to scroll at once
   slidesToShow: fc.integer(1, 5), // How many slides to show in one frame

@@ -23,7 +23,6 @@ export const props = {
   responsive: { type: Array, default: null },
   rows: { type: Number, default: 1 },
   rtl: { type: Boolean, default: false },
-  slide: { type: String, default: 'div' },
   slidesPerRow: { type: Number, default: 1 },
   slidesToScroll: { type: Number, default: 1 },
   slidesToShow: { type: Number, default: 1 },
