@@ -288,6 +288,13 @@ describe('Settings', () => {
       cy.get('.slick-list .slick-active').should('have.length', 1)
     })
   })
+  describe('rows', () => {
+    it('enables key navigation', () => {
+      cy.visit('/#/example/multiple-rows')
+      const { rows } = exampleConfig['multiple-rows'].settings
+      cy.get('.slick-current > div').should('have.length', rows)
+    })
+  })
   describe('rtl', () => {
     it('makes key navigation in reverse', () => {
       cy.visit('/#/example/rtl')
