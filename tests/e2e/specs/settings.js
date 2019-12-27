@@ -299,6 +299,15 @@ describe('Settings', () => {
       cy.get('.slick-current > div').should('have.length', rows)
     })
   })
+  describe('rtl', () => {
+    it('makes key navigation in reverse', () => {
+      cy.visit('/#/example/rtl')
+      cy.get('.slick-slider').type('{rightarrow}')
+      cy.get('.slick-track .slick-slide:nth-child(5)').should('be.visible')
+      cy.get('.slick-slider').type('{leftarrow}')
+      cy.get('.slick-track .slick-slide:nth-child(6)').should('be.visible')
+    })
+  })
   describe('swipe', () => {
     it('should enable swipe ability', () => {
       cy.visit('/#/example/simple')
@@ -327,15 +336,6 @@ describe('Settings', () => {
       cy.get('.slick-current').then($slide => {
         expect($slide.text().trim()).to.equal('3')
       })
-    })
-  })
-  describe('rtl', () => {
-    it('makes key navigation in reverse', () => {
-      cy.visit('/#/example/rtl')
-      cy.get('.slick-slider').type('{rightarrow}')
-      cy.get('.slick-track .slick-slide:nth-child(5)').should('be.visible')
-      cy.get('.slick-slider').type('{leftarrow}')
-      cy.get('.slick-track .slick-slide:nth-child(6)').should('be.visible')
     })
   })
   describe('touchThreshold', () => {
