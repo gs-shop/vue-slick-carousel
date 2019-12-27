@@ -45,7 +45,5 @@ Cypress.Commands.add('dragAndDrop', (el, diff, touch) => {
 })
 
 Cypress.Commands.add('swipe', (el, diff) => {
-  return cy.drag(el, diff, true).then(() => {
-    return cy.get(el).trigger('touchend', { force: true })
-  })
+  return cy.dragAndDrop(el, diff, true)
 })
