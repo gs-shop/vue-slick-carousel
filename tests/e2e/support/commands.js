@@ -8,13 +8,16 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
+Cypress.Commands.add('getBoundingClientRect', el => {
+  cy.get(el).then($el => $el[0].getBoundingClientRect())
+})
+
 Cypress.Commands.add('getCenterXY', el => {
   if (el) {
-    cy.get(el).then($el => {
-      const { left, right, top, bottom } = $el[0].getBoundingClientRect()
-
-      return { x: (left + right) / 2, y: (top + bottom) / 2 }
-    })
+    cy.getBoundingClientRect(el).then(rect => ({
+      x: (rect.left + rect.right) / 2,
+      y: (rect.top + rect.bottom) / 2,
+    }))
   } else {
     const { viewportWidth, viewportHeight } = Cypress.config()
 

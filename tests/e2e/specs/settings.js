@@ -338,4 +338,26 @@ describe('Settings', () => {
       cy.get('.slick-track .slick-slide:nth-child(6)').should('be.visible')
     })
   })
+  describe('touchThreshold', () => {
+    it('should decide whether move the slide or not', () => {
+      cy.visit('/#/example/multiple')
+      const { touchThreshold } = exampleConfig['multiple'].settings
+      let currentSlide
+      cy.get('.slick-current').then($slide => {
+        currentSlide = $slide.text().trim()
+      })
+      cy.getBoundingClientRect('.slick-list').then(({ width: slideWidth }) => {
+        // swipe less than threshold
+        cy.swipe('.slick-current', { x: slideWidth / touchThreshold - 10 })
+        cy.get('.slick-current').then($slide => {
+          expect($slide.text().trim()).to.equal(currentSlide)
+        })
+        // swipe more than threshold
+        cy.swipe('.slick-current', { x: slideWidth / touchThreshold + 10 })
+        cy.get('.slick-current').then($slide => {
+          expect($slide.text().trim()).not.to.equal(currentSlide)
+        })
+      })
+    })
+  })
 })
