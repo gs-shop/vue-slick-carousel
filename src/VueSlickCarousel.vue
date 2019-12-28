@@ -11,7 +11,6 @@ import {
 import { canUseDOM, filterUndefined } from '@/innerSliderUtils'
 import { props, defaultValues } from '@/defaultProps'
 import InnerSlider from '@/InnerSlider'
-import '@/styles/slick.css'
 
 const enquire = canUseDOM() && require('enquire.js')
 
