@@ -83,11 +83,12 @@ See [API](https://github.com/gs-shop/vue-slick-carousel/blob/master/docs/API.md)
 </template>
 
 <script>
-  // require styles from slick-carousel
-  import 'slick-carousel/slick/slick.css'
-  import 'slick-carousel/slick/slick-theme.css'
-
   import VueSlickCarousel from 'vue-slick-carousel'
+
+  // import style
+  import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+  // optional style for arrows & dots
+  import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 
   export default {
     name: 'MyComponent',

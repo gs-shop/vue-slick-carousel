@@ -99,8 +99,7 @@ import Prism from 'vue-prismjs'
 import enquire from 'enquire.js'
 
 import 'prismjs/themes/prism-tomorrow.css'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
+import '@/styles/slick-theme.css'
 
 import configs from './configs'
 
