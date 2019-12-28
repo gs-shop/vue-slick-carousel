@@ -13,4 +13,11 @@ describe('APIs', () => {
       cy.get('[data-index="3"]').should('be.visible')
     })
   })
+  describe('goTo', () => {
+    it('should move the given slide to current', () => {
+      cy.visit('/#/example/multiple')
+      cy.window().then(window => window.carousel.goTo(3))
+      cy.get('[data-index="3"]').should('be.visible')
+    })
+  })
 })
