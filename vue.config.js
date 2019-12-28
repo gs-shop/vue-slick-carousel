@@ -1,3 +1,5 @@
+const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const marked = require('marked')
 const Prism = require('prismjs')
 const loadLanguages = require('prismjs/components/')
@@ -34,6 +36,14 @@ module.exports = {
     output: {
       libraryExport: 'default',
     },
+    plugins: [
+      new CopyWebpackPlugin([
+        {
+          from: path.join(__dirname, 'src/styles/slick-theme.css'),
+          to: path.join(__dirname, 'dist/vue-slick-carousel-theme.css'),
+        },
+      ]),
+    ],
   },
-  css: { extract: false },
+  css: { extract: true },
 }
