@@ -27,6 +27,8 @@ export default {
     title: 'Simple Slides',
     settings: {
       dots: true,
+      dotsClass: 'slick-dots custom-dot-class',
+      edgeFriction: 0.35,
       infinite: false,
       speed: 500,
       slidesToShow: 1,
@@ -38,10 +40,12 @@ export default {
     numSlides: 9,
     settings: {
       dots: true,
+      focusOnSelect: true,
       infinite: true,
       speed: 500,
       slidesToShow: 3,
       slidesToScroll: 3,
+      touchThreshold: 5,
     },
   },
   responsive: {
@@ -87,9 +91,11 @@ export default {
     settings: {
       dots: true,
       infinite: true,
+      initialSlide: 2,
       speed: 500,
       slidesToShow: 3,
       slidesToScroll: 1,
+      swipeToSlide: true,
     },
   },
   'multiple-rows': {
@@ -108,6 +114,7 @@ export default {
     settings: {
       centerMode: true,
       centerPadding: '20px',
+      focusOnSelect: true,
       infinite: true,
       slidesToShow: 3,
       speed: 500,
@@ -168,6 +175,7 @@ export default {
   'auto-play': {
     title: 'Auto Play',
     settings: {
+      arrows: false,
       dots: true,
       infinite: true,
       slidesToShow: 3,
@@ -187,6 +195,8 @@ export default {
       slidesToScroll: 1,
       autoplay: true,
       autoplaySpeed: 2000,
+      pauseOnDotsHover: true,
+      pauseOnFocus: true,
       pauseOnHover: true,
     },
   },
@@ -225,6 +235,8 @@ export default {
     title: 'Vertical Swipe To Slide',
     template: verticalTemplate,
     settings: {
+      centerMode: true,
+      centerPadding: '30px',
       dots: true,
       infinite: true,
       slidesToShow: 3,

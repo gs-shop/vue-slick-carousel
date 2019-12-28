@@ -7,19 +7,46 @@
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This is will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getBoundingClientRect', el => {
+  cy.get(el).then($el => $el[0].getBoundingClientRect())
+})
+
+Cypress.Commands.add('getCenterXY', el => {
+  if (el) {
+    cy.getBoundingClientRect(el).then(rect => ({
+      x: (rect.left + rect.right) / 2,
+      y: (rect.top + rect.bottom) / 2,
+    }))
+  } else {
+    const { viewportWidth, viewportHeight } = Cypress.config()
+
+    return { x: viewportWidth / 2, y: viewportHeight / 2 }
+  }
+})
+
+Cypress.Commands.add('drag', (el, diff, touch = false) => {
+  return cy.getCenterXY(el).then(center => {
+    const coordination = {}
+    if (typeof diff.x === 'number') {
+      coordination.clientX = center.x + diff.x
+    }
+    if (typeof diff.y === 'number') {
+      coordination.clientY = center.y + diff.y
+    }
+    return cy
+      .get(el)
+      .trigger(touch ? 'touchstart' : 'mousedown', { which: 1 }) // mouse down left button
+      .trigger(touch ? 'touchmove' : 'mousemove', coordination)
+  })
+})
+
+Cypress.Commands.add('dragAndDrop', (el, diff, touch) => {
+  return cy.drag(el, diff, touch).then(() => {
+    return cy.get(el).trigger(touch ? 'touchend' : 'mouseup', { force: true })
+  })
+})
+
+Cypress.Commands.add('swipe', (el, diff) => {
+  return cy.dragAndDrop(el, diff, true)
+})

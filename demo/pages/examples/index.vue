@@ -160,6 +160,9 @@ export default {
     enquire.register('(min-width: 0px) and (max-width: 600px)', this.onMobile)
     enquire.register('(min-width: 601px)', this.onDesktop)
   },
+  mounted() {
+    window.carousel = this.$refs.c1
+  },
   methods: {
     onMobile() {
       this.screen = 'mobile'
