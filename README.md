@@ -3,6 +3,7 @@
 > 🚥 Vue Slick Carousel with True SSR Written for Faster [Luxstay](https://www.luxstay.com). This Is a Port of [react-slick](https://github.com/akiran/react-slick).
 
 [![npm version](https://img.shields.io/npm/v/vue-slick-carousel.svg)](https://www.npmjs.com/package/vue-slick-carousel)
+[![bit](https://img.shields.io/bit/collection/total-components/gsshop/vue-slick-carousel)](https://bit.dev/gsshop/vue-slick-carousel/vue-slick-carousel)
 [![license](https://img.shields.io/npm/l/vue-slick-carousel)](https://github.com/gs-shop/vue-slick-carousel/blob/master/LICENSE)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/gs-shop/vue-slick-carousel/issues?&q=is%3Aissue+is%3Aopen)
 [![code with hearth by GSShop](https://img.shields.io/badge/gsshop-%3C%2F%3E%20-cadb2a.svg)](https://github.com/gs-shop)
@@ -49,12 +50,15 @@ Here're nuxt examples for you to test yourself:
 
 ## 🚚 Installation
 
-### yarn/npm
+### yarn/npm/bit
 
 ```bash
+# npm
 npm i vue-slick-carousel
-# or
+# yarn
 yarn add vue-slick-carousel
+# bit
+bit import gsshop.vue-slick-carousel/vue-slick-carousel
 ```
 
 ### cdn

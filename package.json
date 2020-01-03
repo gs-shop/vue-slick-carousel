@@ -75,5 +75,22 @@
     "vue-template-compiler": "^2.6.10",
     "vuetify": "^2.1.12",
     "vuetify-loader": "^1.3.0"
+  },
+  "bit": {
+    "env": {
+      "compiler": "bit.envs/bundlers/vue@2.6.18"
+    },
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "yarn",
+    "dist": {
+      "target": "dist/bit"
+    },
+    "overrides": {
+      "vue-slick-carousel-theme": {
+        "env": {
+          "compiler": "-"
+        }
+      }
+    }
   }
 }

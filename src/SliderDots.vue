@@ -1,5 +1,5 @@
 <script>
-import { PROP_KEYS } from '@/innerSliderUtils'
+import { PROP_KEYS } from './innerSliderUtils'
 
 const getDotCount = spec => {
   let dots

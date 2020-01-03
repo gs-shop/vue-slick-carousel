@@ -4,8 +4,8 @@ import {
   lazyStartIndex,
   lazyEndIndex,
   getPreClones,
-} from '@/innerSliderUtils'
-import { cloneVNode, getData, mergeVNodeData } from '@/vNodeUtils'
+} from './innerSliderUtils'
+import { cloneVNode, getData, mergeVNodeData } from './vNodeUtils'
 
 const getSlideClasses = spec => {
   let slickActive, slickCenter, slickCloned

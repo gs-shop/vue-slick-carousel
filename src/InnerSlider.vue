@@ -1,15 +1,15 @@
 <script>
 import debounce from 'lodash.debounce'
 
-import SliderTrack from '@/SliderTrack'
-import SliderArrow from '@/SliderArrow'
-import SliderDots from '@/SliderDots'
+import SliderTrack from './SliderTrack'
+import SliderArrow from './SliderArrow'
+import SliderDots from './SliderDots'
 
-import { props } from '@/defaultProps'
-import initialState from '@/initialState'
+import { props } from './defaultProps'
+import initialState from './initialState'
 
-import mixinPropsUpdated from '@/mixinPropsUpdated'
-import { getStyle } from '@/vNodeUtils'
+import mixinPropsUpdated from './mixinPropsUpdated'
+import { getStyle } from './vNodeUtils'
 import {
   PROP_KEYS,
   canGoNext,
@@ -29,7 +29,7 @@ import {
   swipeEnd,
   swipeMove,
   swipeStart,
-} from '@/innerSliderUtils'
+} from './innerSliderUtils'
 
 export default {
   name: 'InnerSlider',

@@ -1,16 +1,16 @@
 <script>
 import json2mq from 'json2mq'
 
-import mixinPropsUpdated from '@/mixinPropsUpdated'
+import mixinPropsUpdated from './mixinPropsUpdated'
 import {
   cloneVNode,
   mergeVNodeData,
   setVNodeData,
   getStyle,
-} from '@/vNodeUtils'
-import { canUseDOM, filterUndefined } from '@/innerSliderUtils'
-import { props, defaultValues } from '@/defaultProps'
-import InnerSlider from '@/InnerSlider'
+} from './vNodeUtils'
+import { canUseDOM, filterUndefined } from './innerSliderUtils'
+import { props, defaultValues } from './defaultProps'
+import InnerSlider from './InnerSlider'
 
 const enquire = canUseDOM() && require('enquire.js')
 

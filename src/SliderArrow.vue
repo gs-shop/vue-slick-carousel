@@ -1,6 +1,6 @@
 <script>
-import { PROP_KEYS, canGoNext } from '@/innerSliderUtils'
-import { mergeVNodeData, setVNodeData } from '@/vNodeUtils'
+import { PROP_KEYS, canGoNext } from './innerSliderUtils'
+import { mergeVNodeData, setVNodeData } from './vNodeUtils'
 
 export default {
   name: 'SliderArrow',

@@ -11,3 +11,4 @@ yarn-error.log
 .eslintrc.js
 .browserslistrc
 dist/demo.html
+dist/bit
