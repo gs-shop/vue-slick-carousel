@@ -88,9 +88,6 @@ See [API](https://github.com/gs-shop/vue-slick-carousel/blob/master/docs/API.md)
 
 <script>
   import VueSlickCarousel from 'vue-slick-carousel'
-
-  // import style
-  import 'vue-slick-carousel/dist/vue-slick-carousel.css'
   // optional style for arrows & dots
   import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 
