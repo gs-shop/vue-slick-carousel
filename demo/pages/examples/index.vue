@@ -99,7 +99,7 @@ import Prism from 'vue-prismjs'
 import enquire from 'enquire.js'
 
 import 'prismjs/themes/prism-tomorrow.css'
-import '@/styles/slick-theme.css'
+import '@/slick-theme.css'
 
 import configs from './configs'
 
