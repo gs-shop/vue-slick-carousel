@@ -46,6 +46,8 @@ It is designed to support SSR from the start. vue-slick-carousel supports true S
 Here're nuxt examples for you to test yourself:
 [no-ssr-slick](https://codesandbox.io/s/github/kyuwoo-choi/nuxt-no-ssr-slick-example) vs [vue-slick-carousel](https://codesandbox.io/s/github/kyuwoo-choi/nuxt-vue-slick-carousel-example)
 
+[Find out how fast it is compared to the Top 5 carousels.](https://dev.to/gsshop/vue-js-carousels-ssr-support-and-performance-24nh) And leave what you think.
+
 <br/>
 
 ## 🚚 Installation
