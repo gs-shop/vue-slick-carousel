@@ -144,7 +144,11 @@ export default {
         )
 
         // if slide needs to be precloned or postcloned
-        if (spec.infinite && spec.fade === false) {
+        if (
+          spec.infinite &&
+          spec.fade === false &&
+          childrenCount > spec.slidesToShow
+        ) {
           let preCloneNo = childrenCount - index
           if (
             preCloneNo <= getPreClones(spec) &&
@@ -217,8 +221,6 @@ export default {
   left: 0;
 
   display: block;
-  margin-left: auto;
-  margin-right: auto;
 
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
