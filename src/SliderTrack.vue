@@ -207,7 +207,9 @@ export default {
   render() {
     const slides = this.renderSlides(this.$props, this.$slots.default)
     return (
-      <div class="slick-track" style={this.trackStyle}>
+      <div
+        class={{ 'slick-track': true, 'slick-center': this.$props.centerMode }}
+        style={this.trackStyle}>
         {slides}
       </div>
     )
@@ -221,14 +223,16 @@ export default {
   left: 0;
 
   display: block;
-  margin-left: auto;
-  margin-right: auto;
 
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
   -o-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
+}
+.slick-track.slick-center {
+  margin-left: auto;
+  margin-right: auto;
 }
 .slick-track:before,
 .slick-track:after {
