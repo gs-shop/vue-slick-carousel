@@ -188,6 +188,16 @@ describe('carousel', () => {
             settings.variableWidth !==
               (settings.row !== 1 || settings.slidesPerRow),
           )
+          // no clone slides if less number of slides than it needs to be on a screen
+          if (settings.infinite !== false && settings.fade !== true) {
+            fc.pre(
+              itemHtmls.length >
+                (settings.slidesToShow || 1) *
+                  (settings.slidesPerRow || 1) *
+                  (settings.rows || 1),
+            )
+          }
+          fc.pre(settings.centerMode !== true)
 
           const vueCarousel = await vueServerRender(itemHtmls, settings)
           const reactCarousel = reactServerRender(itemHtmls, settings)
