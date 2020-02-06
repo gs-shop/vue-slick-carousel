@@ -1,6 +1,6 @@
 {
   "name": "vue-slick-carousel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vue Slick Carousel with True SSR Written for Faster Luxstay",
   "keywords": [
     "vue",
