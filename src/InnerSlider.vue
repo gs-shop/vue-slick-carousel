@@ -1,4 +1,5 @@
 <script>
+import ResizeObserver from 'resize-observer-polyfill'
 import debounce from 'lodash.debounce'
 
 import SliderTrack from './SliderTrack'
