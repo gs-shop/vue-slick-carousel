@@ -68,7 +68,7 @@ describe('Settings', () => {
       cy.get('.slick-current').then($slide => {
         currentSlide = $slide.text()
       })
-      cy.wait(200)
+      cy.wait(2000)
       cy.get('.slick-current').then($slide => {
         expect($slide.text()).not.to.equal(currentSlide)
       })
@@ -268,7 +268,7 @@ describe('Settings', () => {
   describe('pauseOnDotsHover', () => {
     it('should pause auto play', () => {
       cy.visit('/#/example/pause-on-hover')
-      cy.get('.slick-current').focus()
+      cy.get('.slick-dots .slick-active').trigger('mouseover')
       let currentSlide
       cy.get('.slick-current').then($slide => {
         currentSlide = $slide.text().trim()
