@@ -106,7 +106,7 @@ export default {
     })
     this.ro.observe(this.$refs.list)
     Array.prototype.forEach.call(
-      this.$refs.list.$el.querySelectorAll('.slick-slide'),
+      this.$refs.list.querySelectorAll('.slick-slide'),
       slide => {
         slide.onfocus = this.pauseOnFocus ? this.onSlideFocus : null
         slide.onblur = this.pauseOnFocus ? this.onSlideBlur : null
@@ -335,7 +335,7 @@ export default {
       this.animationEndCallback = undefined
     },
     checkImagesLoad() {
-      let images = this.$refs.list.$el.querySelectorAll('.slick-slide img')
+      let images = this.$refs.list.querySelectorAll('.slick-slide img')
       let imagesCount = images.length,
         loadedCount = 0
       Array.prototype.forEach.call(images, image => {
