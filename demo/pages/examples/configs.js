@@ -83,6 +83,10 @@ export default {
             slidesToScroll: 1,
           },
         },
+        {
+          breakpoint: 320,
+          settings: 'unslick',
+        },
       ],
     },
   },
