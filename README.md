@@ -8,6 +8,7 @@
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/gs-shop/vue-slick-carousel/issues?&q=is%3Aissue+is%3Aopen)
 [![code with hearth by GSShop](https://img.shields.io/badge/gsshop-%3C%2F%3E%20-cadb2a.svg)](https://github.com/gs-shop)
 [![hearth for Luxstay](https://img.shields.io/badge/luxstay-%20%E2%99%A5%20-ff3333.svg)](https://www.luxstay.com)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 <a href="https://gitmoji.carloscuesta.me">
 <img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square"
       alt="Gitmoji">
