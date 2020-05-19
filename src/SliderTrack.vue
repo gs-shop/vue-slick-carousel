@@ -35,6 +35,7 @@ const getSlideClasses = spec => {
   return {
     'slick-slide': true,
     'slick-active': slickActive,
+    'slick-inactive': !slickActive,
     'slick-center': slickCenter,
     'slick-cloned': slickCloned,
     'slick-current': slickCurrent, // dubious in case of RTL
