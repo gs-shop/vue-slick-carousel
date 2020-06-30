@@ -10,13 +10,14 @@ import {
 } from './vNodeUtils'
 import { canUseDOM, filterUndefined } from './innerSliderUtils'
 import { props, defaultValues } from './defaultProps'
+import InnerSlider from './InnerSlider'
 
 const enquire = canUseDOM() && require('enquire.js')
 
 export default {
   name: 'VueSlickCarousel',
   components: {
-    InnerSlider: () => import('./InnerSlider'),
+    InnerSlider,
   },
   mixins: [mixinPropsUpdated],
   inheritAttrs: false,

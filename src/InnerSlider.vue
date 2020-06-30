@@ -2,6 +2,10 @@
 import ResizeObserver from 'resize-observer-polyfill'
 import debounce from 'lodash.debounce'
 
+import SliderTrack from './SliderTrack'
+import SliderArrow from './SliderArrow'
+import SliderDots from './SliderDots'
+
 import { props } from './defaultProps'
 import initialState from './initialState'
 
@@ -31,9 +35,9 @@ import {
 export default {
   name: 'InnerSlider',
   components: {
-    SliderTrack: () => import('./SliderTrack'),
-    SliderArrow: () => import('./SliderArrow'),
-    SliderDots: () => import('./SliderDots'),
+    SliderTrack,
+    SliderArrow,
+    SliderDots,
   },
   mixins: [mixinPropsUpdated],
   inheritAttrs: false,
