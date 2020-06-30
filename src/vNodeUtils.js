@@ -1,6 +1,6 @@
-import pick from 'lodash/pick'
-import assign from 'lodash/assign'
-import get from 'lodash/get'
+import pick from 'lodash.pick'
+import assign from 'lodash.assign'
+import get from 'lodash.get'
 
 export const mergeVNodeData = (vnode, name, obj) => {
   if (!vnode) {
