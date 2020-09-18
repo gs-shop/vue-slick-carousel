@@ -75,7 +75,7 @@ export default {
       let slidesToLoad = getOnDemandLazySlides(this.spec)
       if (slidesToLoad.length > 0) {
         this.lazyLoadedList = this.lazyLoadedList.concat(slidesToLoad)
-        this.$parent.$emit('lazyLoad', slidesToLoad)
+        this.$parent.$emit('lazy-load', slidesToLoad)
       }
     }
   },
@@ -120,7 +120,7 @@ export default {
   },
   updated() {
     this.checkImagesLoad()
-    this.$parent.$emit('reInit')
+    this.$parent.$emit('re-init')
     if (this.lazyLoad) {
       let slidesToLoad = getOnDemandLazySlides({
         ...this.$props,
@@ -128,7 +128,7 @@ export default {
       })
       if (slidesToLoad.length > 0) {
         this.lazyLoadedList = this.lazyLoadedList.concat(slidesToLoad)
-        this.$parent.$emit('lazyLoad', slidesToLoad)
+        this.$parent.$emit('lazy-load', slidesToLoad)
       }
     }
     this.adaptHeight()
@@ -278,12 +278,12 @@ export default {
         useCSS: this.useCSS && !dontAnimate,
       })
       if (!state) return
-      this.$parent.$emit('beforeChange', currentSlide, state.currentSlide)
+      this.$parent.$emit('before-change', currentSlide, state.currentSlide)
       let slidesToLoad = state.lazyLoadedList.filter(
         value => this.lazyLoadedList.indexOf(value) < 0,
       )
       if (slidesToLoad.length) {
-        this.$parent.$emit('lazyLoad', slidesToLoad)
+        this.$parent.$emit('lazy-load', slidesToLoad)
       }
       Object.assign(this.$data, state)
       if (asNavFor) {
@@ -298,7 +298,7 @@ export default {
             this.animating = animating
           }, 10),
         )
-        this.$parent.$emit('afterChange', state.currentSlide)
+        this.$parent.$emit('after-change', state.currentSlide)
         // delete this.animationEndCallback
         this.animationEndCallback = undefined
       }, speed)
@@ -362,7 +362,7 @@ export default {
             image.onload = handler
             image.onerror = () => {
               handler()
-              this.$parent.$emit('lazyLoadError')
+              this.$parent.$emit('lazy-load-error')
             }
           }
         }
@@ -393,7 +393,7 @@ export default {
       }
       if (slidesToLoad.length > 0) {
         this.lazyLoadedList = this.lazyLoadedList.concat(slidesToLoad)
-        this.$parent.$emit('lazyLoad', slidesToLoad)
+        this.$parent.$emit('lazy-load', slidesToLoad)
       } else {
         if (this.lazyLoadTimer) {
           clearInterval(this.lazyLoadTimer)
