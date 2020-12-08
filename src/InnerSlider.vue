@@ -423,11 +423,11 @@ export default {
         this.slideHandler(targetSlide)
       }
     },
-    disableBodyScroll(){
-      document.querySelector("body").style.overflow = "hidden";
+    disableBodyScroll() {
+      document.querySelector('body').style.overflow = 'hidden'
     },
-    enableBodyScroll(){
-      document.querySelector("body").style.overflow = "scroll";
+    enableBodyScroll() {
+      document.querySelector('body').style.overflow = 'scroll'
     },
     swipeStart(e) {
       if (this.verticalSwiping) {
