@@ -30,6 +30,7 @@ export const props = {
   swipe: { type: Boolean, default: true },
   swipeToSlide: { type: Boolean, default: false },
   touchMove: { type: Boolean, default: true },
+  verticalSwiping: { type: Boolean, default: false },
   touchThreshold: { type: Number, default: 5 },
   useCSS: { type: Boolean, default: true },
   useTransform: { type: Boolean, default: true },
