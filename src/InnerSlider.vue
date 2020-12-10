@@ -49,12 +49,9 @@ export default {
     customPaging: Function,
   },
   data() {
-    return { ...initialState, currentSlide: this.initialSlide }
+    return { ...initialState, currentSlide: this.initialSlide, slideCount: this.$slots.default.length }
   },
   computed: {
-    slideCount() {
-      return this.$slots.default.length
-    },
     spec() {
       return {
         ...this.$props,
@@ -119,6 +116,7 @@ export default {
     }
   },
   updated() {
+    this.slideCount = this.$slots.default.length
     this.checkImagesLoad()
     this.$parent.$emit('reInit')
     if (this.lazyLoad) {
