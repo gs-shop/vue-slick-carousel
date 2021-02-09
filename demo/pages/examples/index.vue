@@ -18,6 +18,7 @@
           <VueSlickCarousel
             v-bind="config.settings"
             :class="classes"
+            slides-class="this-slides-class"
             ref="c1"
             :asNavFor="config.asNavFor ? $refs.c2 : null"
           >

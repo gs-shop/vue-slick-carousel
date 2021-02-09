@@ -689,6 +689,7 @@ export default {
           style={listStyle}>
           <SliderTrack
             ref="track"
+            slidesClass={this.slidesClass}
             {...{ props: trackProps }}
             {...{ nativeOn: trackNativeOn }}
             onChildClicked={this.selectHandler}>

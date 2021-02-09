@@ -79,7 +79,7 @@ const getKey = (child, fallbackKey) =>
 
 export default {
   name: 'SliderTrack',
-  props: PROP_KEYS.TRACK,
+  props: [...PROP_KEYS.TRACK, 'slidesClass'],
   methods: {
     cloneSlide(slide, options) {
       let clone = cloneVNode(slide)
@@ -87,6 +87,7 @@ export default {
       mergeVNodeData(clone, 'class', options.class)
       mergeVNodeData(clone, 'attrs', options.attrs)
       mergeVNodeData(clone, 'style', options.style)
+      clone.data.class = [options.class, this.slidesClass]
       mergeVNodeData(clone, 'on', {
         click: e => {
           getData(slide, 'on.click', () => {})(e)
@@ -125,6 +126,7 @@ export default {
         }
         let childStyle = getSlideStyle({ ...spec, index })
         let slideClasses = getSlideClasses({ ...spec, index })
+
         // push a cloned element of the desired slide
         slides.push(
           this.cloneSlide(child, {
@@ -159,6 +161,7 @@ export default {
               child = elem
             }
             slideClasses = getSlideClasses({ ...spec, index: key })
+
             preCloneSlides.push(
               this.cloneSlide(child, {
                 key: 'precloned' + getKey(child, key),

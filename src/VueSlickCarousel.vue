@@ -235,6 +235,7 @@ export default {
       <InnerSlider
         ref="innerSlider"
         {...{ props: settings }}
+        slidesClass={this.slidesClass}
         key={Object.values(settings).join('')}>
         {newChildren}
       </InnerSlider>
