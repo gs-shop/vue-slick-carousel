@@ -26,6 +26,7 @@ export const props = {
   slidesPerRow: { type: Number, default: 1 },
   slidesToScroll: { type: Number, default: 1 },
   slidesToShow: { type: Number, default: 1 },
+  slidesClass: { type: [Number, Object, String], default: '' },
   speed: { type: Number, default: 500 },
   swipe: { type: Boolean, default: true },
   swipeToSlide: { type: Boolean, default: false },
