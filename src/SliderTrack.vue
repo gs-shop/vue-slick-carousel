@@ -101,7 +101,7 @@ export default {
       let slides = []
       let preCloneSlides = []
       let postCloneSlides = []
-      let childrenCount = children.length
+      let childrenCount = (children && children.length) || 0
       let startIndex = lazyStartIndex(spec)
       let endIndex = lazyEndIndex(spec)
 
