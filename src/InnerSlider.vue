@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     slideCount() {
-      return this.$slots.default.length
+      return (this.$slots.default && this.$slots.default.length) || 0
     },
     spec() {
       return {
