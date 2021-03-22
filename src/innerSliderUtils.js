@@ -622,7 +622,7 @@ export const getSwipeDirection = (touchObject, verticalSwiping = false) => {
 // get initialized state
 export const initializedState = spec => {
   // spec also contains listRef, trackRef
-  let slideCount = spec.children.length
+  let slideCount = (spec.children && spec.children.length) || 0
   let listWidth = Math.ceil(getWidth(spec.listRef))
   let trackWidth = Math.ceil(getWidth(spec.trackRef))
   let slideWidth
