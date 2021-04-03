@@ -422,6 +422,10 @@ export default {
       } else {
         this.slideHandler(targetSlide)
       }
+      if( this.autoplayTimer ) {
+        clearInterval(this.autoplayTimer)
+        this.autoplayTimer = setInterval(this.play, this.autoplaySpeed + 50)
+      }
     },
     swipeStart(e) {
       if (this.verticalSwiping) {
