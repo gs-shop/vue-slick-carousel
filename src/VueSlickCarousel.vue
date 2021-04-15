@@ -227,9 +227,7 @@ export default {
       }
     }
 
-    if (newChildren.length <= settings.slidesToShow) {
-      settings.unslick = true
-    }
+    settings.unslick = newChildren.length <= settings.slidesToShow
 
     return (
       <InnerSlider
