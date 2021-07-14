@@ -240,7 +240,7 @@ export const swipeMove = (e, spec) => {
     positionOffset = touchObject.curY > touchObject.startY ? 1 : -1
 
   let dotCount = Math.ceil(slideCount / slidesToScroll)
-  let swipeDirection = getSwipeDirection(spec.touchObject, verticalSwiping, rtl)
+  let swipeDirection = getSwipeDirection(spec.touchObject, verticalSwiping)
   let touchSwipeLength = touchObject.swipeLength
   if (!infinite) {
     if (
@@ -260,7 +260,11 @@ export const swipeMove = (e, spec) => {
     state['swiped'] = true
   }
   if (!vertical) {
-    swipeLeft = curLeft + touchSwipeLength * positionOffset
+    if (!rtl) {
+      swipeLeft = curLeft + touchSwipeLength * positionOffset
+    } else {
+      swipeLeft = curLeft - touchSwipeLength * positionOffset
+    }
   } else {
     swipeLeft =
       curLeft + touchSwipeLength * (listHeight / listWidth) * positionOffset
@@ -299,7 +303,6 @@ export const swipeEnd = (e, spec) => {
     swipeToSlide,
     scrolling,
     onSwipe,
-    rtl,
   } = spec
   if (!dragging) {
     if (swipe) e.preventDefault()
@@ -308,7 +311,7 @@ export const swipeEnd = (e, spec) => {
   let minSwipe = verticalSwiping
     ? listHeight / touchThreshold
     : listWidth / touchThreshold
-  let swipeDirection = getSwipeDirection(touchObject, verticalSwiping, rtl)
+  let swipeDirection = getSwipeDirection(touchObject, verticalSwiping)
   // reset the state of touch related state variables.
   let state = {
     dragging: false,
@@ -587,11 +590,7 @@ export const slideHandler = spec => {
 export const getWidth = elem => (elem && elem.offsetWidth) || 0
 export const getHeight = elem => (elem && elem.offsetHeight) || 0
 
-export const getSwipeDirection = (
-  touchObject,
-  verticalSwiping = false,
-  rtl = false,
-) => {
+export const getSwipeDirection = (touchObject, verticalSwiping = false) => {
   var xDist, yDist, r, swipeAngle
   xDist = touchObject.startX - touchObject.curX
   yDist = touchObject.startY - touchObject.curY
@@ -604,10 +603,10 @@ export const getSwipeDirection = (
     (swipeAngle <= 45 && swipeAngle >= 0) ||
     (swipeAngle <= 360 && swipeAngle >= 315)
   ) {
-    return !rtl ? 'left' : 'right'
+    return 'left'
   }
   if (swipeAngle >= 135 && swipeAngle <= 225) {
-    return !rtl ? 'right' : 'left'
+    return 'right'
   }
   if (verticalSwiping === true) {
     if (swipeAngle >= 35 && swipeAngle <= 135) {
@@ -644,6 +643,9 @@ export const initializedState = spec => {
   let listHeight = slideHeight * spec.slidesToShow
   let currentSlide =
     spec.currentSlide === undefined ? spec.initialSlide : spec.currentSlide
+  if (spec.rtl && spec.currentSlide === undefined) {
+    currentSlide = slideCount - 1 - spec.initialSlide
+  }
   let lazyLoadedList = spec.lazyLoadedList || []
   let slidesToLoad = getOnDemandLazySlides(
     { currentSlide, lazyLoadedList },
@@ -779,10 +781,7 @@ export const getTotalSlides = spec =>
     : getPreClones(spec) + spec.slideCount + getPostClones(spec)
 
 export const checkSpecKeys = (spec, keysArray) =>
-  keysArray.reduce(
-    (value, key) => value && spec.hasOwnProperty.call(spec, key),
-    true,
-  )
+  keysArray.reduce((value, key) => value && spec.hasOwnProperty(key), true)
     ? null
     : console.error('Keys Missing:', spec) // eslint-disable-line no-console
 
@@ -807,15 +806,14 @@ export const getTrackCSS = spec => {
     WebkitTransition: '',
   }
   if (spec.useTransform) {
-    const correctedLeft = spec.rtl ? -spec.left : spec.left
     let WebkitTransform = !spec.vertical
-      ? 'translate3d(' + correctedLeft + 'px, 0px, 0px)'
+      ? 'translate3d(' + spec.left + 'px, 0px, 0px)'
       : 'translate3d(0px, ' + spec.left + 'px, 0px)'
     let transform = !spec.vertical
-      ? 'translate3d(' + correctedLeft + 'px, 0px, 0px)'
+      ? 'translate3d(' + spec.left + 'px, 0px, 0px)'
       : 'translate3d(0px, ' + spec.left + 'px, 0px)'
     let msTransform = !spec.vertical
-      ? 'translateX(' + correctedLeft + 'px)'
+      ? 'translateX(' + spec.left + 'px)'
       : 'translateY(' + spec.left + 'px)'
     style = {
       ...style,
