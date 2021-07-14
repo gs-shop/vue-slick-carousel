@@ -166,7 +166,7 @@ export default {
       }
       let setTrackStyle = false
       for (let key of Object.keys(this.$props)) {
-        if (!nextProps.hasOwnProperty(key)) {
+        if (!nextProps.hasOwnProperty.call(nextProps, key)) {
           setTrackStyle = true
           break
         }
@@ -217,6 +217,7 @@ export default {
     ssrInit() {
       const preClones = getPreClones(this.spec)
       const postClones = getPostClones(this.spec)
+      // console.log(this.currentSlide, this.slideCount, preClones, postClones)
       if (this.variableWidth) {
         let trackWidth = [],
           trackLeft = []
@@ -500,14 +501,10 @@ export default {
     },
     play() {
       var nextIndex
-      if (this.rtl) {
-        nextIndex = this.currentSlide - this.slidesToScroll
+      if (canGoNext({ ...this.$props, ...this.$data })) {
+        nextIndex = this.currentSlide + this.slidesToScroll
       } else {
-        if (canGoNext({ ...this.$props, ...this.$data })) {
-          nextIndex = this.currentSlide + this.slidesToScroll
-        } else {
-          return false
-        }
+        return false
       }
 
       this.slideHandler(nextIndex)
@@ -680,7 +677,8 @@ export default {
     })
 
     return (
-      <div class={className} dir={!this.unslick ? 'ltr' : false}>
+      // <div class={className} dir={!this.unslick ? 'ltr' : false}>
+      <div class={className} dir={!this.rtl ? 'ltr' : 'rtl'}>
         {!this.unslick ? prevArrow : ''}
         <div
           ref="list"
