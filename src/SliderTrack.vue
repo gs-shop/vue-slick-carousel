@@ -124,8 +124,14 @@ export default {
           } else {
             child = <div />
           }
-          let childStyle = getSlideStyle({ ...spec, index })
-          let slideClasses = getSlideClasses({ ...spec, index })
+          let childStyle = getSlideStyle({
+            ...spec,
+            index,
+          })
+          let slideClasses = getSlideClasses({
+            ...spec,
+            index,
+          })
           // push a cloned element of the desired slide
           slides.push(
             this.cloneSlide(child, {
@@ -159,7 +165,10 @@ export default {
               if (key >= startIndex) {
                 child = elem
               }
-              slideClasses = getSlideClasses({ ...spec, index: key })
+              slideClasses = getSlideClasses({
+                ...spec,
+                index: key,
+              })
               preCloneSlides.push(
                 this.cloneSlide(child, {
                   key: 'precloned' + getKey(child, key),
@@ -180,7 +189,10 @@ export default {
               if (key < endIndex) {
                 child = elem
               }
-              slideClasses = getSlideClasses({ ...spec, index: key })
+              slideClasses = getSlideClasses({
+                ...spec,
+                index: key,
+              })
               postCloneSlides.push(
                 this.cloneSlide(child, {
                   key: 'postcloned' + getKey(child, key),
@@ -209,7 +221,7 @@ export default {
     const slides = this.renderSlides(this.$props, this.$slots.default)
     return (
       <div
-        class={{ 'slick-track': true, 'slick-center': this.$props.centerMode }}
+        class={{ 'slick-track': true, 'slick-center': this.centerMode }}
         style={this.trackStyle}>
         {slides}
       </div>
