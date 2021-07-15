@@ -32,52 +32,34 @@ export const keyHandler = (e, accessibility, rtl) => {
 
 export const siblingDirection = spec => {
   if (spec.targetSlide > spec.currentSlide) {
-    if (spec.targetSlide > spec.currentSlide + slidesOnRight(spec)) {
-      return 'left'
+    if (spec.targetSlide > spec.currentSlide + slidesAfter(spec)) {
+      return spec.rtl ? 'right' : 'left'
     }
-    return 'right'
+    return spec.rtl ? 'left' : 'right'
   } else {
-    if (spec.targetSlide < spec.currentSlide - slidesOnLeft(spec)) {
-      return 'right'
+    if (spec.targetSlide < spec.currentSlide - slidesBefore(spec)) {
+      return spec.rtl ? 'left' : 'right'
     }
-    return 'left'
+    return spec.rtl ? 'right' : 'left'
   }
 }
 
-export const slidesOnRight = ({
-  slidesToShow,
-  centerMode,
-  rtl,
-  centerPadding,
-}) => {
+export const slidesAfter = ({ slidesToShow, centerMode, centerPadding }) => {
   // returns no of slides on the right of active slide
   if (centerMode) {
-    let right = (slidesToShow - 1) / 2 + 1
-    if (parseInt(centerPadding) > 0) right += 1
-    if (rtl && slidesToShow % 2 === 0) right += 1
-    return right
-  }
-  if (rtl) {
-    return 0
+    let after = (slidesToShow - 1) / 2 + 1
+    if (parseInt(centerPadding) > 0) after += 1
+    return after
   }
   return slidesToShow - 1
 }
 
-export const slidesOnLeft = ({
-  slidesToShow,
-  centerMode,
-  rtl,
-  centerPadding,
-}) => {
+export const slidesBefore = ({ slidesToShow, centerMode, centerPadding }) => {
   // returns no of slides on the left of active slide
   if (centerMode) {
-    let left = (slidesToShow - 1) / 2 + 1
-    if (parseInt(centerPadding) > 0) left += 1
-    if (!rtl && slidesToShow % 2 === 0) left += 1
-    return left
-  }
-  if (rtl) {
-    return slidesToShow - 1
+    let before = (slidesToShow - 1) / 2 + 1
+    if (parseInt(centerPadding) > 0) before += 1
+    return before
   }
   return 0
 }
@@ -110,7 +92,7 @@ export const getOnDemandLazySlides = spec => {
 }
 
 export const changeSlide = (spec, options) => {
-  var indexOffset, previousInt, slideOffset, unevenOffset, targetSlide
+  let indexOffset, previousInt, slideOffset, unevenOffset, targetSlide
   const {
     slidesToScroll,
     slidesToShow,
@@ -150,9 +132,15 @@ export const changeSlide = (spec, options) => {
     }
     if (infinite) {
       let direction = siblingDirection({ ...spec, targetSlide })
-      if (targetSlide > options.currentSlide && direction === 'left') {
+      if (
+        targetSlide > options.currentSlide &&
+        direction === (spec.rtl ? 'right' : 'left')
+      ) {
         targetSlide = targetSlide - slideCount
-      } else if (targetSlide < options.currentSlide && direction === 'right') {
+      } else if (
+        targetSlide < options.currentSlide &&
+        direction === (spec.rtl ? 'left' : 'right')
+      ) {
         targetSlide = targetSlide + slideCount
       }
     }
@@ -335,13 +323,13 @@ export const swipeEnd = (e, spec) => {
       case 'left':
       case 'up':
         newSlide = currentSlide + getSlideCount(spec)
-        slideCount = swipeToSlide ? checkNavigable(spec, newSlide) : newSlide
+        slideCount = swipeToSlide ? newSlide : checkNavigable(spec, newSlide)
         state['currentDirection'] = 0
         break
       case 'right':
       case 'down':
         newSlide = currentSlide - getSlideCount(spec)
-        slideCount = swipeToSlide ? checkNavigable(spec, newSlide) : newSlide
+        slideCount = swipeToSlide ? newSlide : checkNavigable(spec, newSlide)
         state['currentDirection'] = 1
         break
       default:
@@ -357,29 +345,34 @@ export const swipeEnd = (e, spec) => {
 }
 export const getNavigableIndexes = spec => {
   let max = spec.infinite ? spec.slideCount * 2 : spec.slideCount
-  let breakpoint = spec.infinite ? spec.slidesToShow * -1 : 0
-  let counter = spec.infinite ? spec.slidesToShow * -1 : 0
+  let breakpoint = spec.infinite ? spec.currentSlide : 0
   let indexes = []
   while (breakpoint < max) {
     indexes.push(breakpoint)
-    breakpoint = counter + spec.slidesToScroll
-    counter += Math.min(spec.slidesToScroll, spec.slidesToShow)
+    breakpoint += Math.min(spec.slidesToScroll, spec.slidesToShow)
+  }
+  if (spec.infinite) {
+    for (
+      breakpoint =
+        spec.currentSlide - Math.min(spec.slidesToScroll, spec.slidesToShow);
+      breakpoint >= spec.slidesToShow * -1;
+      breakpoint -= Math.min(spec.slidesToScroll, spec.slidesToShow)
+    ) {
+      indexes.push(breakpoint)
+    }
+    indexes.sort(function(a, b) {
+      return a - b
+    })
   }
   return indexes
 }
 export const checkNavigable = (spec, index) => {
   const navigables = getNavigableIndexes(spec)
-  let prevNavigable = 0
   if (index > navigables[navigables.length - 1]) {
     index = navigables[navigables.length - 1]
   } else {
-    for (let n in navigables) {
-      if (index < navigables[n]) {
-        index = prevNavigable
-        break
-      }
-      prevNavigable = navigables[n]
-    }
+    const nav = navigables.map(navIndex => Math.abs(navIndex - index))
+    index = navigables[nav.indexOf(Math.min(...nav))]
   }
   return index
 }
@@ -394,10 +387,11 @@ export const getSlideCount = spec => {
     const slides = slickList.querySelectorAll('.slick-slide')
     Array.from(slides).every(slide => {
       if (!spec.vertical) {
-        if (
-          slide.offsetLeft - centerOffset + getWidth(slide) / 2 >
-          spec.swipeLeft * -1
-        ) {
+        const offsetRight =
+          slide.parentNode.offsetWidth - slide.offsetLeft - slide.offsetWidth
+        const offsetLeft = slide.offsetLeft
+        const offset = spec.rtl ? offsetRight : offsetLeft
+        if (offset - centerOffset + getWidth(slide) / 2 > spec.swipeLeft * -1) {
           swipedSlide = slide
           return false
         }
@@ -414,10 +408,7 @@ export const getSlideCount = spec => {
     if (!swipedSlide) {
       return 0
     }
-    const currentIndex =
-      spec.rtl === true
-        ? spec.slideCount - spec.currentSlide
-        : spec.currentSlide
+    const currentIndex = spec.currentSlide
     const slidesTraversed =
       Math.abs(swipedSlide.dataset.index - currentIndex) || 1
     return slidesTraversed
@@ -537,8 +528,8 @@ export const slideHandler = spec => {
     if (animationSlide < 0) {
       finalSlide = animationSlide + slideCount
       if (!infinite) finalSlide = 0
-      else if (slideCount % slidesToScroll !== 0)
-        finalSlide = slideCount - (slideCount % slidesToScroll)
+      // else if (slideCount % slidesToScroll !== 0)
+      //   finalSlide = slideCount - (slideCount % slidesToScroll)
     } else if (!canGoNext(spec) && animationSlide > currentSlide) {
       animationSlide = finalSlide = currentSlide
     } else if (centerMode && animationSlide >= slideCount) {
@@ -547,7 +538,7 @@ export const slideHandler = spec => {
     } else if (animationSlide >= slideCount) {
       finalSlide = animationSlide - slideCount
       if (!infinite) finalSlide = slideCount - slidesToShow
-      else if (slideCount % slidesToScroll !== 0) finalSlide = 0
+      // else if (slideCount % slidesToScroll !== 0) finalSlide = 0
     }
     animationLeft = getTrackLeft({ ...spec, slideIndex: animationSlide })
     finalLeft = getTrackLeft({ ...spec, slideIndex: finalSlide })
@@ -592,7 +583,7 @@ export const getSwipeDirection = (
   verticalSwiping = false,
   rtl = false,
 ) => {
-  var xDist, yDist, r, swipeAngle
+  let xDist, yDist, r, swipeAngle
   xDist = touchObject.startX - touchObject.curX
   yDist = touchObject.startY - touchObject.curY
   r = Math.atan2(yDist, xDist)
@@ -704,10 +695,10 @@ export const getTrackLeft = spec => {
     vertical,
   } = spec
 
-  var slideOffset = 0
-  var targetLeft
-  var targetSlide
-  var verticalOffset = 0
+  let slideOffset = 0
+  let targetLeft
+  let targetSlide
+  let verticalOffset = 0
 
   if (fade || spec.slideCount === 1) {
     return 0
@@ -717,14 +708,15 @@ export const getTrackLeft = spec => {
   if (infinite) {
     slidesToOffset = -getPreClones(spec) // bring active slide to the beginning of visual area
     // if next scroll doesn't have enough children, just reach till the end of original slides instead of shifting slidesToScroll children
-    if (
-      slideCount % slidesToScroll !== 0 &&
-      slideIndex + slidesToScroll > slideCount
-    ) {
-      slidesToOffset = -(slideIndex > slideCount
-        ? slidesToShow - (slideIndex - slideCount)
-        : slideCount % slidesToScroll)
-    }
+    // const postSlides = getPostClones(spec)
+    // if (
+    //   slideCount % slidesToScroll !== 0 &&
+    //   slideIndex + slidesToScroll > slideCount // + postSlides
+    // ) {
+    //   slidesToOffset = -(slideIndex > slideCount
+    //     ? slidesToShow - (slideIndex - slideCount)
+    //     : slideCount % slidesToScroll)
+    // }
     // shift current slide to center of the frame
     if (centerMode) {
       slidesToOffset += parseInt(slidesToShow / 2)
@@ -750,11 +742,17 @@ export const getTrackLeft = spec => {
   }
 
   if (variableWidth === true) {
-    var targetSlideIndex
+    let targetSlideIndex
     let trackElem = trackRef.$el
     targetSlideIndex = slideIndex + getPreClones(spec)
     targetSlide = trackElem && trackElem.childNodes[targetSlideIndex]
-    targetLeft = targetSlide ? targetSlide.offsetLeft * -1 : 0
+    const offsetRight =
+      targetSlide.parentNode.offsetWidth -
+      targetSlide.offsetLeft -
+      targetSlide.offsetWidth
+    const offsetLeft = targetSlide.offsetLeft
+    const offset = spec.rtl ? offsetRight : offsetLeft
+    targetLeft = targetSlide ? offset * -1 : 0
     if (centerMode === true) {
       targetSlideIndex = infinite ? slideIndex + getPreClones(spec) : slideIndex
       targetSlide = trackElem && trackElem.children[targetSlideIndex]

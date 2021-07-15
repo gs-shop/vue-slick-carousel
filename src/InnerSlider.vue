@@ -217,7 +217,6 @@ export default {
     ssrInit() {
       const preClones = getPreClones(this.spec)
       const postClones = getPostClones(this.spec)
-      // console.log(this.currentSlide, this.slideCount, preClones, postClones)
       if (this.variableWidth) {
         let trackWidth = [],
           trackLeft = []
@@ -677,8 +676,7 @@ export default {
     })
 
     return (
-      // <div class={className} dir={!this.unslick ? 'ltr' : false}>
-      <div class={className} dir={!this.rtl ? 'ltr' : 'rtl'}>
+      <div class={className} dir={this.rtl ? 'rtl' : 'ltr'}>
         {!this.unslick ? prevArrow : ''}
         <div
           ref="list"
@@ -739,5 +737,14 @@ export default {
 .slick-list.dragging {
   cursor: pointer;
   cursor: hand;
+}
+.slick-slider[dir='rtl'] >>> .slick-slide {
+  float: right;
+}
+.slick-slider[dir='ltr'] >>> .slick-slide {
+  float: left;
+}
+.slick-slider .slick-list {
+  transition: height 0.3s ease;
 }
 </style>

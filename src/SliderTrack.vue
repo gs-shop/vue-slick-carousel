@@ -55,6 +55,8 @@ const getSlideStyle = spec => {
     style.position = 'relative'
     if (spec.vertical) {
       style.top = `${-spec.index * parseInt(spec.slideHeight)}px`
+    } else if (spec.rtl) {
+      style.right = `${-spec.index * parseInt(spec.slideWidth)}px`
     } else {
       style.left = `${-spec.index * parseInt(spec.slideWidth)}px`
     }
@@ -210,11 +212,7 @@ export default {
           }
         }, this)
 
-      if (spec.rtl) {
-        return preCloneSlides.concat(slides, postCloneSlides).reverse()
-      } else {
-        return preCloneSlides.concat(slides, postCloneSlides)
-      }
+      return preCloneSlides.concat(slides, postCloneSlides)
     },
   },
   render() {
@@ -265,9 +263,6 @@ export default {
 
   height: 100%;
   min-height: 1px;
-}
-[dir='rtl'] .slick-slide {
-  float: right;
 }
 .slick-slide img {
   display: block;
