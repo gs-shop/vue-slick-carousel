@@ -1,6 +1,6 @@
 {
   "name": "vue-slick-carousel-rtl",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "Vue Slick Carousel with True SSR Written for Faster Luxstay",
   "keywords": [
     "vue",
@@ -13,7 +13,7 @@
   ],
   "homepage": "https://gs-shop.github.io/vue-slick-carousel/",
   "bugs": {
-    "url": "https://github.com/iran-110/vue-slick-carousel/issues"
+    "url": "https://github.com/iran-110/vue-slick-carousel-rtl/issues"
   },
   "license": "MIT",
   "author": "KyuWoo Choi",
@@ -31,7 +31,7 @@
     "test:unit:watch": "vue-cli-service test:unit --watch",
     "release": "semantic-release --no-ci"
   },
-  "main": "dist/vue-slick-carousel.umd.js",
+  "main": "dist/vue-slick-carousel-rtl.umd.js",
   "dependencies": {
     "enquire.js": "2.1.6",
     "json2mq": "0.2.0",

@@ -1,3 +1,5 @@
+src/
+docs/
 demo/
 tests/
 gh-pages/
@@ -13,7 +15,6 @@ yarn-error.log
 dist/demo.html
 dist/bit
 .idea
-docs/
 release.config.js
 .bitmap
 package-lock.json
