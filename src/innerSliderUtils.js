@@ -496,7 +496,6 @@ export const slideHandler = spec => {
     lazyLoad,
     currentSlide,
     centerMode,
-    slidesToScroll,
     slidesToShow,
     useCSS,
   } = spec

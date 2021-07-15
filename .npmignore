@@ -12,3 +12,9 @@ yarn-error.log
 .browserslistrc
 dist/demo.html
 dist/bit
+.idea
+docs/
+release.config.js
+.bitmap
+package-lock.json
+.gitattributes
