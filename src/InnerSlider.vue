@@ -155,6 +155,9 @@ export default {
     }
   },
   methods: {
+    getCurrentSlide() {
+      return this.currentSlide
+    },
     onPropsUpdated() {
       const nextProps = this.$props
       let spec = {
