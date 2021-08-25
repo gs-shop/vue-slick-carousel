@@ -108,6 +108,9 @@ export default {
     this.clearBreakpoints()
   },
   methods: {
+    getCurrentSlide() {
+      return this.$refs.innerSlider.getCurrentSlide()
+    },
     prev() {
       this.$refs.innerSlider.prev()
     },
