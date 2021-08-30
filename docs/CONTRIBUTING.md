@@ -43,7 +43,7 @@ Unsure where to begin contributing? You can start by looking through these `docu
 ### Development WorkFlow
 
 - Set up your development environment
-- Be sure the code passes `yarn lint`, `yarn test`
+- Be sure the code passes `yarn lint`, `yarn test:unit`
 - Make a pull request
 
 ### Development Environment
