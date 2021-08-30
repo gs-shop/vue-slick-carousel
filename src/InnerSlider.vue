@@ -88,8 +88,8 @@ export default {
     }
     this.updateState(spec, true)
     this.adaptHeight()
-    if (this.autoPlay) {
-      this.autoPlay('update')
+    if (this.autoplay) {
+      this.runAutoPlay('update')
     }
     if (this.lazyLoad === 'progressive') {
       this.lazyLoadTimer = setInterval(this.progressiveLazyLoad, 1000)
@@ -190,7 +190,7 @@ export default {
         })
       }
       if (nextProps.autoplay) {
-        this.autoPlay('update')
+        this.runAutoPlay('update')
       } else {
         this.pause('paused')
       }
@@ -324,7 +324,7 @@ export default {
       }
       this.updateState(spec, setTrackStyle)
       if (this.autoplay) {
-        this.autoPlay('update')
+        this.runAutoPlay('update')
       } else {
         this.pause('paused')
       }
@@ -512,7 +512,7 @@ export default {
 
       this.slideHandler(nextIndex)
     },
-    autoPlay(playType) {
+    runAutoPlay(playType) {
       if (this.autoplayTimer) {
         clearInterval(this.autoplayTimer)
       }
@@ -557,22 +557,34 @@ export default {
       }
     },
     onDotsOver() {
-      this.autoplay && this.pause('hovered')
+      if (this.autoplay) {
+        this.pause('hovered')
+      }
     },
     onDotsLeave() {
-      this.autoplay && this.autoplaying === 'hovered' && this.autoPlay('leave')
+      if (this.autoplay && this.autoplaying === 'hovered') {
+        this.runAutoPlay('leave')
+      }
     },
     onTrackOver() {
-      this.autoplay && this.pause('hovered')
+      if (this.autoplay) {
+        this.pause('hovered')
+      }
     },
     onTrackLeave() {
-      this.autoplay && this.autoplaying === 'hovered' && this.autoPlay('leave')
+      if (this.autoplay && this.autoplaying === 'hovered') {
+        this.runAutoPlay('leave')
+      }
     },
     onSlideFocus() {
-      this.autoplay && this.pause('focused')
+      if (this.autoplay) {
+        this.pause('focused')
+      }
     },
     onSlideBlur() {
-      this.autoplay && this.autoplaying === 'focused' && this.autoPlay('blur')
+      if (this.autoplay && this.autoplaying === 'focused') {
+        this.runAutoPlay('blur')
+      }
     },
     selectHandler(options) {
       if (this.focusOnSelect) {
