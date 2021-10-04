@@ -115,7 +115,7 @@ export default {
       this.$refs.innerSlider.next()
     },
     goTo(slide, dontAnimate = false) {
-      this.$refs.innerSlider?.goTo(slide, dontAnimate)
+      this.$refs.innerSlider && this.$refs.innerSlider.goTo(slide, dontAnimate)
     },
     pause() {
       this.$refs.innerSlider.pause('paused')
