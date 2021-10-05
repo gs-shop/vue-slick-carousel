@@ -40,7 +40,8 @@
     "lodash.get": "^4.4.2",
     "lodash.pick": "^4.4.0",
     "resize-observer-polyfill": "1.5.1",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "core-js": "3.18.1"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",
