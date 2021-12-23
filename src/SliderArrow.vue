@@ -52,7 +52,7 @@ export default {
     mergeVNodeData(arrow, 'on', {
       click: () => {
         if (clickable) {
-          this.$emit('arrowClicked', { message: this.type })
+          this.$emit('arrow-clicked', { message: this.type })
         }
       },
     })

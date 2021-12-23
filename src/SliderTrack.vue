@@ -90,7 +90,7 @@ export default {
       mergeVNodeData(clone, 'on', {
         click: e => {
           getData(slide, 'on.click', () => {})(e)
-          this.$emit('childClicked', options.childOnClickOptions)
+          this.$emit('child-clicked', options.childOnClickOptions)
         },
       })
 
