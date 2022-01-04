@@ -58,7 +58,7 @@ export default {
         <li
           key={i}
           class={className}
-          onClick={() => this.$emit('dotClicked', dotOptions)}>
+          onClick={() => this.$emit('dot-clicked', dotOptions)}>
           {customPaging}
         </li>
       )
