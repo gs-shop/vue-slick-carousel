@@ -88,7 +88,7 @@ export default {
     }
     this.updateState(spec, true)
     this.adaptHeight()
-    if (this.autoPlay) {
+    if (spec.autoplay) {
       this.autoPlay('update')
     }
     if (this.lazyLoad === 'progressive') {
