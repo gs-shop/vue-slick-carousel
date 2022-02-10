@@ -62,7 +62,7 @@
     "html-to-react": "^1.4.2",
     "jsdom": "^15.2.1",
     "markdown-loader": "^5.1.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "prettier": "^1.18.2",
     "prettydiff": "^101.2.6",
     "react": "^16.12.0",
