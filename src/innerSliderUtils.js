@@ -133,6 +133,9 @@ export const changeSlide = (spec, options) => {
   } else if (options.message === 'next') {
     slideOffset = indexOffset === 0 ? slidesToScroll : indexOffset
     targetSlide = currentSlide + slideOffset
+    if( !infinite && !lazyLoad && ( (targetSlide + slidesToScroll) > slideCount) ){
+      targetSlide = slideCount - slidesToScroll;
+    }
     if (lazyLoad && !infinite) {
       targetSlide = ((currentSlide + slidesToScroll) % slideCount) + indexOffset
     }
