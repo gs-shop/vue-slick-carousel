@@ -457,6 +457,9 @@ export default {
         slideIndex: this.currentSlide,
       })
       if (!state) return
+      if (!state['swiping']) {
+        this.clickable = true
+      }
       let triggerSlideHandler = state['triggerSlideHandler']
       // delete state["triggerSlideHandler"];
       this.triggerSlideHandler = undefined
