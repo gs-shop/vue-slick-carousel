@@ -118,6 +118,9 @@ export default {
       this.$refs.innerSlider.next()
     },
     goTo(slide, dontAnimate = false) {
+      if (!this.$refs.innerSlider) {
+        return
+      }
       this.$refs.innerSlider.goTo(slide, dontAnimate)
     },
     pause() {
