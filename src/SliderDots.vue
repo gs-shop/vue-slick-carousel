@@ -51,7 +51,7 @@ export default {
       const customPaging = this.customPaging ? (
         this.customPaging(i)[0]
       ) : (
-        <button>{i + 1}</button>
+        <button type="button">{i + 1}</button>
       )
 
       return (
