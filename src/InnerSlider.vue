@@ -405,7 +405,9 @@ export default {
     clickHandler(e) {
       if (this.clickable === false) {
         e.stopPropagation()
-        e.preventDefault()
+        if (e.cancelable) {
+          e.preventDefault()
+        }
       }
       this.clickable = true
     },
