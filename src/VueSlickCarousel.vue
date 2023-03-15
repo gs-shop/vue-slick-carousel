@@ -181,9 +181,9 @@ export default {
     if (settings === 'unslick') {
       return <div class="regular slider">{children}</div>
     }
-    settings.prevArrow = this.$scopedSlots.prevArrow
-    settings.nextArrow = this.$scopedSlots.nextArrow
-    settings.customPaging = this.$scopedSlots.customPaging
+    settings.prevArrow = this.$slots.prevArrow()
+    settings.nextArrow = this.$slots.nextArrow()
+    settings.customPaging = this.$slots.customPaging()
     children = children.filter(child => !!child.tag)
 
     let newChildren = []
