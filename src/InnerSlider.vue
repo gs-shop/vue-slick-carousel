@@ -201,7 +201,8 @@ export default {
       let targetLeft = getTrackLeft(spec)
       spec = { ...spec, left: targetLeft }
       let trackStyle = getTrackCSS(spec)
-      if (setTrackStyle || this.slideCount !== spec.children.length) {
+      let slideCount = (spec.children && spec.children.length) || 0
+      if (setTrackStyle || this.slideCount !== slideCount) {
         updatedState['trackStyle'] = trackStyle
       }
       Object.assign(this.$data, updatedState)
