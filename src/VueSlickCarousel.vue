@@ -34,6 +34,17 @@ export default {
       let newProps
 
       if (this.breakpoint) {
+        // define the maximum `SlidesToShow` for SSR compatibility.
+        let maxSlidesToShow = this.slidesToShow
+        this.responsive.forEach(resp => {
+          if (
+            resp.settings.slidesToShow &&
+            maxSlidesToShow < resp.settings.slidesToShow
+          ) {
+            maxSlidesToShow = resp.settings.slidesToShow
+          }
+        })
+        // select the current breakpoint
         newProps = this.responsive.filter(
           resp => resp.breakpoint === this.breakpoint,
         )
@@ -44,6 +55,7 @@ export default {
                 ...defaultValues,
                 ...props,
                 ...newProps[0].settings,
+                maxSlidesToShow,
               }
       } else {
         settings = { ...defaultValues, ...props }

@@ -12,6 +12,10 @@ export const getPreClones = spec => {
   if (spec.variableWidth) {
     return spec.slideCount
   }
+  if (spec.maxSlidesToShow) {
+    // in responsive state, use the maximum number of `slidesToShow` for supporting SSR
+    return spec.maxSlidesToShow + (spec.centerMode ? 1 : 0)
+  }
   return spec.slidesToShow + (spec.centerMode ? 1 : 0)
 }
 
@@ -446,6 +450,7 @@ export const PROP_KEYS = {
     'variableWidth',
     'unslick',
     'centerPadding',
+    'maxSlidesToShow',
   ],
   DOT: [
     'dotsClass',
