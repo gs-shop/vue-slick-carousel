@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     slideCount() {
-      return this.$slots.default.length
+      return (this.$slots.default && this.$slots.default.length) || 0
     },
     spec() {
       return {
@@ -166,7 +166,7 @@ export default {
       }
       let setTrackStyle = false
       for (let key of Object.keys(this.$props)) {
-        if (!nextProps.hasOwnProperty(key)) {
+        if (!nextProps.hasOwnProperty.call(nextProps, key)) {
           setTrackStyle = true
           break
         }
@@ -201,7 +201,8 @@ export default {
       let targetLeft = getTrackLeft(spec)
       spec = { ...spec, left: targetLeft }
       let trackStyle = getTrackCSS(spec)
-      if (setTrackStyle || this.slideCount !== spec.children.length) {
+      let slideCount = (spec.children && spec.children.length) || 0
+      if (setTrackStyle || this.slideCount !== slideCount) {
         updatedState['trackStyle'] = trackStyle
       }
       Object.assign(this.$data, updatedState)
@@ -500,14 +501,10 @@ export default {
     },
     play() {
       var nextIndex
-      if (this.rtl) {
-        nextIndex = this.currentSlide - this.slidesToScroll
+      if (canGoNext({ ...this.$props, ...this.$data })) {
+        nextIndex = this.currentSlide + this.slidesToScroll
       } else {
-        if (canGoNext({ ...this.$props, ...this.$data })) {
-          nextIndex = this.currentSlide + this.slidesToScroll
-        } else {
-          return false
-        }
+        return false
       }
 
       this.slideHandler(nextIndex)
@@ -680,7 +677,7 @@ export default {
     })
 
     return (
-      <div class={className} dir={!this.unslick ? 'ltr' : false}>
+      <div class={className} dir={this.rtl ? 'rtl' : 'ltr'}>
         {!this.unslick ? prevArrow : ''}
         <div
           ref="list"
@@ -741,5 +738,14 @@ export default {
 .slick-list.dragging {
   cursor: pointer;
   cursor: hand;
+}
+.slick-slider[dir='rtl'] >>> .slick-slide {
+  float: right;
+}
+.slick-slider[dir='ltr'] >>> .slick-slide {
+  float: left;
+}
+.slick-slider .slick-list {
+  transition: height 0.3s ease;
 }
 </style>

@@ -55,6 +55,8 @@ const getSlideStyle = spec => {
     style.position = 'relative'
     if (spec.vertical) {
       style.top = `${-spec.index * parseInt(spec.slideHeight)}px`
+    } else if (spec.rtl) {
+      style.right = `${-spec.index * parseInt(spec.slideWidth)}px`
     } else {
       style.left = `${-spec.index * parseInt(spec.slideWidth)}px`
     }
@@ -101,114 +103,123 @@ export default {
       let slides = []
       let preCloneSlides = []
       let postCloneSlides = []
-      let childrenCount = children.length
+      let childrenCount = (children && children.length) || 0
       let startIndex = lazyStartIndex(spec)
       let endIndex = lazyEndIndex(spec)
 
-      children.forEach((elem, index) => {
-        let child
-        let childOnClickOptions = {
-          message: 'children',
-          index: index,
-          slidesToScroll: spec.slidesToScroll,
-          currentSlide: spec.currentSlide,
-        }
+      children &&
+        children.forEach((elem, index) => {
+          let child
+          let childOnClickOptions = {
+            message: 'children',
+            index: index,
+            slidesToScroll: spec.slidesToScroll,
+            currentSlide: spec.currentSlide,
+          }
 
-        // in case of lazyLoad, whether or not we want to fetch the slide
-        if (
-          !spec.lazyLoad ||
-          (spec.lazyLoad && spec.lazyLoadedList.indexOf(index) >= 0)
-        ) {
-          child = elem
-        } else {
-          child = <div />
-        }
-        let childStyle = getSlideStyle({ ...spec, index })
-        let slideClasses = getSlideClasses({ ...spec, index })
-        // push a cloned element of the desired slide
-        slides.push(
-          this.cloneSlide(child, {
-            key: 'original' + getKey(child, index),
-            class: slideClasses,
-            style: {
-              outline: 'none',
-              ...childStyle,
-            },
-            attrs: {
-              tabIndex: '-1',
-              'data-index': index,
-              'aria-hidden': `${!slideClasses['slick-active']}`,
-            },
-            childOnClickOptions,
-          }),
-        )
-
-        // if slide needs to be precloned or postcloned
-        if (
-          spec.infinite &&
-          spec.fade === false &&
-          childrenCount > spec.slidesToShow
-        ) {
-          let preCloneNo = childrenCount - index
+          // in case of lazyLoad, whether or not we want to fetch the slide
           if (
-            preCloneNo <= getPreClones(spec) &&
-            childrenCount !== spec.slidesToShow
+            !spec.lazyLoad ||
+            (spec.lazyLoad && spec.lazyLoadedList.indexOf(index) >= 0)
           ) {
-            key = -preCloneNo
-            if (key >= startIndex) {
-              child = elem
-            }
-            slideClasses = getSlideClasses({ ...spec, index: key })
-            preCloneSlides.push(
-              this.cloneSlide(child, {
-                key: 'precloned' + getKey(child, key),
-                class: slideClasses,
-                style: childStyle,
-                attrs: {
-                  tabIndex: '-1',
-                  'data-index': key,
-                  'aria-hidden': `${!slideClasses['slick-active']}`,
-                },
-                childOnClickOptions,
-              }),
-            )
+            child = elem
+          } else {
+            child = <div />
           }
+          let childStyle = getSlideStyle({
+            ...spec,
+            index,
+          })
+          let slideClasses = getSlideClasses({
+            ...spec,
+            index,
+          })
+          // push a cloned element of the desired slide
+          slides.push(
+            this.cloneSlide(child, {
+              key: 'original' + getKey(child, index),
+              class: slideClasses,
+              style: {
+                outline: 'none',
+                ...childStyle,
+              },
+              attrs: {
+                tabIndex: '-1',
+                'data-index': index,
+                'aria-hidden': `${!slideClasses['slick-active']}`,
+              },
+              childOnClickOptions,
+            }),
+          )
 
-          if (childrenCount !== spec.slidesToShow) {
-            key = childrenCount + index
-            if (key < endIndex) {
-              child = elem
+          // if slide needs to be precloned or postcloned
+          if (
+            spec.infinite &&
+            spec.fade === false &&
+            childrenCount > spec.slidesToShow
+          ) {
+            let preCloneNo = childrenCount - index
+            if (
+              preCloneNo <= getPreClones(spec) &&
+              childrenCount !== spec.slidesToShow
+            ) {
+              key = -preCloneNo
+              if (key >= startIndex) {
+                child = elem
+              }
+              slideClasses = getSlideClasses({
+                ...spec,
+                index: key,
+              })
+              preCloneSlides.push(
+                this.cloneSlide(child, {
+                  key: 'precloned' + getKey(child, key),
+                  class: slideClasses,
+                  style: childStyle,
+                  attrs: {
+                    tabIndex: '-1',
+                    'data-index': key,
+                    'aria-hidden': `${!slideClasses['slick-active']}`,
+                  },
+                  childOnClickOptions,
+                }),
+              )
             }
-            slideClasses = getSlideClasses({ ...spec, index: key })
-            postCloneSlides.push(
-              this.cloneSlide(child, {
-                key: 'postcloned' + getKey(child, key),
-                class: slideClasses,
-                style: childStyle,
-                attrs: {
-                  tabIndex: '-1',
-                  'data-index': key,
-                  'aria-hidden': `${!slideClasses['slick-active']}`,
-                },
-                childOnClickOptions,
-              }),
-            )
-          }
-        }
-      }, this)
 
-      if (spec.rtl) {
-        return preCloneSlides.concat(slides, postCloneSlides).reverse()
-      } else {
-        return preCloneSlides.concat(slides, postCloneSlides)
-      }
+            if (childrenCount !== spec.slidesToShow) {
+              key = childrenCount + index
+              if (key < endIndex) {
+                child = elem
+              }
+              slideClasses = getSlideClasses({
+                ...spec,
+                index: key,
+              })
+              postCloneSlides.push(
+                this.cloneSlide(child, {
+                  key: 'postcloned' + getKey(child, key),
+                  class: slideClasses,
+                  style: childStyle,
+                  attrs: {
+                    tabIndex: '-1',
+                    'data-index': key,
+                    'aria-hidden': `${!slideClasses['slick-active']}`,
+                  },
+                  childOnClickOptions,
+                }),
+              )
+            }
+          }
+        }, this)
+
+      return preCloneSlides.concat(slides, postCloneSlides)
     },
   },
   render() {
     const slides = this.renderSlides(this.$props, this.$slots.default)
     return (
       <div
-        class={{ 'slick-track': true, 'slick-center': this.$props.centerMode }}
+        class={{ 'slick-track': true, 'slick-center': this.centerMode }}
         style={this.trackStyle}>
         {slides}
       </div>
@@ -252,9 +263,6 @@ export default {
 
   height: 100%;
   min-height: 1px;
-}
-[dir='rtl'] .slick-slide {
-  float: right;
 }
 .slick-slide img {
   display: block;
