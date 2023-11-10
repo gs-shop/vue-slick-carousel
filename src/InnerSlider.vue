@@ -330,9 +330,10 @@ export default {
       }
       // animating state should be cleared while resizing, otherwise autoplay stops working
       this.animating = false
-      clearTimeout(this.animationEndCallback)
+      // commented the below lines since this will break the carousel selection with iframes
+      // clearTimeout(this.animationEndCallback)
       // delete this.animationEndCallback
-      this.animationEndCallback = undefined
+      // this.animationEndCallback = undefined
     },
     checkImagesLoad() {
       let images = this.$refs.list.querySelectorAll('.slick-slide img')
