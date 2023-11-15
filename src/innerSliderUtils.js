@@ -822,6 +822,7 @@ export const getTrackCSS = spec => {
       msTransform,
     }
   } else {
+    console.log(spec, 'spec');
     if (spec.vertical) {
       style['top'] = spec.left
     } else {
