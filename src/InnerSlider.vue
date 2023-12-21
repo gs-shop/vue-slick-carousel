@@ -740,6 +740,5 @@ export default {
 }
 .slick-list.dragging {
   cursor: pointer;
-  cursor: hand;
 }
 </style>
