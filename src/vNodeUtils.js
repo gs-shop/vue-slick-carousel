@@ -33,7 +33,7 @@ const DATA_KEYS = [
   'on',
   'nativeOn',
   'directives',
-  'scopesSlots',
+  'scopedSlots',
   'slot',
   'ref',
   'key',
